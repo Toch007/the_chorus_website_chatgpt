@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Kelechi Nnam",
+    "role": "Music Director",
+    "voicePart": "director",
+    "bio": "Kelechi Nnam is a trained Engineer and a practicing Business Development Expert who is deeply passionate about music. He is the Music Director of The Chorus Abuja, leading with excellence and heart.",
+    "image": "/images/kelechi1.jpg"
+  },
+  {
+    "name": "Kenneth Elekwachi",
+    "role": "Accompanist",
+    "voicePart": "accompanist",
+    "bio": "Kenneth Elekwachi is a distinguished Data Analyst with a passion for music. As an accompanist, he brings depth and precision to every performance with The Chorus Abuja.",
+    "image": "/images/kenneth.jpg"
+  },
+  {
+    "name": "Iheanyi Owutu",
+    "role": "Accompanist",
+    "voicePart": "accompanist",
+    "bio": "Iheanyi Owutu started his musical journey as a soprano singer at St Peters Seminary Okigwe. Today, he plays for various choirs and brings his talent to The Chorus Abuja as an accompanist.",
+    "image": "/images/Iheanyi.jpeg"
+  },
+  {
+    "name": "Favour Madubuko",
+    "role": "Soprano",
+    "voicePart": "soprano",
+    "bio": "Favour is a software engineer who brings harmony into everything she does. Her voice shines in the soprano section of The Chorus Abuja.",
+    "image": "/images/favour.jpg"
+  },
+  {
+    "name": "Gloria Chimezie",
+    "role": "Soprano",
+    "voicePart": "soprano",
+    "bio": "Gloria is a lawyer whose love for choral music led her to join The Chorus Abuja. She sings in the soprano section with passion and poise.",
+    "image": "/images/gloria.jpg"
+  },
+  {
+    "name": "Ihuoma Ojukwu",
+    "role": "Soprano",
+    "voicePart": "soprano",
+    "bio": "Ihuoma is an expressive soprano whose powerful vocals add beauty to The Chorus Abuja’s harmony.",
+    "image": "/images/ihuoma.jpg"
+  },
+  {
+    "name": "Jennifer Michael",
+    "role": "Alto",
+    "voicePart": "alto",
+    "bio": "Jennifer is a fashion designer and alto singer whose creativity flows into her music. She brings soulful tones to The Chorus Abuja.",
+    "image": "/images/jennifer.jpg"
+  },
+  {
+    "name": "Stephanie Igwe",
+    "role": "Alto",
+    "voicePart": "alto",
+    "bio": "Stephanie is a gentle and supportive alto in The Chorus Abuja. She is an administrator and lover of music.",
+    "image": "/images/stephanie.jpg"
+  },
+  {
+    "name": "Eno Blessing",
+    "role": "Alto",
+    "voicePart": "alto",
+    "bio": "Eno Blessing’s warm alto voice enriches The Chorus Abuja. She is known for her sweet nature and reliability.",
+    "image": "/images/eno.jpg"
+  },
+  {
+    "name": "Amana Okon",
+    "role": "Tenor",
+    "voicePart": "tenor",
+    "bio": "Amana is a pastor, engineer, and passionate singer who carries the tenor line with energy and grace in The Chorus Abuja.",
+    "image": "/images/amana.jpg"
+  },
+  {
+    "name": "Tochukwu Uche",
+    "role": "Tenor",
+    "voicePart": "tenor",
+    "bio": "Tochukwu is a storyteller and planner with a deep love for harmony. He brings steady strength to the tenor section.",
+    "image": "/images/toch.jpg"
+  },
+  {
+    "name": "Michael Enweazu",
+    "role": "Bass",
+    "voicePart": "bass",
+    "bio": "Michael is a medical doctor who anchors the bass section with a commanding voice and calm presence in The Chorus Abuja.",
+    "image": "/images/michael.jpg"
+  },
+  {
+    "name": "Gabriel Ebuka",
+    "role": "Bass",
+    "voicePart": "bass",
+    "bio": "Ebuka is a quiet force in the bass section. His deep tone gives The Chorus Abuja its grounding harmony.",
+    "image": "/images/ebuka.jpg"
+  }
+]

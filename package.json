@@ -1,0 +1,48 @@
+{
+  "name": "the_chorus_website_chatgpt",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "seed:events": "tsx scripts/seedEvents.ts",
+    "seed:posts": "tsx scripts/seedBlogPosts.ts",
+    "seed:members": "tsx scripts/seedMembers.ts",
+    "build:scripts": "tsc scripts/seedMembers.ts --outDir dist/scripts",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.2.0",
+    "firebase": "^12.0.0",
+    "framer-motion": "^12.23.6",
+    "lucide-react": "^0.525.0",
+    "next": "15.4.1",
+    "postcss": "^8.5.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^3.3.3",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
