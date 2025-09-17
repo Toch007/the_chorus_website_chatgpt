@@ -35,12 +35,9 @@ async function getEvent(id: string): Promise<EventType | null> {
   }
 }
 
-// ✅ Next.js server component
-export default async function EventPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+// ✅ Safe-any patch applied
+export default async function EventPage(props: any) {
+  const { params } = props;
   const event = await getEvent(params.id);
 
   if (!event) {
