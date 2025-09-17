@@ -30,8 +30,12 @@ type BlogPost = {
   createdAt?: any;
 };
 
-export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
-  const q = query(collection(db, "posts"), where("slug", "==", params.slug));
+// ✅ Safe-any patch
+export default async function BlogDetailPage(props: any) {
+  const { params } = props;
+  const slug = params.slug;
+
+  const q = query(collection(db, "posts"), where("slug", "==", slug));
   const snapshot = await getDocs(q);
 
   if (snapshot.empty) {
@@ -41,27 +45,27 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
   const doc = snapshot.docs[0];
   const post = doc.data() as BlogPost;
 
-    return (
+  return (
     <>
       <Header />
-    <main className="max-w-3xl mx-auto py-16 px-4">
-      <h1 className="text-4xl font-bold text-blue-900 mb-4">{post.title}</h1>
+      <main className="max-w-3xl mx-auto py-16 px-4">
+        <h1 className="text-4xl font-bold text-blue-900 mb-4">{post.title}</h1>
 
-      {post.image && (
-        <Image
-          src={post.image}
-          alt={post.title}
-          width={800}
-          height={400}
-          className="rounded-xl mb-6 w-full object-cover"
-        />
-      )}
+        {post.image && (
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={800}
+            height={400}
+            className="rounded-xl mb-6 w-full object-cover"
+          />
+        )}
 
-      <article className="prose prose-blue max-w-none">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
-      </article>
+        <article className="prose prose-blue max-w-none">
+          <ReactMarkdown>{post.content}</ReactMarkdown>
+        </article>
       </main>
-            <Footer />
-            </ >
+      <Footer />
+    </>
   );
 }
