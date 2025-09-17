@@ -27,20 +27,22 @@ export default function HomePage() {
       <About />
 
       <ParallaxBridge
-        image="/images/solomon1.png"
-        heading="The Best Ever Seen"
-        subtext="Come watch the story ."
-        height="h-[100vh]"
-      />
+  image="/images/solomon1.png"
+  heading="The Best Ever Seen"
+  subtext="Come watch the story."
+  height="h-[100vh]"
+  ticketUrl="https://tix.africa/thechorus-solomon" // 👈 replace with actual link
+/>
+
 
       <Events />
       <Join />
       <Members />
 
       <ParallaxBridge
-        image="/images/gallery4.jpeg"
-        heading="Timeless Traditions"
-        subtext="Where music meets meaning and history sings again."
+        image="/images/gallery8.jpeg"
+        heading="Diverse Unison"
+        subtext="Where music speaks with one voice."
       />
 
       <Testimonials />

@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import ParallaxBridge from "@/components/ParallaxBridge";
 
 export default function SupportPage() {
   return (
@@ -26,7 +27,7 @@ export default function SupportPage() {
           {/* Donate Card */}
           <div className="bg-white shadow-lg rounded-lg p-6 text-center">
             <Image
-              src="/images/donate-icon.png"
+              src="/images/donate.jpg"
               alt="Donate"
               width={64}
               height={64}
@@ -47,7 +48,7 @@ export default function SupportPage() {
           {/* Sponsor Card */}
           <div className="bg-white shadow-lg rounded-lg p-6 text-center">
             <Image
-              src="/images/sponsor-icon.png"
+              src="/images/sponsor.webp"
               alt="Sponsor"
               width={64}
               height={64}
@@ -68,7 +69,7 @@ export default function SupportPage() {
           {/* Partner Card */}
           <div className="bg-white shadow-lg rounded-lg p-6 text-center">
             <Image
-              src="/images/partner-icon.png"
+              src="/images/partner.png"
               alt="Partner"
               width={64}
               height={64}
@@ -97,31 +98,14 @@ export default function SupportPage() {
             scholarships, and outreach programs. Be part of a legacy of harmony and impact.
           </p>
           <div className="flex justify-center gap-6 flex-wrap">
-            <a
-              href="https://paystack.com/pay/thechorusdonate"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700"
-            >
-              Donate with Paystack
-            </a>
-            <a
-              href="https://flutterwave.com/pay/thechorusdonate"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600"
-            >
-              Donate with Flutterwave
-            </a>
-            <Link
-              href="/support/donate"
-              className="bg-blue-700 text-white px-6 py-3 rounded hover:bg-blue-800"
-            >
-              More Options
-            </Link>
+            
           </div>
         </section>
-
+    <ParallaxBridge
+            image="/images/support.jpg"
+            heading="Support Our Mission"
+            subtext="Your contribution makes a difference."
+          />
         {/* Looking to Support Differently */}
         <section className="text-center bg-gray-100 rounded-lg p-10">
           <h2 className="text-2xl font-bold mb-4">Looking to Support Differently?</h2>

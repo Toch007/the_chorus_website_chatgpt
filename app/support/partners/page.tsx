@@ -31,10 +31,10 @@ const partnershipTypes = [
 ];
 
 const partnerLogos = [
-  "/images/partner1.png",
-  "/images/partner2.png",
-  "/images/partner3.png",
-  "/images/partner4.png"
+  "/images/partners/logo1.png",
+  "/images/partners/logo2.png",
+  "/images/partners/logo3.png",
+  "/images/partners/logo4.png"
 ];
 
 export default function PartnersPage() {

@@ -20,7 +20,7 @@ export default function AboutPage() {
           </div>
               </section>
               <ParallaxBridge
-        image="/images/gallery4.jpeg"
+        image="/images/about-page.jpg"
         heading="Timeless Traditions"
         subtext="Where music meets meaning and history sings again."
       />
@@ -90,9 +90,9 @@ export default function AboutPage() {
           </div>
               </section>
               <ParallaxBridge
-        image="/images/gallery4.jpeg"
-        heading="Timeless Traditions"
-        subtext="Where music meets meaning and history sings again."
+        image="/images/section-leaders.jpg"
+        heading="A Musical Family"
+        subtext="You can also be a part of our story."
       />
 
         <section className="bg-blue-100 py-12 text-center px-4">
@@ -102,8 +102,7 @@ export default function AboutPage() {
             Fill out the form and our team will be in touch.
           </p>
           <a
-            href="https://forms.gle/Cv6icG5f6vLG7BhMA"
-            target="_blank"
+            href="/join"
             rel="noopener noreferrer"
             className="inline-block bg-blue-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
           >

@@ -38,6 +38,7 @@ export default function AdminDashboard() {
       <h1 className="text-3xl font-bold">Admin Dashboard</h1>
 
       <div className="flex flex-col gap-4 items-center">
+        {/* Existing Links */}
         <a href="/admin/members" className="text-blue-700 underline hover:text-blue-900">
           ➕ Manage Members
         </a>
@@ -50,13 +51,27 @@ export default function AdminDashboard() {
         <a href="/admin/newsletter" className="text-blue-700 underline hover:text-blue-900">
           📧 View Newsletter Subscribers
         </a>
-        <button
-          onClick={handleLogout}
-          className="text-red-600 hover:underline mt-4"
-        >
-          🔐 Logout
-        </button>
+
+        {/* ✅ New Join Forms Management */}
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2">Join Forms</h2>
+          <div className="flex flex-col gap-2">
+            <a href="/admin/join/choir" className="text-green-700 underline hover:text-green-900">
+              🎶 View Choir Applications
+            </a>
+            <a href="/admin/join/volunteer" className="text-green-700 underline hover:text-green-900">
+              🙌 View Volunteer Applications
+            </a>
+            <a href="/admin/join/media" className="text-green-700 underline hover:text-green-900">
+              🎥 View Media Applications
+            </a>
+            <a href="/admin/join/tech" className="text-green-700 underline hover:text-green-900">
+              🛠️ View Tech Applications
+            </a>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 }

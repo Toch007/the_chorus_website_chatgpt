@@ -4,6 +4,29 @@ import { useState } from "react";
 
 export default function SupportForm({ purpose }: { purpose: string }) {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      purpose,
+    };
+
+    const res = await fetch("/api/support", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data),
+});
+
+    setLoading(false);
+    if (res.ok) setSubmitted(true);
+  }
 
   return submitted ? (
     <div className="text-green-700 font-semibold text-center mt-6">
@@ -11,16 +34,10 @@ export default function SupportForm({ purpose }: { purpose: string }) {
     </div>
   ) : (
     <form
-      action="https://formspree.io/f/xldlnjnz" // Replace with your actual endpoint
-      method="POST"
-      onSubmit={() => setSubmitted(true)}
+      onSubmit={handleSubmit}
       className="bg-white shadow-md rounded p-6 max-w-xl mx-auto space-y-4"
     >
-      <input
-        type="hidden"
-        name="_subject"
-        value={`New ${purpose} Support Inquiry`}
-      />
+      <input type="hidden" name="purpose" value={purpose} />
       <input
         type="text"
         name="name"
@@ -43,9 +60,10 @@ export default function SupportForm({ purpose }: { purpose: string }) {
       />
       <button
         type="submit"
+        disabled={loading}
         className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800"
       >
-        Submit
+        {loading ? "Sending..." : "Submit"}
       </button>
     </form>
   );

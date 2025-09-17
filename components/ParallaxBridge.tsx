@@ -3,6 +3,7 @@
 
 import { motion } from "framer-motion";
 import React from "react";
+import Link from "next/link";
 
 // ✅ Declare prop types
 type ParallaxBridgeProps = {
@@ -10,14 +11,15 @@ type ParallaxBridgeProps = {
   heading: string;
   subtext?: string;
   height?: string;
+  ticketUrl?: string; 
 };
 
-// ✅ Use props in the function signature
 export default function ParallaxBridge({
   image,
   heading,
   subtext,
   height = "h-[60vh]",
+  ticketUrl,
 }: ParallaxBridgeProps) {
   return (
     <section
@@ -36,6 +38,19 @@ export default function ParallaxBridge({
         <h2 className="text-2xl md:text-4xl font-semibold">{heading}</h2>
         {subtext && (
           <p className="mt-2 text-sm md:text-base text-gray-200">{subtext}</p>
+        )}
+
+        {ticketUrl && (
+          <div className="mt-4">
+            <Link
+              href={ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-xl shadow-lg hover:bg-primary/90 transition"
+            >
+              🎟️ Get Tickets
+            </Link>
+          </div>
         )}
       </motion.div>
     </section>
