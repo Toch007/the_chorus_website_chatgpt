@@ -4,6 +4,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 
@@ -39,39 +40,75 @@ export default function AdminDashboard() {
 
       <div className="flex flex-col gap-4 items-center">
         {/* Existing Links */}
-        <a href="/admin/members" className="text-blue-700 underline hover:text-blue-900">
+        <Link
+          href="/admin/members"
+          className="text-blue-700 underline hover:text-blue-900"
+        >
           ➕ Manage Members
-        </a>
-        <a href="/admin/events" className="text-blue-700 underline hover:text-blue-900">
+        </Link>
+        <Link
+          href="/admin/events"
+          className="text-blue-700 underline hover:text-blue-900"
+        >
           📅 Manage Events
-        </a>
-        <a href="/admin/blog" className="text-blue-700 underline hover:text-blue-900">
+        </Link>
+        <Link
+          href="/admin/blog"
+          className="text-blue-700 underline hover:text-blue-900"
+        >
           📝 Manage Blog Posts
-        </a>
-        <a href="/admin/newsletter" className="text-blue-700 underline hover:text-blue-900">
+        </Link>
+        <Link
+          href="/admin/newsletter"
+          className="text-blue-700 underline hover:text-blue-900"
+        >
           📧 View Newsletter Subscribers
-        </a>
+        </Link>
+        <Link
+          href="/admin/tickets"
+          className="text-blue-700 underline hover:text-blue-900"
+        >
+          🎟 Manage Tickets
+        </Link>
 
-        {/* ✅ New Join Forms Management */}
+        {/* ✅ Join Forms Management */}
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-2">Join Forms</h2>
           <div className="flex flex-col gap-2">
-            <a href="/admin/join/choir" className="text-green-700 underline hover:text-green-900">
+            <Link
+              href="/admin/join/choir"
+              className="text-green-700 underline hover:text-green-900"
+            >
               🎶 View Choir Applications
-            </a>
-            <a href="/admin/join/volunteer" className="text-green-700 underline hover:text-green-900">
+            </Link>
+            <Link
+              href="/admin/join/volunteer"
+              className="text-green-700 underline hover:text-green-900"
+            >
               🙌 View Volunteer Applications
-            </a>
-            <a href="/admin/join/media" className="text-green-700 underline hover:text-green-900">
+            </Link>
+            <Link
+              href="/admin/join/media"
+              className="text-green-700 underline hover:text-green-900"
+            >
               🎥 View Media Applications
-            </a>
-            <a href="/admin/join/tech" className="text-green-700 underline hover:text-green-900">
+            </Link>
+            <Link
+              href="/admin/join/tech"
+              className="text-green-700 underline hover:text-green-900"
+            >
               🛠️ View Tech Applications
-            </a>
+            </Link>
           </div>
         </div>
-      </div>
 
+        <button
+          onClick={handleLogout}
+          className="mt-8 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-900"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

@@ -47,13 +47,13 @@ export default function Events() {
       <div className="max-w-6xl mx-auto text-center">
         <Reveal direction="up">
           <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
-            Upcoming Events
+            Upcoming Performances
           </h2>
         </Reveal>
 
         <Reveal direction="up" delay={0.2}>
           <p className="text-lg text-gray-700 mb-10">
-            Mark your calendars for our upcoming concerts and performances.
+            Stay inspired. Join us at our next concert, outreach, or festival appearance.
           </p>
         </Reveal>
 
@@ -95,7 +95,7 @@ export default function Events() {
             href="/events"
             className="inline-block bg-blue-800 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
           >
-            View More Events
+            📅 See All Events
           </Link>
         </Reveal>
       </div>

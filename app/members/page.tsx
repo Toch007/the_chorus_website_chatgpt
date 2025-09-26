@@ -19,6 +19,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Member } from "@/types/Member";
+import Link from "next/link";
 
 const displayNames: Record<string, string> = {
   "music director": "Music Director",
@@ -72,9 +73,9 @@ export default function MembersPage() {
         <ul className="flex flex-wrap justify-center gap-4 pb-8 text-sm font-medium">
           {Object.entries(displayNames).map(([key, label]) => (
             <li key={key}>
-              <a href={`#${key}`} className="text-primary hover:underline">
+              <Link href={`#${key}`} className="text-primary hover:underline">
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -132,12 +133,12 @@ export default function MembersPage() {
             <p className="text-muted-foreground mb-4">
               We're always excited to welcome passionate singers and instrumentalists.
             </p>
-            <a
+            <Link
               href="/join"
               className="inline-block bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/90 transition"
             >
               Join Us
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

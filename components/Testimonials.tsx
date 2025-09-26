@@ -26,13 +26,13 @@ export default function Testimonials() {
       <div className="max-w-6xl mx-auto text-center">
         <Reveal>
           <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
-            What People Are Saying
+            Stories of Transformation
           </h2>
         </Reveal>
 
         <Reveal delay={0.2}>
           <p className="text-lg text-gray-700 mb-10">
-            Hear from our members and audience about their experience with The Chorus Abuja.
+            Hear from those whose lives have been touched by The Chorus Abuja.
           </p>
         </Reveal>
 

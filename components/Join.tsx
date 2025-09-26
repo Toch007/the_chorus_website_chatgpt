@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "@/components/Reveal";
+import Link from "next/link";
 
 export default function Join() {
   return (
@@ -8,17 +9,14 @@ export default function Join() {
       <div className="max-w-4xl mx-auto text-center">
         <Reveal direction="up">
           <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
-            Join The Chorus Abuja
+            Find Your Place With Us
           </h2>
         </Reveal>
 
         <Reveal delay={0.2}>
           <p className="text-lg text-gray-700 leading-relaxed mb-8">
-            Are you passionate about classical music and eager to perform with a
-            dedicated group of artists? Whether you sing soprano, alto, tenor,
-            or bass—or play an instrument—we welcome your talent. Become a part
-            of a musical journey that inspires, uplifts, and connects through
-            harmony.
+            Whether you sing, volunteer, design, or manage tech — there’s a role
+            for you in The Chorus Abuja.
           </p>
         </Reveal>
 
@@ -31,12 +29,12 @@ export default function Join() {
         </Reveal>
 
         <Reveal delay={0.6}>
-          <a
+          <Link
             href="/join"
             className="inline-block bg-blue-800 text-white px-8 py-3 rounded-full font-medium shadow hover:bg-blue-700 transition"
           >
-            Apply to Join
-          </a>
+            ✍️ Join the Journey
+          </Link>
         </Reveal>
       </div>
     </section>

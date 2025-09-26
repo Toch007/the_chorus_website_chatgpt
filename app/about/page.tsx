@@ -4,6 +4,7 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ParallaxBridge from "@/components/ParallaxBridge";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -101,13 +102,13 @@ export default function AboutPage() {
             Are you passionate about classical music? We’re always on the lookout for committed vocalists and instrumentalists.
             Fill out the form and our team will be in touch.
           </p>
-          <a
+          <Link
             href="/join"
-            rel="noopener noreferrer"
             className="inline-block bg-blue-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
+            rel="noopener noreferrer"
           >
             Apply Now
-          </a>
+          </Link>
         </section>
       </main>
       <Footer />

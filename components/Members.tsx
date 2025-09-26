@@ -10,15 +10,13 @@ export default function Members() {
       <div className="max-w-6xl mx-auto text-center">
         <Reveal>
           <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
-            Meet Our Ensemble
+            Meet the Family
           </h2>
         </Reveal>
 
         <Reveal delay={0.2}>
           <p className="text-lg text-gray-700 leading-relaxed mb-10">
-            Our ensemble is made up of passionate vocalists and instrumentalists who bring skill,
-            soul, and dedication to every performance. From section leaders to guest soloists,
-            each member plays a unique role in bringing our music to life.
+            Every voice matters. Every hand makes a difference. Together, we make the music possible.
           </p>
         </Reveal>
 
@@ -44,14 +42,14 @@ export default function Members() {
             <div className="bg-gray-50 rounded-2xl shadow p-6">
               <Image
                 src="/images/section-leaders.jpg"
-                alt="Section Leaders"
+                alt="Instrumentalists"
                 width={400}
                 height={250}
                 className="rounded-xl mb-4 w-full h-48 object-cover"
               />
-              <h3 className="text-xl font-semibold text-blue-700">Section Leaders</h3>
+              <h3 className="text-xl font-semibold text-blue-700">Experienced Instrumentalists</h3>
               <p className="text-gray-700 mt-2">
-                Experienced singers or instrumentalists who guide their groups and mentor new members.
+                Experienced instrumentalists who guide their groups and mentor new members.
               </p>
             </div>
           </Reveal>

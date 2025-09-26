@@ -8,11 +8,11 @@ export default function About() {
     <section className="bg-gray-50 py-16 px-6 md:px-20" id="about">
       <div className="max-w-4xl mx-auto text-center">
         <Reveal direction="up">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">About The Chorus Abuja</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">Who We Are</h2>
         </Reveal>
         <Reveal direction="left" delay={0.6}>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Founded in the heart of Nigeria's capital, <strong>The Chorus Abuja</strong> is a passionate collective...
+            More than a choir — we are a community. A family of musicians, volunteers, and creatives bringing hope, beauty, and joy through music.
           </p>
         </Reveal>
         <Reveal direction="right" delay={0.6}>
@@ -20,11 +20,7 @@ export default function About() {
             Through meticulous rehearsals and captivating performances, we aim to inspire...
           </p>
         </Reveal>
-        <Reveal direction="up" delay={0.6}>
-          <p className="text-lg text-gray-700 leading-relaxed mt-4">
-            Whether performing at grand concert halls, intimate recitals, or collaborative festivals...
-          </p>
-              </Reveal>
+        
               <Reveal delay={0.6}>
   <div className="mt-10">
     <Link

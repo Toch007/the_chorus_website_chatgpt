@@ -119,94 +119,94 @@ export default function EventsPage() {
     <>
       <Header />
       <main className="bg-white text-gray-800">
-        {/* Hero section */}
-        <section className="bg-gradient-to-r from-white to-blue-50 text-center pt-24 px-4">
-          <h1 className="text-5xl font-bold text-blue-900">
-            Our Concerts & Events
-          </h1>
-          <p className="text-lg text-gray-700 mt-4 max-w-2xl mx-auto">
-            Discover our unforgettable performances, community events, and
-            inspiring choral journeys.
-          </p>
-        </section>
+      {/* Hero section */}
+      <section className="bg-gradient-to-r from-white to-blue-50 text-center pt-24 px-4">
+        <h1 className="text-5xl font-bold text-blue-900">
+        Our Concerts & Events
+        </h1>
+        <p className="text-lg text-gray-700 mt-4 max-w-2xl mx-auto">
+        Discover our unforgettable performances, community events, and
+        inspiring choral journeys.
+        </p>
+      </section>
 
-        {renderEvents("Upcoming Events", upcomingEvents)}
-        {renderEvents("Past Events", pastEvents)}
+      {renderEvents("Upcoming Events", upcomingEvents)}
+      {renderEvents("Past Events", pastEvents)}
 
-        {/* Event modal */}
-        {isClient && selectedEvent && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-lg mx-auto relative shadow-lg">
-              <button
-                onClick={() => setSelectedEvent(null)}
-                className="absolute top-2 right-4 text-gray-600 hover:text-gray-900"
-              >
-                ✕
-              </button>
-              <h2 className="text-2xl font-bold text-blue-800 mb-2">
-                {selectedEvent.title}
-              </h2>
-              <p className="text-sm text-gray-600 mb-1">
-                Date: {selectedEvent.date}
-              </p>
-              <p className="text-sm text-gray-600 mb-4">
-                Location: {selectedEvent.location}
-              </p>
-              <p className="text-gray-700 whitespace-pre-line">
-                {selectedEvent.details}
-              </p>
-
-              {selectedEvent.ticketed && selectedEvent.ticketUrl && (
-                <Link
-                  href={selectedEvent.ticketUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block mt-4 bg-yellow-400 hover:bg-yellow-300 text-blue-900 px-6 py-3 rounded-full font-bold text-center transition"
-                >
-                  🎟️ Buy Tickets
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Highlight Solomon CTA */}
-        <section
-          className="relative bg-cover bg-center h-[500px] flex items-center justify-center text-white"
-          style={{ backgroundImage: 'url("/images/solomon.jpg")' }}
-        >
-          <div className="bg-black/60 p-8 rounded-xl text-center max-w-2xl">
-            <h2 className="text-4xl font-bold mb-2">
-              🎟️ Solomon – A Choral Experience
-            </h2>
-            <p className="text-lg mb-4">
-              Sunday, 16 November 2025 · Limited tickets available!
-            </p>
-            <Link
-              href="https://tix.africa/the-chorus-solomon"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-yellow-400 hover:bg-yellow-300 text-blue-900 px-6 py-3 rounded-full font-bold transition"
-            >
-              Learn More / Buy Tickets
-            </Link>
-          </div>
-        </section>
-
-        {/* Closing section */}
-        <section className="bg-blue-900 text-white text-center py-12">
-          <h3 className="text-2xl font-bold mb-2">Stay Tuned for More Events</h3>
-          <p className="mb-6">
-            Subscribe or join us to receive updates on upcoming performances and
-            recitals.
-          </p>
-          <a
-            href="/join"
-            className="bg-white text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-blue-100 transition"
+      {/* Event modal */}
+      {isClient && selectedEvent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 max-w-lg mx-auto relative shadow-lg">
+          <button
+          onClick={() => setSelectedEvent(null)}
+          className="absolute top-2 right-4 text-gray-600 hover:text-gray-900"
           >
-            Join Our Community
-          </a>
-        </section>
+          ✕
+          </button>
+          <h2 className="text-2xl font-bold text-blue-800 mb-2">
+          {selectedEvent.title}
+          </h2>
+          <p className="text-sm text-gray-600 mb-1">
+          Date: {selectedEvent.date}
+          </p>
+          <p className="text-sm text-gray-600 mb-4">
+          Location: {selectedEvent.location}
+          </p>
+          <p className="text-gray-700 whitespace-pre-line">
+          {selectedEvent.details}
+          </p>
+
+          {selectedEvent.ticketed && selectedEvent.ticketUrl && (
+          <Link
+            href={selectedEvent.ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block mt-4 bg-yellow-400 hover:bg-yellow-300 text-blue-900 px-6 py-3 rounded-full font-bold text-center transition"
+          >
+            🎟️ Buy Tickets
+          </Link>
+          )}
+        </div>
+        </div>
+      )}
+
+      {/* Highlight Solomon CTA */}
+      <section
+        className="relative bg-cover bg-center h-[500px] flex items-center justify-center text-white"
+        style={{ backgroundImage: 'url("/images/solomon.jpg")' }}
+      >
+        <div className="bg-black/60 p-8 rounded-xl text-center max-w-2xl">
+        <h2 className="text-4xl font-bold mb-2">
+          🎟️ Solomon – A Choral Experience
+        </h2>
+        <p className="text-lg mb-4">
+          Sunday, 16 November 2025 · Limited tickets available!
+        </p>
+        <Link
+          href="https://tix.africa/the-chorus-solomon"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-yellow-400 hover:bg-yellow-300 text-blue-900 px-6 py-3 rounded-full font-bold transition"
+        >
+          Learn More / Buy Tickets
+        </Link>
+        </div>
+      </section>
+
+      {/* Closing section */}
+      <section className="bg-blue-900 text-white text-center py-12">
+        <h3 className="text-2xl font-bold mb-2">Stay Tuned for More Events</h3>
+        <p className="mb-6">
+        Subscribe or join us to receive updates on upcoming performances and
+        recitals.
+        </p>
+        <Link
+        href="/join"
+        className="bg-white text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-blue-100 transition"
+        >
+        Join Our Community
+        </Link>
+      </section>
       </main>
       <UpcomingBanner />
       <Footer />

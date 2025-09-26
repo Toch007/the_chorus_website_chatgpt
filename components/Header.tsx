@@ -10,7 +10,10 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTransparent, setIsTransparent] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [hovered, setHovered] = useState(false); // 👈 track hover
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
@@ -21,9 +24,7 @@ export default function Header() {
         closeMenu();
       }
     };
-    if (menuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    if (menuOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
@@ -36,26 +37,41 @@ export default function Header() {
       const totalHeight = document.body.scrollHeight - window.innerHeight;
       const progress = totalHeight > 0 ? (scrolled / totalHeight) * 100 : 0;
       setScrollProgress(progress);
+
+      // Show header while scrolling
+      setVisible(true);
+
+      // Hide after idle, unless hovered
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+      scrollTimeout.current = setTimeout(() => {
+        if (window.scrollY > 80 && !hovered) setVisible(false);
+      }, 1500);
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [hovered]);
 
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Members", href: "/members" },
-    { name: "Events", href: "/events" },
-    { name: "Contact Us", href: "/contact" },
-    { name: "Join", href: "/join" },
-    { name: "Support Us", href: "/support" },
-    { name: "Admin", href: "/admin" },
-  ];
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Members", href: "/members" },
+  { name: "Events", href: "/events" },
+  { name: "Blog", href: "/blog" }, // ✅ added
+  { name: "Contact Us", href: "/contact" },
+  { name: "Join", href: "/join" },
+  { name: "Support Us", href: "/support" },
+];
+
 
   return (
-    <header
+    <motion.header
+      onMouseEnter={() => setHovered(true)}   // 👈 hover start
+      onMouseLeave={() => setHovered(false)}  // 👈 hover end
+      initial={{ y: 0 }}
+      animate={{ y: visible ? 0 : -100 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 backdrop-blur-md ${
         isTransparent ? "bg-transparent shadow-none" : "bg-white/80 shadow-md"
       }`}
@@ -153,6 +169,6 @@ export default function Header() {
           ))}
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

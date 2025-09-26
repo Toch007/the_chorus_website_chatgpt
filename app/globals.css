@@ -81,3 +81,10 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+input {
+  color: #111827; /* Tailwind gray-900 */
+}
+::placeholder {
+  color: #9CA3AF; /* Tailwind gray-400 */
+}

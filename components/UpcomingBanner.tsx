@@ -45,14 +45,14 @@ export default function UpcomingBanner() {
         <strong>Next Event:</strong> {nextEvent.title} — {nextEvent.date} @ {nextEvent.location}
       </div>
       {nextEvent.ticketed ? (
-        <a
+        <Link
           href="https://tix.africa/the-chorus-solomon"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-blue-900 text-white px-4 py-2 rounded-full hover:bg-blue-800 transition"
         >
           🎟️ Get Tickets
-        </a>
+        </Link>
       ) : (
         <Link
           href="/events"

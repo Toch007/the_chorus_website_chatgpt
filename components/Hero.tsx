@@ -42,14 +42,16 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-20 max-w-4xl">
         <Reveal direction="up" delay={0.1}>
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4 max-w-[90vw] md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-[1200px]">
-  Elevating Abuja’s Classical Music Scene
-</h1>
+          {/* ✅ Adjust heading sizes for better mobile balance */}
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-4 max-w-[90vw] md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-[1200px]">
+            The Chorus Abuja
+          </h1>
         </Reveal>
 
         <Reveal direction="up" delay={0.3}>
-          <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-            Experience the power of voices united. Join us on a journey of harmony and artistry.
+          {/* ✅ Mobile-first scaling for subtext */}
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            Voices united in harmony, excellence, and purpose. Join us in creating music that inspires and transforms lives.
           </p>
         </Reveal>
       </div>

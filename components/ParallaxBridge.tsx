@@ -26,7 +26,7 @@ export default function ParallaxBridge({
       className={`relative ${height} bg-fixed bg-center bg-cover flex items-center justify-center`}
       style={{ backgroundImage: `url(${image})` }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50" />
+      <div className="absolute inset-0 bg-black bg-opacity-70" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -48,7 +48,8 @@ export default function ParallaxBridge({
               rel="noopener noreferrer"
               className="inline-block px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-xl shadow-lg hover:bg-primary/90 transition"
             >
-              🎟️ Get Tickets
+              🎟️ Get Tickets Now
+              <p> Limited seats available — don’t miss this unforgettable performance.</p>
             </Link>
           </div>
         )}

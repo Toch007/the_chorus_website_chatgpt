@@ -1,66 +1,66 @@
 // app/events/solomon/page.tsx
+"use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import SolomonTicketCTA from "@/components/SolomonTicketCTA";
+import TicketStore, { Ticket } from "@/components/TicketStore";
+import { motion } from "framer-motion";
 
+const solomonTickets: Ticket[] = [
+  { name: "Bronze", price: 10000, perks: ["🎶 Standard Seating"], color: "bg-amber-500" },
+  { name: "Silver", price: 30000, perks: ["🎶 Better Seating", "🥤 Free Refreshments"], color: "bg-slate-400" },
+  { name: "Gold", price: 50000, perks: ["🎶 Premium Seating", "🥤 Free Refreshments", "📸 Photo with Choir"], color: "bg-yellow-400" },
+  { name: "Diamond", price: 100000, perks: ["🎶 VIP Front Row", "🥤 Free Refreshments", "📸 Photo with Choir", "🎁 Special Gift Pack"], color: "bg-blue-600" },
+];
 
-export const metadata = {
-  title: "Solomon – A Choral Experience | The Chorus Abuja",
-  description: "Tickets now available! Join The Chorus Abuja in October 2025 for Solomon – a powerful choral experience at Nigerian Society of Engineers Hall, 1012, Sani Abacha Way, CBD, Abuja,.",
-  openGraph: {
-    title: "Solomon – A Choral Experience",
-    description: "Get your tickets now for Solomon, a moving concert by The Chorus Abuja – Novermber 16 2025, Nigerian Society of Engineers Hall, 1012, Sani Abacha Way, CBD, Abuja,.",
-    url: "https://thechorusabuja.com/events/solomon",  // or your production URL
-    images: ["/images/solomon1.jpg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Solomon – A Choral Experience",
-    description: "Get your tickets now for Solomon by The Chorus Abuja. Limited seats. Nigerian Society of Engineers Hall, 1012, Sani Abacha Way, CBD, Abuja, November 16, 2025.",
-    images: ["/images/solomon1.jpg"],
-  },
-};
-
-export default function SolomonPage() {
+export default function SolomonEventPage() {
   return (
-    <>
-      <Header />
-      <main className="bg-white text-gray-800 px-6 py-20 max-w-4xl mx-auto">
-        <Image
-          src="/images/solomon1.jpg"
-          alt="Solomon Concert"
-          width={1000}
-          height={600}
-          className="rounded-xl w-full object-cover mb-6"
-        />
+    <main className="relative min-h-screen w-full overflow-hidden">
+      {/* Full-viewport background with 'parallax-like' fixed behavior */}
+      <div
+        className="absolute inset-0 -z-10 bg-center bg-cover bg-fixed"
+        style={{ backgroundImage: "url('/images/solomon-1.jpg')" }}
+        aria-hidden
+      />
 
-        <h1 className="text-4xl font-bold text-blue-900 mb-4">
-          Solomon – A Choral Experience
-        </h1>
+      {/* dark overlay */}
+      <div className="absolute inset-0 -z-5 bg-black/60" />
 
-        <p className="text-lg mb-6">
-          Tickets are now available for one of the most breathtaking performances by The Chorus Abuja. “Solomon” is a powerful, dramatic, and uplifting musical journey through the wisdom, wealth, and worship of King Solomon.
-        </p>
+      {/* Content */}
+      <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center text-white">
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="text-4xl md:text-6xl font-extrabold mb-3"
+        >
+          Handel’s <span className="text-yellow-300">Solomon</span>
+        </motion.h1>
 
-        <h2 className="text-2xl font-semibold text-blue-800 mb-2">🎫 Ticket Information</h2>
-        <p className="mb-4">
-          Tickets are available in multiple tiers, including General Admission and VIP seating. Early-bird discounts may apply until stock runs out.
-        </p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.9 }}
+          className="max-w-2xl text-lg md:text-xl mb-8 text-gray-100"
+        >
+          A dramatized musical performance by <strong>The Chorus Abuja</strong>.
+        </motion.p>
 
-        <h2 className="text-2xl font-semibold text-blue-800 mb-2">📍 Venue</h2>
-        <p className="mb-4">Nigerian Society of Engineers Hall, 1012, Sani Abacha Way, CBD, Abuja</p>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.9 }}
+          className="w-full max-w-6xl"
+        >
+          {/* TicketStore is a reusable component; tickets are provided here only */}
+          <div className="px-4 py-8 rounded-2xl">
+            <TicketStore tickets={solomonTickets as Ticket[]} />
+          </div>
+        </motion.div>
 
-        <h2 className="text-2xl font-semibold text-blue-800 mb-2">📅 Date</h2>
-        <p className="mb-6">Sunday November 16, 2025 — Exact date & time available on ticket page.</p>
-
-        <div className="mt-10 text-center">
-          <SolomonTicketCTA />
+        <div className="mt-8 text-gray-200 text-sm">
+          📅 <strong>Date:</strong> November 16, 2025 &nbsp;•&nbsp; 📍 <strong>Venue:</strong> Nigerian Society of Engineers Hall, 1012, Sani Abacha Way, CBD, Abuja
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </main>
   );
 }

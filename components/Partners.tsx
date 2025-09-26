@@ -33,13 +33,13 @@ export default function Partners() {
       <div className="max-w-6xl mx-auto text-center">
         <Reveal>
           <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
-            Our Partners & Sponsors
+            In Harmony With Our Partners
           </h2>
         </Reveal>
 
         <Reveal delay={0.2}>
           <p className="text-lg text-gray-700 leading-relaxed mb-10">
-            We are proud to be supported by organizations that believe in the transformative power of music.
+            We are grateful for those who walk with us in making music that matters.
           </p>
         </Reveal>
 

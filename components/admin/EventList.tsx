@@ -10,6 +10,7 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/config";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Link } from "lucide-react";
 
 // ✅ Define event type
 type EventType = {
@@ -166,12 +167,12 @@ export default function EventsPage() {
         <section className="bg-blue-900 text-white text-center py-12">
           <h3 className="text-2xl font-bold mb-2">Stay Tuned for More Events</h3>
           <p className="mb-6">Subscribe or join us to receive updates on upcoming performances and recitals.</p>
-          <a
+          <Link
             href="/join"
             className="bg-white text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-blue-100 transition"
           >
             Join Our Community
-          </a>
+          </Link>
         </section>
       </main>
       <Footer />
