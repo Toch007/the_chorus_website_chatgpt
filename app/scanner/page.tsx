@@ -20,6 +20,8 @@ type ValidationResponse = {
 export default function ScannerPage() {
   const [status, setStatus] = useState<string>("Waiting for scan...");
   const [history, setHistory] = useState<ValidationResponse[]>([]);
+  const [lastScannedId, setLastScannedId] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const handleScan = async (result: any) => {
     if (!result) return;
@@ -43,6 +45,14 @@ export default function ScannerPage() {
       return;
     }
 
+    // Prevent scanning the same ticket multiple times in quick succession
+    if (ticketId === lastScannedId || isProcessing) {
+      return;
+    }
+
+    setIsProcessing(true);
+    setLastScannedId(ticketId);
+
     try {
       const res = await fetch("/api/validateTicket", {
         method: "POST",
@@ -62,6 +72,11 @@ export default function ScannerPage() {
     } catch (err) {
       console.error("Validation error:", err);
       setStatus("❌ Error talking to server");
+    } finally {
+      // Allow scanning again after 2 seconds
+      setTimeout(() => {
+        setIsProcessing(false);
+      }, 2000);
     }
   };
 
