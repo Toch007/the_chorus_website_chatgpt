@@ -119,7 +119,7 @@ export default function HomePage() {
         heading="Experience Handel’s Solomon"
         subtext="A dramatized musical performance like no other. A story of wisdom, love, and power — told in breathtaking harmony. 16 November, 2025."
         height="h-[100vh]"
-        ticketUrl="https://tix.africa/the-chorus-solomon"
+        ticketUrl="events/solomon"
       />
 
       <Events />

@@ -1,3 +1,4 @@
+// lib/resend.ts
 import { Resend } from "resend";
 
 if (!process.env.RESEND_API_KEY) {

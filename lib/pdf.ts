@@ -1,52 +1,87 @@
 // lib/pdf.ts
-import PDFDocument from "pdfkit";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import QRCode from "qrcode";
 import fs from "fs";
 import path from "path";
-import QRCode from "qrcode";
 
 export async function generateTicketPDF(
   tier: string,
-  reference: string,
+  ticketId: string,   // 👈 now we pass ticketId instead of reference
   buyerName: string
 ): Promise<Buffer> {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const doc = new PDFDocument({
-        size: "A4",
-        margin: 0,
-      });
+  // 1️⃣ Ticket template path
+  const ticketPath = path.join(process.cwd(), "public", "tickets", `${tier}.jpg`);
+  if (!fs.existsSync(ticketPath)) {
+    throw new Error(`Ticket template not found: ${ticketPath}`);
+  }
 
-      const buffers: Buffer[] = [];
-      doc.on("data", buffers.push.bind(buffers));
-      doc.on("end", () => resolve(Buffer.concat(buffers)));
+  // 2️⃣ Load background image
+  const ticketImageBytes = fs.readFileSync(ticketPath);
 
-      // ✅ Use your own font instead of Helvetica
-      const fontPath = path.join(process.cwd(), "public/fonts/OpenSans-Regular.ttf");
-      if (!fs.existsSync(fontPath)) {
-        throw new Error("Font not found at: " + fontPath);
-      }
-      doc.font(fontPath);
+  // 3️⃣ Create PDF in landscape
+  const pdfDoc = await PDFDocument.create();
+  const page = pdfDoc.addPage([842, 380]);
+  const { width, height } = page.getSize();
+  const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-      // ✅ Load ticket background image
-      const ticketImagePath = path.join(process.cwd(), "public/tickets", `${tier}.jpg`);
-      if (!fs.existsSync(ticketImagePath)) {
-        throw new Error("Ticket image not found at: " + ticketImagePath);
-      }
-      doc.image(ticketImagePath, 0, 0, { width: 595, height: 842 });
+  // 4️⃣ Embed background image
+  const ticketImage = await pdfDoc.embedJpg(ticketImageBytes);
+  page.drawImage(ticketImage, { x: 0, y: 0, width, height });
 
-      // ✅ Overlay text
-      doc.fillColor("black").fontSize(18).text(`Name: ${buyerName}`, 50, 700);
-      doc.fontSize(16).text(`Reference: ${reference}`, 50, 730);
-      doc.text(`Tier: ${tier}`, 50, 760);
-
-      // ✅ QR Code
-      const qrDataUrl = await QRCode.toDataURL(reference);
-      const qrBuffer = Buffer.from(qrDataUrl.split(",")[1], "base64");
-      doc.image(qrBuffer, 400, 700, { width: 120, height: 120 });
-
-      doc.end();
-    } catch (err) {
-      reject(err);
-    }
+  // 5️⃣ Generate QR code with JSON payload
+  const qrPayload = JSON.stringify({
+    ticketId,    // 👈 embed ticketId (what scanner expects)
+    tier,
+    buyerName,
+    issuedAt: new Date().toISOString(),
   });
+
+  const qrDataUrl = await QRCode.toDataURL(qrPayload, { margin: 1, width: 200 });
+  const qrBase64 = qrDataUrl.split(",")[1];
+  const qrBytes = Buffer.from(qrBase64, "base64");
+  const qrImage = await pdfDoc.embedPng(qrBytes);
+
+  // 6️⃣ Draw semi-transparent rectangle behind text
+  const textBoxWidth = 220;
+  const textBoxHeight = 50;
+  const textBoxX = 40;
+  const textBoxY = 40;
+  page.drawRectangle({
+    x: textBoxX,
+    y: textBoxY,
+    width: textBoxWidth,
+    height: textBoxHeight,
+    color: rgb(0, 0, 0),
+    opacity: 0.6,
+  });
+
+  // 7️⃣ Overlay buyer info
+  const textColor = rgb(1, 1, 1);
+  page.drawText(`Name: ${buyerName}`, {
+    x: textBoxX + 10,
+    y: textBoxY + 28,
+    size: 14,
+    font,
+    color: textColor,
+  });
+  page.drawText(`ID: ${ticketId}`, {    // 👈 show ticketId
+    x: textBoxX + 10,
+    y: textBoxY + 10,
+    size: 10,
+    font,
+    color: textColor,
+  });
+
+  // 8️⃣ Place QR code top-right
+  const qrSize = 80;
+  page.drawImage(qrImage, {
+    x: width - qrSize - 20,
+    y: height - qrSize - 20,
+    width: qrSize,
+    height: qrSize,
+  });
+
+  // 9️⃣ Return PDF buffer
+  const pdfBytes = await pdfDoc.save();
+  return Buffer.from(pdfBytes);
 }

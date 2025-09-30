@@ -2,10 +2,6 @@
 
 import React, { useState } from "react";
 
-/**
- * Lightweight local PaystackButton replacement to avoid depending on
- * '@paystack/inline-js-react' which isn't installed / typed.
- */
 type PaystackButtonProps = {
   className?: string;
   text?: string;
@@ -38,7 +34,8 @@ const PaystackButton: React.FC<PaystackButtonProps> = ({
       script.src = "https://js.paystack.co/v1/inline.js";
       script.async = true;
       script.onload = () => resolve();
-      script.onerror = () => reject(new Error("Failed to load Paystack script"));
+      script.onerror = () =>
+        reject(new Error("Failed to load Paystack script"));
       document.body.appendChild(script);
     });
 
@@ -82,7 +79,7 @@ export type Ticket = {
   name: string;
   price: number;
   perks: string[];
-  color?: string; // Tailwind background class
+  color?: string;
 };
 
 type TicketStoreProps = {
@@ -112,13 +109,15 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
     return sum + (t ? t.price * qty : 0);
   }, 0);
 
-  const handleSuccess = async (res: any) => {
-  try {
-    if (!buyerName || !buyerEmail) {
-      alert("Please enter your name and email before proceeding.");
-      return;
-    }
+const handleSuccess = async (res: any) => {
+  if (!buyerName || !buyerEmail) {
+    alert("Please enter your name and email before proceeding.");
+    return;
+  }
 
+  setLoading(true);
+
+  try {
     const response = await fetch("/api/purchaseTickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -126,23 +125,25 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
         reference: res.reference,
         cart,
         buyerName,
-        buyerEmail,
+        email: buyerEmail,
       }),
     });
 
     const data = await response.json();
 
     if (data.success) {
-      alert("✅ Payment verified! Tickets issued.");
+      alert("✅ Payment verified! Your tickets have been emailed to you.");
       setCart({});
       setBuyerName("");
       setBuyerEmail("");
     } else {
-      alert("❌ Verification failed: " + data.error || data.message);
+      alert("❌ Ticket processing failed: " + (data.error || data.message));
     }
   } catch (err) {
     console.error(err);
-    alert("❌ Error verifying payment.");
+    alert("❌ Error verifying payment. Please contact support if charged.");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -153,37 +154,39 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {tickets.map((ticket) => (
           <div
-            key={ticket.name}
-            className="rounded-xl overflow-hidden shadow-lg bg-white flex flex-col"
-          >
-            {/* Header */}
-            <div
-              className={`${ticket.color ?? "bg-blue-700"} p-4 text-white text-center`}
-            >
+  key={ticket.name}
+  className={`rounded-xl overflow-hidden shadow-lg bg-white flex flex-col ${
+    ticket.name === "Diamond" ? "ring-4 ring-blue-400 animate-pulse" : ""
+  }`}
+>
+
+            <div className={`${ticket.color ?? "bg-blue-700"} p-4 text-white text-center`}>
               <h3 className="text-xl font-bold">{ticket.name}</h3>
               <p className="text-lg font-semibold mt-1">
                 ₦{ticket.price.toLocaleString()}
               </p>
             </div>
 
-            {/* Perks */}
             <div className="p-4 flex-1 flex flex-col justify-between">
-              <ul className="text-sm text-gray-700 mb-4 space-y-1">
-                {ticket.perks.map((p, i) => (
-                  <li key={i}>• {p}</li>
-                ))}
-              </ul>
+  {ticket.perks.length > 0 && (
+    <ul className="text-sm text-gray-700 mb-4 space-y-1">
+      {ticket.perks.map((p, i) => (
+        <li key={i}>• {p}</li>
+      ))}
+    </ul>
+  )}
 
-              <div className="flex justify-between items-center">
-                <button
-                  onClick={() => addToCart(ticket)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md transition"
-                >
-                  Add to Cart
-                </button>
-                <span className="text-xs text-gray-500">Per ticket</span>
-              </div>
-            </div>
+  <div className="flex justify-between items-center">
+    <button
+      onClick={() => addToCart(ticket)}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md transition"
+    >
+      Add to Cart
+    </button>
+    <span className="text-xs text-gray-500">Per ticket</span>
+  </div>
+</div>
+
           </div>
         ))}
       </div>
@@ -201,7 +204,7 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
               return (
                 <li
                   key={name}
-                  className="flex justify-between items-center bg-gray-50 rounded p-3 shadow-sm"
+                  className="flex justify-between items-center bg-green-500 rounded p-3 shadow-sm"
                 >
                   <div>
                     <div className="font-medium">{name}</div>
@@ -231,7 +234,6 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
           </ul>
         )}
 
-        {/* Buyer Info */}
         <div className="space-y-3 mb-4">
           <input
             type="text"
@@ -249,7 +251,6 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
           />
         </div>
 
-        {/* Total */}
         <div className="flex items-center justify-between mb-4">
           <div className="text-lg font-semibold">Total:</div>
           <div className="text-xl font-bold text-blue-900">
@@ -257,25 +258,23 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
           </div>
         </div>
 
-        {/* Paystack */}
         <PaystackButton
-  className="flex-1 bg-yellow-500 text-blue-900 font-bold px-4 py-2 rounded-md hover:bg-yellow-400 disabled:opacity-60"
-  text={loading ? "Processing..." : "Proceed to Paystack"}
-  disabled={totalAmount === 0 || loading}
-  publicKey={process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!}
-  email={buyerEmail}
-  amount={totalAmount * 100} // in kobo
-  reference={`TICKET-${Date.now()}`}
-  onSuccess={handleSuccess}
-  onClose={() => alert("Transaction closed")}
-  metadata={{
-    custom_fields: [
-      { display_name: "Name", variable_name: "buyerName", value: buyerName },
-      { display_name: "Cart", variable_name: "cart", value: JSON.stringify(cart) },
-    ],
-  }}
-/>
-
+          className="flex-1 bg-yellow-500 text-blue-900 font-bold px-4 py-2 rounded-md hover:bg-yellow-400 disabled:opacity-60"
+          text={loading ? "Processing..." : "Proceed to Paystack"}
+          disabled={totalAmount === 0 || loading}
+          publicKey={process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!}
+          email={buyerEmail}
+          amount={totalAmount * 100} // in kobo
+          reference={`TICKET-${Date.now()}`}
+          onSuccess={handleSuccess} 
+          onClose={() => alert("Transaction closed")}
+          metadata={{
+            custom_fields: [
+              { display_name: "Name", variable_name: "buyerName", value: buyerName },
+              { display_name: "Cart", variable_name: "cart", value: JSON.stringify(cart) },
+            ],
+          }}
+        />
       </div>
     </div>
   );

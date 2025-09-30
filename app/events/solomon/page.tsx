@@ -5,11 +5,12 @@ import TicketStore, { Ticket } from "@/components/TicketStore";
 import { motion } from "framer-motion";
 
 const solomonTickets: Ticket[] = [
-  { name: "Bronze", price: 10000, perks: ["🎶 Standard Seating"], color: "bg-amber-500" },
-  { name: "Silver", price: 30000, perks: ["🎶 Better Seating", "🥤 Free Refreshments"], color: "bg-slate-400" },
-  { name: "Gold", price: 50000, perks: ["🎶 Premium Seating", "🥤 Free Refreshments", "📸 Photo with Choir"], color: "bg-yellow-400" },
-  { name: "Diamond", price: 100000, perks: ["🎶 VIP Front Row", "🥤 Free Refreshments", "📸 Photo with Choir", "🎁 Special Gift Pack"], color: "bg-blue-600" },
+  { name: "Bronze", price: 10000, perks: [], color: "bg-amber-500" },
+  { name: "Silver", price: 30000, perks: [], color: "bg-slate-400" },
+  { name: "Gold", price: 50000, perks: [], color: "bg-yellow-400" },
+  { name: "Diamond", price: 100000, perks: ["🎟 Admits 2 Persons"], color: "bg-blue-600" },
 ];
+
 
 export default function SolomonEventPage() {
   return (

@@ -1,32 +1,30 @@
-import { NextResponse } from "next/server";
+// app/api/validateTicket/route.ts
 import { db } from "@/firebase/config";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { ticketId } = await req.json();
 
-    if (!ticketId) {
-      return NextResponse.json({ success: false, message: "❌ Invalid request – no ticketId" }, { status: 400 });
+    const ticketRef = doc(db, "ticketPurchases", ticketId);
+    const snapshot = await getDoc(ticketRef);
+
+    if (!snapshot.exists()) {
+      return NextResponse.json({ status: "error", message: "🚫 Ticket not found" });
     }
 
-    const docRef = doc(db, "ticketPurchases", ticketId);
-    const docSnap = await getDoc(docRef);
+    const ticket = snapshot.data();
 
-    if (!docSnap.exists()) {
-      return NextResponse.json({ success: false, message: "🚫 Ticket not found" }, { status: 404 });
+    if (ticket.used) {
+      return NextResponse.json({ status: "error", message: "⚠️ Ticket already used" });
     }
 
-    const ticketData = docSnap.data();
+    await updateDoc(ticketRef, { used: true, usedAt: new Date() });
 
-    if (ticketData.status === "used") {
-      return NextResponse.json({ success: false, message: "⚠️ Ticket already used" }, { status: 409 });
-    }
-
-    await updateDoc(docRef, { status: "used" });
-    return NextResponse.json({ success: true, message: "✅ Valid Ticket – Access Granted" });
-  } catch (error) {
-    console.error("Validation error:", error);
-    return NextResponse.json({ success: false, message: "❌ Error validating ticket" }, { status: 500 });
+    return NextResponse.json({ status: "success", message: "✅ Ticket valid", ticket });
+  } catch (err) {
+    console.error("validateTicket error:", err);
+    return NextResponse.json({ status: "error", message: "Server error" }, { status: 500 });
   }
 }
