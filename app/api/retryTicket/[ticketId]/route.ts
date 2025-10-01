@@ -1,17 +1,16 @@
 import { NextResponse } from "next/server";
 import { db } from "@/firebase/admin";
-import QRCode from "qrcode";
 import { Resend } from "resend";
-import { Readable } from "stream";
+import { generateTicketPDF } from "@/lib/pdf";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(
   req: Request,
-  { params }: { params: { ticketId: string } }
+  { params }: { params: Promise<{ ticketId: string }> }
 ) {
   try {
-    const ticketId = params.ticketId;
+    const { ticketId } = await params;
 
     const docRef = db.collection("tickets").doc(ticketId);
     const ticketSnap = await docRef.get();
@@ -20,30 +19,14 @@ export async function POST(
       return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
     }
 
-    const { email, purchaserName, eventName } = ticketSnap.data()!;
+    const { email, purchaserName, eventName, tier } = ticketSnap.data()!;
 
-    // ✅ Regenerate QR Code
-    const qrCode = await QRCode.toDataURL(ticketId);
-
-    // ✅ Generate PDF again
-    const pdfkit = await import("pdfkit");
-    const getStream = (await import("get-stream")).default;
-    const doc = new pdfkit.default();
-
-    doc.fontSize(20).text(`${eventName} Ticket`, { align: "center" });
-    doc.moveDown();
-    doc.fontSize(14).text(`Name: ${purchaserName}`);
-    doc.text(`Email: ${email}`);
-    doc.text(`Ticket ID: ${ticketId}`);
-    doc.moveDown();
-    doc.image(Buffer.from(qrCode.split(",")[1], "base64"), {
-      fit: [150, 150],
-      align: "center",
-      valign: "center",
-    });
-
-    const stream = doc as unknown as Readable;
-    const pdfBuffer = await getStream.buffer(stream);
+    // ✅ Generate PDF using the existing pdf-lib function
+    const pdfBuffer = await generateTicketPDF(
+      tier || "General", // fallback to "General" if no tier
+      ticketId,
+      purchaserName || "Guest"
+    );
 
     // ✅ Resend the email
     const result = await resend.emails.send({

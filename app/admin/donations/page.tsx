@@ -1,64 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { usePaystackPayment } from "react-paystack";
+import dynamic from "next/dynamic";
+
+// Dynamically import PaystackButton to avoid SSR issues
+const PaystackButton = dynamic(
+  () => import("react-paystack").then((mod) => mod.PaystackButton),
+  { ssr: false }
+);
 
 export default function DonatePage() {
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!;
 
-  const initializePayment = usePaystackPayment({
-    reference: `DON-${Date.now()}`,
-    email,
-    amount: amount * 100, // Paystack expects kobo
-    publicKey,
-  });
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const handleDonate = () => {
-    if (!email || amount <= 0) {
-      alert("Please enter a valid email and donation amount.");
-      return;
+  const handlePaymentSuccess = async (reference: any) => {
+    setLoading(true);
+    try {
+      // Call API to save donor + send email
+      const res = await fetch("/api/donations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          amount,
+          reference: reference.reference,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert(
+          "🎉 Thank you for your donation! A confirmation email has been sent."
+        );
+        setEmail("");
+        setAmount(0);
+      } else {
+        alert("⚠️ Donation processed, but we couldn't save the record.");
+      }
+    } catch (err) {
+      console.error("Donation post-error:", err);
+      alert("⚠️ Donation processed, but there was a server error.");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    initializePayment({
-      onSuccess: async (reference) => {
-        setLoading(true);
-        try {
-          // Call API to save donor + send email
-          const res = await fetch("/api/donations", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email,
-              amount,
-              reference: reference.reference,
-            }),
-          });
-
-          const data = await res.json();
-          if (data.success) {
-            alert("🎉 Thank you for your donation! A confirmation email has been sent.");
-            setEmail("");
-            setAmount(0);
-          } else {
-            alert("⚠️ Donation processed, but we couldn't save the record.");
-          }
-        } catch (err) {
-          console.error("Donation post-error:", err);
-          alert("⚠️ Donation processed, but there was a server error.");
-        } finally {
-          setLoading(false);
-        }
-      },
-      onClose: () => {
-        console.log("Donation window closed");
-      },
-    });
+  const handlePaymentClose = () => {
+    console.log("Donation window closed");
   };
 
   return (
@@ -70,8 +68,8 @@ export default function DonatePage() {
           Support Through Giving
         </h1>
         <p className="text-gray-700 max-w-2xl mx-auto">
-          Thank you for choosing to support The Chorus Abuja. Your donation empowers
-          voices and builds communities.
+          Thank you for choosing to support The Chorus Abuja. Your donation
+          empowers voices and builds communities.
         </p>
 
         {/* Donation form */}
@@ -90,13 +88,28 @@ export default function DonatePage() {
             placeholder="Donation Amount (₦)"
             className="w-full border px-4 py-2 rounded"
           />
-          <button
-            onClick={handleDonate}
-            disabled={loading}
-            className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 disabled:bg-gray-400 w-full"
-          >
-            {loading ? "Processing..." : "Donate with Paystack"}
-          </button>
+          {mounted && email && amount > 0 && (
+            <PaystackButton
+              reference={`DON-${Date.now()}`}
+              email={email}
+              amount={amount * 100} // Paystack expects kobo
+              publicKey={publicKey}
+              text={loading ? "Processing..." : "Donate with Paystack"}
+              onSuccess={handlePaymentSuccess}
+              onClose={handlePaymentClose}
+              className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 disabled:bg-gray-400 w-full"
+            />
+          )}
+          {(!mounted || !email || amount <= 0) && (
+            <button
+              disabled
+              className="bg-gray-400 text-white px-6 py-3 rounded w-full cursor-not-allowed"
+            >
+              {!email || amount <= 0
+                ? "Please enter email and amount"
+                : "Loading..."}
+            </button>
+          )}
         </div>
 
         {/* Bank transfer option */}
@@ -104,7 +117,9 @@ export default function DonatePage() {
           <h2 className="text-2xl font-semibold text-blue-900 mb-4">
             Bank Transfer
           </h2>
-          <p className="mb-2">You can also support us directly via bank transfer:</p>
+          <p className="mb-2">
+            You can also support us directly via bank transfer:
+          </p>
           <div className="font-medium">
             <p>
               Account Name:{" "}

@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 // ✅ Import scanner dynamically
@@ -20,21 +20,36 @@ type ValidationResponse = {
 export default function ScannerPage() {
   const [status, setStatus] = useState<string>("Waiting for scan...");
   const [history, setHistory] = useState<ValidationResponse[]>([]);
+  const lastScanRef = useRef<{ id?: string; ts?: number }>({});
+  const isProcessingRef = useRef(false);
 
   const handleScan = async (result: any) => {
     if (!result) return;
 
-    const raw = result.getText();
+    // Avoid processing multiple scans at once
+    if (isProcessingRef.current) return;
+
+    // Normalize raw string from various scanner result shapes
+    let raw: string | undefined;
+    if (typeof result === "string") raw = result;
+    else if (result?.getText && typeof result.getText === "function") {
+      try {
+        raw = result.getText();
+      } catch {
+        raw = undefined;
+      }
+    } else if (typeof result.text === "string") raw = result.text;
+    else if (typeof result.code === "string") raw = result.code;
+    else if (typeof result.rawValue === "string") raw = result.rawValue;
+
     if (!raw) return;
 
+    // Try parsing JSON payload (PDF embeds JSON). Fallback to raw string.
     let ticketId: string | null = null;
-
     try {
-      // Try parsing JSON payload from PDF
       const parsed = JSON.parse(raw);
-      ticketId = parsed.ticketId || null;
+      ticketId = parsed.ticketId || parsed.reference || null;
     } catch {
-      // Fallback → assume raw text is the ticketId
       ticketId = raw;
     }
 
@@ -42,6 +57,18 @@ export default function ScannerPage() {
       setStatus("❌ Invalid QR Code");
       return;
     }
+
+    // Debounce duplicate scans for 3s
+    const now = Date.now();
+    if (
+      lastScanRef.current.id === ticketId &&
+      now - (lastScanRef.current.ts || 0) < 3000
+    ) {
+      return;
+    }
+
+    isProcessingRef.current = true;
+    setStatus("⏳ Validating...");
 
     try {
       const res = await fetch("/api/validateTicket", {
@@ -51,7 +78,10 @@ export default function ScannerPage() {
       });
 
       const json: ValidationResponse = await res.json();
-      setStatus(json.message);
+      setStatus(
+        json.message ||
+          (json.success ? "✅ Ticket valid" : "❌ Validation result")
+      );
 
       if (json.success) {
         new Audio("/sounds/beep.mp3").play().catch(() => {});
@@ -59,9 +89,17 @@ export default function ScannerPage() {
 
       // Keep last 5
       setHistory((prev) => [json, ...prev.slice(0, 4)]);
+
+      // record last scan
+      lastScanRef.current = { id: ticketId, ts: Date.now() };
     } catch (err) {
       console.error("Validation error:", err);
       setStatus("❌ Error talking to server");
+    } finally {
+      // small cooldown before allowing next scan
+      setTimeout(() => {
+        isProcessingRef.current = false;
+      }, 800);
     }
   };
 
@@ -106,10 +144,10 @@ export default function ScannerPage() {
             status.includes("✅")
               ? "bg-green-600 text-white"
               : status.includes("⚠️")
-              ? "bg-yellow-500 text-black"
-              : status.includes("❌") || status.includes("🚫")
-              ? "bg-red-600 text-white"
-              : "bg-gray-200 text-gray-700"
+                ? "bg-yellow-500 text-black"
+                : status.includes("❌") || status.includes("🚫")
+                  ? "bg-red-600 text-white"
+                  : "bg-gray-200 text-gray-700"
           }`}
         >
           {status}
