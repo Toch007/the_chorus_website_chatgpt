@@ -40,8 +40,7 @@ const joinOptions = [
   {
     icon: <Users className="w-10 h-10 text-blue-700" />,
     title: "Tech & Logistics",
-    description:
-      "Assist with sound, staging, transport, and technical setup.",
+    description: "Assist with sound, staging, transport, and technical setup.",
     link: "/join/tech",
   },
 ];
@@ -67,7 +66,7 @@ export default function JoinPage() {
   return (
     <>
       <Header />
-      <main className="max-w-6xl mx-auto px-4 py-20 space-y-20">
+      <main className="max-w-6xl mx-auto px-4 pt-24 pb-20 space-y-20">
         {/* Hero */}
         <section className="relative bg-gradient-to-r from-blue-50 to-white rounded-2xl shadow-md p-12 text-center">
           <Reveal>
@@ -81,10 +80,10 @@ export default function JoinPage() {
           </Reveal>
         </section>
         <ParallaxBridge
-                      image="/images/gallery1.jpg"
-                      heading="A Perfect Harmony"
-                      subtext="Music, Excellence, Community and Creativity."
-                    />
+          image="/images/gallery1.jpg"
+          heading="A Perfect Harmony"
+          subtext="Music, Excellence, Community and Creativity."
+        />
 
         {/* Join Options */}
         <Reveal>
@@ -129,8 +128,8 @@ export default function JoinPage() {
               <div className="bg-blue-50 p-6 rounded-xl shadow">
                 <Quote className="w-6 h-6 text-blue-700 mb-2" />
                 <p className="italic text-gray-700">
-                  “I love the energy, the passion, and the sense of purpose here.
-                  It’s powerful.”
+                  “I love the energy, the passion, and the sense of purpose
+                  here. It’s powerful.”
                 </p>
                 <footer className="mt-4 text-sm font-medium text-blue-700">
                   – Sam, Volunteer
@@ -153,9 +152,7 @@ export default function JoinPage() {
                   className="border border-gray-200 rounded-lg overflow-hidden shadow-sm"
                 >
                   <button
-                    onClick={() =>
-                      setOpenFAQ(openFAQ === idx ? null : idx)
-                    }
+                    onClick={() => setOpenFAQ(openFAQ === idx ? null : idx)}
                     className="w-full flex justify-between items-center px-4 py-3 text-left text-gray-800 font-medium hover:bg-blue-50 transition"
                   >
                     {faq.q}

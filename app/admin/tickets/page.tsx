@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 type Ticket = {
   id: string;
@@ -12,6 +13,7 @@ type Ticket = {
 };
 
 export default function TicketsAdminPage() {
+  useAuthRedirect();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(false);
   const [retrying, setRetrying] = useState<string | null>(null);

@@ -24,12 +24,20 @@ export default function Header() {
         closeMenu();
       }
     };
-    if (menuOpen) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (menuOpen && typeof window !== "undefined") {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
   }, [menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
+      if (typeof window === "undefined") return;
+
       const heroHeight = document.getElementById("hero")?.offsetHeight ?? 0;
       setIsTransparent(window.scrollY < heroHeight - 80);
 
@@ -44,31 +52,33 @@ export default function Header() {
       // Hide after idle, unless hovered
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
       scrollTimeout.current = setTimeout(() => {
-        if (window.scrollY > 80 && !hovered) setVisible(false);
+        if (typeof window !== "undefined" && window.scrollY > 80 && !hovered)
+          setVisible(false);
       }, 1500);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      handleScroll();
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, [hovered]);
 
   const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Members", href: "/members" },
-  { name: "Events", href: "/events" },
-  { name: "Blog", href: "/blog" }, // ✅ added
-  { name: "Contact Us", href: "/contact" },
-  { name: "Join", href: "/join" },
-  { name: "Support Us", href: "/support" },
-];
-
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Members", href: "/members" },
+    { name: "Events", href: "/events" },
+    { name: "Blog", href: "/blog" }, // ✅ added
+    { name: "Contact Us", href: "/contact" },
+    { name: "Join", href: "/join" },
+    { name: "Support Us", href: "/support" },
+  ];
 
   return (
     <motion.header
-      onMouseEnter={() => setHovered(true)}   // 👈 hover start
-      onMouseLeave={() => setHovered(false)}  // 👈 hover end
+      onMouseEnter={() => setHovered(true)} // 👈 hover start
+      onMouseLeave={() => setHovered(false)} // 👈 hover end
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -105,16 +115,20 @@ export default function Header() {
           }`}
         >
           {navLinks.map((link, i) => (
-            <Link key={link.name} href={link.href}>
-              <motion.a
+            <Link
+              key={link.name}
+              href={link.href}
+              className="relative group hover:text-blue-400 transition duration-300"
+            >
+              <motion.span
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="relative group hover:text-blue-400 transition duration-300"
+                className="block"
               >
                 {link.name}
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full" />
-              </motion.a>
+              </motion.span>
             </Link>
           ))}
         </nav>
@@ -153,7 +167,9 @@ export default function Header() {
       <div
         ref={menuRef}
         className={`sm:hidden fixed top-[72px] left-0 w-full bg-white z-50 shadow-md transition-all duration-300 ease-in-out overflow-hidden ${
-          menuOpen ? "max-h-96 opacity-100 scale-100" : "max-h-0 opacity-0 scale-95"
+          menuOpen
+            ? "max-h-96 opacity-100 scale-100"
+            : "max-h-0 opacity-0 scale-95"
         }`}
       >
         <div className="px-6 py-4 space-y-3 text-gray-700 font-medium">

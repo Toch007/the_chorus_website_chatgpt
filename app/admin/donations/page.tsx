@@ -90,7 +90,7 @@ export default function DonatePage() {
           />
           {mounted && email && amount > 0 && (
             <PaystackButton
-              reference={`DON-${Date.now()}`}
+              reference={`DON-${crypto.randomUUID()}`}
               email={email}
               amount={amount * 100} // Paystack expects kobo
               publicKey={publicKey}

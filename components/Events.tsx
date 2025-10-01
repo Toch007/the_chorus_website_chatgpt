@@ -53,7 +53,8 @@ export default function Events() {
 
         <Reveal direction="up" delay={0.2}>
           <p className="text-lg text-gray-700 mb-10">
-            Stay inspired. Join us at our next concert, outreach, or festival appearance.
+            Stay inspired. Join us at our next concert, outreach, or festival
+            appearance.
           </p>
         </Reveal>
 
@@ -62,7 +63,15 @@ export default function Events() {
             <p className="text-gray-600">No upcoming events at the moment.</p>
           </Reveal>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+          <div
+            className={`grid gap-8 mb-10 ${
+              upcomingEvents.length === 1
+                ? "grid-cols-1 justify-items-center max-w-md mx-auto"
+                : upcomingEvents.length === 2
+                  ? "grid-cols-1 md:grid-cols-2 justify-items-center max-w-4xl mx-auto"
+                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            }`}
+          >
             {upcomingEvents.map((event, index) => (
               <Reveal key={event.id} direction="up" delay={index * 0.2}>
                 <div className="bg-white rounded-2xl shadow overflow-hidden text-left">

@@ -40,7 +40,8 @@ export default function MediaJoinForm() {
     const { name, value, type } = target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? (target as HTMLInputElement).checked : value,
+      [name]:
+        type === "checkbox" ? (target as HTMLInputElement).checked : value,
     }));
   };
 
@@ -90,143 +91,143 @@ export default function MediaJoinForm() {
     }
   };
 
-    return (
-      <> 
-        <Header />
-        <div className="max-w-2xl mx-auto p-6 my-20">
-          <h1 className="text-2xl font-bold mb-6">Join as Media Team</h1>
+  return (
+    <>
+      <Header />
+      <div className="max-w-2xl mx-auto p-6 mt-24 mb-20">
+        <h1 className="text-2xl font-bold mb-6">Join as Media Team</h1>
 
-      {success && (
-        <p className="text-green-600 mb-4">Form submitted successfully!</p>
-      )}
+        {success && (
+          <p className="text-green-600 mb-4">Form submitted successfully!</p>
+        )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="fullName"
-          placeholder="Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          name="age"
-          type="number"
-          placeholder="Age"
-          value={formData.age}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        >
-          <option value="">Select Gender</option>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
-
-        <input
-          name="phone"
-          placeholder="Phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <fieldset className="border p-3 rounded">
-          <legend className="font-semibold">Media Skills</legend>
-          {skills.map((skill) => (
-            <label key={skill} className="block">
-              <input
-                type="checkbox"
-                checked={formData.mediaSkills.includes(skill)}
-                onChange={() => handleSkillChange(skill)}
-              />{" "}
-              {skill}
-            </label>
-          ))}
-        </fieldset>
-
-        <input
-          name="portfolio"
-          placeholder="Portfolio Link (optional)"
-          value={formData.portfolio}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-
-        <select
-          name="availability"
-          value={formData.availability}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        >
-          <option value="">Select Availability</option>
-          <option>Weekdays</option>
-          <option>Weekends</option>
-          <option>Flexible</option>
-        </select>
-
-        <label className="block">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
-            type="checkbox"
-            name="ownEquipment"
-            checked={formData.ownEquipment}
-            onChange={handleChange}
-          />{" "}
-          Do you own equipment?
-        </label>
-
-        <label className="block">
-          <input
-            type="checkbox"
-            name="teamWork"
-            checked={formData.teamWork}
-            onChange={handleChange}
-          />{" "}
-          Willing to work as part of a team
-        </label>
-
-        <label className="block font-semibold">
-          <input
-            type="checkbox"
-            name="declaration"
-            checked={formData.declaration}
+            name="fullName"
+            placeholder="Full Name"
+            value={formData.fullName}
             onChange={handleChange}
             required
-          />{" "}
-          I hereby declare that the above information is true.
-        </label>
+            className="w-full p-2 border rounded"
+          />
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </button>
-      </form>
-            </div>
-            <Footer />
-          </>
+          <input
+            name="age"
+            type="number"
+            placeholder="Age"
+            value={formData.age}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          >
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+
+          <input
+            name="phone"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+
+          <fieldset className="border p-3 rounded">
+            <legend className="font-semibold">Media Skills</legend>
+            {skills.map((skill) => (
+              <label key={skill} className="block">
+                <input
+                  type="checkbox"
+                  checked={formData.mediaSkills.includes(skill)}
+                  onChange={() => handleSkillChange(skill)}
+                />{" "}
+                {skill}
+              </label>
+            ))}
+          </fieldset>
+
+          <input
+            name="portfolio"
+            placeholder="Portfolio Link (optional)"
+            value={formData.portfolio}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          />
+
+          <select
+            name="availability"
+            value={formData.availability}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          >
+            <option value="">Select Availability</option>
+            <option>Weekdays</option>
+            <option>Weekends</option>
+            <option>Flexible</option>
+          </select>
+
+          <label className="block">
+            <input
+              type="checkbox"
+              name="ownEquipment"
+              checked={formData.ownEquipment}
+              onChange={handleChange}
+            />{" "}
+            Do you own equipment?
+          </label>
+
+          <label className="block">
+            <input
+              type="checkbox"
+              name="teamWork"
+              checked={formData.teamWork}
+              onChange={handleChange}
+            />{" "}
+            Willing to work as part of a team
+          </label>
+
+          <label className="block font-semibold">
+            <input
+              type="checkbox"
+              name="declaration"
+              checked={formData.declaration}
+              onChange={handleChange}
+              required
+            />{" "}
+            I hereby declare that the above information is true.
+          </label>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </button>
+        </form>
+      </div>
+      <Footer />
+    </>
   );
 }

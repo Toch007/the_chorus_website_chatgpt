@@ -59,7 +59,7 @@ export default function ScannerPage() {
     }
 
     // Debounce duplicate scans for 3s
-    const now = Date.now();
+    const now = performance.now();
     if (
       lastScanRef.current.id === ticketId &&
       now - (lastScanRef.current.ts || 0) < 3000
@@ -91,7 +91,7 @@ export default function ScannerPage() {
       setHistory((prev) => [json, ...prev.slice(0, 4)]);
 
       // record last scan
-      lastScanRef.current = { id: ticketId, ts: Date.now() };
+      lastScanRef.current = { id: ticketId, ts: performance.now() };
     } catch (err) {
       console.error("Validation error:", err);
       setStatus("❌ Error talking to server");

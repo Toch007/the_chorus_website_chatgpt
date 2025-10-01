@@ -9,90 +9,49 @@ import {
 } from "react-icons/fa";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "@/firebase/config";
 import { motion } from "framer-motion";
+import NewsletterSignup from "./NewsletterSignup";
 
 const socialLinks = [
-  { icon: FaFacebook, href: "https://facebook.com/thechorusabuja", label: "Facebook" },
-  { icon: FaInstagram, href: "https://instagram.com/thechorusabuja", label: "Instagram" },
-  { icon: FaYoutube, href: "https://www.youtube.com/@thechorusabuja", label: "YouTube" },
-  { icon: FaTwitter, href: "https://twitter.com/thechorusabuja", label: "Twitter" },
+  {
+    icon: FaFacebook,
+    href: "https://facebook.com/thechorusabuja",
+    label: "Facebook",
+  },
+  {
+    icon: FaInstagram,
+    href: "https://instagram.com/thechorusabuja",
+    label: "Instagram",
+  },
+  {
+    icon: FaYoutube,
+    href: "https://www.youtube.com/@thechorusabuja",
+    label: "YouTube",
+  },
+  {
+    icon: FaTwitter,
+    href: "https://twitter.com/thechorusabuja",
+    label: "Twitter",
+  },
 ];
 
 export default function Footer() {
   const [showScroll, setShowScroll] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScroll(window.scrollY > 300);
+      if (typeof window !== "undefined") {
+        setShowScroll(window.scrollY > 300);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (successMessage) {
-      const timeoutId = setTimeout(() => setSuccessMessage(""), 5000);
-      return () => clearTimeout(timeoutId);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
     }
-  }, [successMessage]);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const handleNewsletterSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    const emailInput = e.currentTarget.elements.namedItem("email") as HTMLInputElement;
-    const email = emailInput.value.trim().toLowerCase();
-
-    setSuccessMessage("");
-    setErrorMessage("");
-
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const newsletterRef = collection(db, "newsletterSubscribers");
-      const q = query(newsletterRef, where("email", "==", email));
-      const existing = await getDocs(q);
-
-      if (!existing.empty) {
-        setSuccessMessage("You're already subscribed!");
-        return;
-      }
-
-      await addDoc(newsletterRef, {
-        email,
-        subscribedAt: serverTimestamp(),
-      });
-
-      setSuccessMessage("✅ Successfully subscribed to our newsletter!");
-      emailInput.value = "";
-    } catch (error) {
-      console.error("Subscription error:", error);
-      setErrorMessage("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
@@ -115,42 +74,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div>
-            <h4 className="text-lg font-semibold mb-3">📧 Stay Connected</h4>
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
-              <input
-                name="email"
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="w-full sm:w-auto flex-1 px-4 py-2 rounded-full text-gray-900 bg-white placeholder-gray-500"
-              />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`px-6 py-2 rounded-full font-semibold border transition 
-                  ${
-                    isSubmitting
-                      ? "bg-white text-blue-900 opacity-50 cursor-not-allowed"
-                      : "bg-white text-blue-900 hover:bg-blue-800 hover:text-white border-blue-900"
-                  }`}
-              >
-                {isSubmitting ? "Subscribing..." : "Subscribe"}
-              </button>
-            </form>
-
-            {/* Feedback messages */}
-            {successMessage && (
-              <div className="mt-3 bg-green-600 text-white px-4 py-2 rounded-md text-sm">
-                {successMessage}
-              </div>
-            )}
-            {errorMessage && (
-              <div className="mt-3 bg-red-600 text-white px-4 py-2 rounded-md text-sm">
-                {errorMessage}
-              </div>
-            )}
-          </div>
+          <NewsletterSignup showTitle={true} />
 
           {/* Social Links */}
           <div>
@@ -174,7 +98,7 @@ export default function Footer() {
         {/* Divider & Copyright */}
         <div className="border-t border-blue-700 pt-6 mt-10">
           <p className="text-xs text-gray-400 text-center">
-            © {new Date().getFullYear()} The Chorus Abuja. All rights reserved.
+            © 2025 The Chorus Abuja. All rights reserved.
           </p>
         </div>
       </footer>

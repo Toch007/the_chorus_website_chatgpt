@@ -8,16 +8,19 @@ export default function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY * 0.2; // Adjust parallax strength
-      if (videoRef.current) {
-        videoRef.current.style.transform = `scale(1.1) translateY(${offset}px)`;
+      if (typeof window !== "undefined") {
+        const offset = window.scrollY * 0.2; // Adjust parallax strength
+        if (videoRef.current) {
+          videoRef.current.style.transform = `scale(1.1) translateY(${offset}px)`;
+        }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      handleScroll();
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
   return (
@@ -51,7 +54,8 @@ export default function Hero() {
         <Reveal direction="up" delay={0.3}>
           {/* ✅ Mobile-first scaling for subtext */}
           <p className="text-sm sm:text-base md:text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed">
-            Voices united in harmony, excellence, and purpose. Join us in creating music that inspires and transforms lives.
+            Voices united in harmony, excellence, and purpose. Join us in
+            creating music that inspires and transforms lives.
           </p>
         </Reveal>
       </div>

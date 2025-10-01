@@ -10,15 +10,16 @@ export default function SupportPage() {
   return (
     <>
       <Header />
-      <main className="max-w-6xl mx-auto px-4 py-20 space-y-16">
+      <main className="max-w-6xl mx-auto px-4 pt-24 pb-20 space-y-16">
         {/* Hero Section */}
         <section className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6">
             Join Us in Making a Difference
           </h1>
           <p className="text-gray-700 text-lg max-w-3xl mx-auto">
-            Music inspires, heals, and brings people together. Your support helps us
-            continue to perform, mentor, and impact lives through music.
+            Music inspires, heals, and brings people together. Your support
+            helps us continue to perform, mentor, and impact lives through
+            music.
           </p>
         </section>
 
@@ -35,7 +36,8 @@ export default function SupportPage() {
             />
             <h2 className="text-2xl font-semibold mb-2">Make a Donation</h2>
             <p className="text-gray-600 mb-4">
-              Support our mission with a one-time or recurring donation. Every amount counts.
+              Support our mission with a one-time or recurring donation. Every
+              amount counts.
             </p>
             <Link
               href="/support/donate"
@@ -56,7 +58,8 @@ export default function SupportPage() {
             />
             <h2 className="text-2xl font-semibold mb-2">Become a Sponsor</h2>
             <p className="text-gray-600 mb-4">
-              Partner with us as a sponsor and gain visibility while supporting musical excellence.
+              Partner with us as a sponsor and gain visibility while supporting
+              musical excellence.
             </p>
             <Link
               href="/support/sponsors"
@@ -77,7 +80,8 @@ export default function SupportPage() {
             />
             <h2 className="text-2xl font-semibold mb-2">Partner With Us</h2>
             <p className="text-gray-600 mb-4">
-              Collaborate with us for community outreach, media projects, and more.
+              Collaborate with us for community outreach, media projects, and
+              more.
             </p>
             <Link
               href="/support/partners"
@@ -94,23 +98,25 @@ export default function SupportPage() {
             Every Voice Matters. So Does Every Gift.
           </h2>
           <p className="text-gray-700 max-w-2xl mx-auto mb-6">
-            Your generosity helps fund rehearsals, musical instruments, community concerts,
-            scholarships, and outreach programs. Be part of a legacy of harmony and impact.
+            Your generosity helps fund rehearsals, musical instruments,
+            community concerts, scholarships, and outreach programs. Be part of
+            a legacy of harmony and impact.
           </p>
-          <div className="flex justify-center gap-6 flex-wrap">
-            
-          </div>
+          <div className="flex justify-center gap-6 flex-wrap"></div>
         </section>
-    <ParallaxBridge
-            image="/images/support.jpg"
-            heading="Support Our Mission"
-            subtext="Your contribution makes a difference."
-          />
+        <ParallaxBridge
+          image="/images/support.jpg"
+          heading="Support Our Mission"
+          subtext="Your contribution makes a difference."
+        />
         {/* Looking to Support Differently */}
         <section className="text-center bg-gray-100 rounded-lg p-10">
-          <h2 className="text-2xl font-bold mb-4">Looking to Support Differently?</h2>
+          <h2 className="text-2xl font-bold mb-4">
+            Looking to Support Differently?
+          </h2>
           <p className="text-gray-700 max-w-2xl mx-auto mb-6">
-            Whether you're a volunteer, service provider, or just want to help, we’d love to hear from you.
+            Whether you're a volunteer, service provider, or just want to help,
+            we’d love to hear from you.
           </p>
           <Link
             href="/support/other"
@@ -126,7 +132,8 @@ export default function SupportPage() {
             Thank You for Supporting the Chorus Abuja 🎶
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Your involvement empowers voices, builds community, and celebrates the transformative power of music.
+            Your involvement empowers voices, builds community, and celebrates
+            the transformative power of music.
           </p>
         </section>
       </main>

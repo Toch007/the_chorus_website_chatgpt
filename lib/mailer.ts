@@ -1,11 +1,12 @@
 // lib/mailer.ts
 import { Resend } from "resend";
+import { formatCurrency } from "./formatCurrency";
 
 if (!process.env.RESEND_API_KEY) {
   throw new Error("Missing RESEND_API_KEY in environment variables");
 }
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
 const LOGO_URL = "https://thechorusabuja.org/images/chorus-ico.jpg";
 
@@ -105,7 +106,7 @@ export async function sendDonationEmail({
       subject: "Thank You for Your Donation 💝",
       text: `Dear ${donorName || "Friend"},
 
-We sincerely appreciate your generous donation of ₦${amount.toLocaleString()} to The Chorus Abuja.
+We sincerely appreciate your generous donation of ₦${formatCurrency(amount)} to The Chorus Abuja.
 
 Reference: ${reference}
 
@@ -123,7 +124,7 @@ info@thechorusabuja.org
           <h2 style="color: #1d4ed8;">💝 Thank You for Your Donation</h2>
           <p>Dear ${donorName || "Friend"},</p>
           <p>We sincerely appreciate your generous donation of 
-          <strong>₦${amount.toLocaleString()}</strong> to The Chorus Abuja.</p>
+          <strong>₦${formatCurrency(amount)}</strong> to The Chorus Abuja.</p>
           <p><strong>Reference:</strong> ${reference}</p>
           <p>Your support helps us bring inspiring music to life and continue our mission.</p>
           <p style="margin-top: 20px;">With gratitude,<br>The Chorus Abuja</p>

@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { db, storage } from "@/firebase/config";
-import {
-  collection,
-  addDoc,
-  Timestamp,
-} from "firebase/firestore";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import toast from "react-hot-toast";
 
@@ -29,7 +25,10 @@ export default function EventForm() {
       let imageUrl = "";
 
       if (image) {
-        const imageRef = ref(storage, `events/${Date.now()}-${image.name}`);
+        const imageRef = ref(
+          storage,
+          `events/${crypto.randomUUID()}-${image.name}`
+        );
         const snapshot = await uploadBytes(imageRef, image);
         imageUrl = await getDownloadURL(snapshot.ref);
       }

@@ -28,13 +28,17 @@ export default function ManageEventsPage() {
   const [selectedPost, setSelectedPost] = useState<any | null>(null);
 
   const fetchEvents = async () => {
-    const snapshot = await getDocs(query(collection(db, "events"), orderBy("date", "desc")));
+    const snapshot = await getDocs(
+      query(collection(db, "events"), orderBy("date", "desc"))
+    );
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setEvents(data);
   };
 
   const fetchPosts = async () => {
-    const snapshot = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")));
+    const snapshot = await getDocs(
+      query(collection(db, "posts"), orderBy("createdAt", "desc"))
+    );
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setPosts(data);
   };
@@ -49,15 +53,18 @@ export default function ManageEventsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    const confirm = window.confirm("Are you sure you want to delete this event?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this event?"
+    );
     if (!confirm) return;
     await deleteDoc(doc(db, "events", id));
     fetchEvents();
   };
 
-  const filteredEvents = events.filter((evt) =>
-    evt.title.toLowerCase().includes(search.toLowerCase()) ||
-    evt.location.toLowerCase().includes(search.toLowerCase())
+  const filteredEvents = events.filter(
+    (evt) =>
+      evt.title.toLowerCase().includes(search.toLowerCase()) ||
+      evt.location.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
@@ -90,7 +97,9 @@ export default function ManageEventsPage() {
         {paginatedEvents.map((evt) => (
           <div key={evt.id} className="border p-4 rounded bg-white shadow">
             <h2 className="font-semibold text-xl">{evt.title}</h2>
-            <p className="text-sm text-gray-500">{evt.date} | {evt.location}</p>
+            <p className="text-sm text-gray-500">
+              {evt.date} | {evt.location}
+            </p>
             <div className="mt-2 flex gap-2">
               <button
                 onClick={() => handleEdit(evt)}
@@ -118,7 +127,9 @@ export default function ManageEventsPage() {
           >
             Previous
           </button>
-          <span>Page {currentPage} of {totalPages}</span>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
@@ -155,7 +166,11 @@ export default function ManageEventsPage() {
             <h3 className="text-lg font-bold">{post.title}</h3>
             <p className="text-sm text-gray-600">{post.excerpt}</p>
             <p className="text-xs text-gray-400">Slug: {post.slug}</p>
-            <p className="text-xs text-gray-400">Date: {post.createdAt?.toDate?.().toLocaleDateString?.() || "N/A"}</p>
+            <p className="text-xs text-gray-400">
+              Date:{" "}
+              {post.createdAt?.toDate?.().toLocaleDateString?.("en-US") ||
+                "N/A"}
+            </p>
             <div className="mt-2 flex gap-2">
               <button
                 onClick={() => setSelectedPost(post)}

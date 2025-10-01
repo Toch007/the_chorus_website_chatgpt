@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type PaystackButtonProps = {
   className?: string;
@@ -34,7 +35,8 @@ const PaystackButton: React.FC<PaystackButtonProps> = ({
       script.src = "https://js.paystack.co/v1/inline.js";
       script.async = true;
       script.onload = () => resolve();
-      script.onerror = () => reject(new Error("Failed to load Paystack script"));
+      script.onerror = () =>
+        reject(new Error("Failed to load Paystack script"));
       document.body.appendChild(script);
     });
 
@@ -46,7 +48,7 @@ const PaystackButton: React.FC<PaystackButtonProps> = ({
         key: publicKey,
         email,
         amount,
-        reference: reference ?? `DON-${Date.now()}`,
+        reference: reference ?? `DON-${crypto.randomUUID()}`,
         metadata,
         callback: (res: any) => {
           onSuccess && onSuccess(res);
@@ -98,7 +100,7 @@ export default function DonationForm() {
 
       if (response.ok && data.success) {
         alert(
-          `✅ Thank you for your donation of ₦${amount.toLocaleString()}! A confirmation email has been sent to ${email}.`
+          `✅ Thank you for your donation of ₦${formatCurrency(amount)}! A confirmation email has been sent to ${email}.`
         );
         setEmail("");
         setAmount(1000);
@@ -107,7 +109,9 @@ export default function DonationForm() {
       }
     } catch (err) {
       console.error(err);
-      alert("❌ Donation succeeded but recording failed. Please contact support.");
+      alert(
+        "❌ Donation succeeded but recording failed. Please contact support."
+      );
     } finally {
       setLoading(false);
     }

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 export default function AdminJoinFormPage() {
+  useAuthRedirect();
   const { form } = useParams(); // "choir", "volunteer", "media", "tech"
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,8 +45,8 @@ export default function AdminJoinFormPage() {
 
     // Add data rows
     applications.forEach((app) => {
-      const row = headers.map((h) =>
-        `"${String(app[h] ?? "").replace(/"/g, '""')}"`
+      const row = headers.map(
+        (h) => `"${String(app[h] ?? "").replace(/"/g, '""')}"`
       );
       csvRows.push(row.join(","));
     });
@@ -60,7 +62,8 @@ export default function AdminJoinFormPage() {
     window.URL.revokeObjectURL(url);
   };
 
-  if (loading) return <p className="text-center py-10">Loading applications...</p>;
+  if (loading)
+    return <p className="text-center py-10">Loading applications...</p>;
 
   if (applications.length === 0)
     return (
@@ -74,9 +77,7 @@ export default function AdminJoinFormPage() {
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold capitalize">
-          {form} Applications
-        </h1>
+        <h1 className="text-3xl font-bold capitalize">{form} Applications</h1>
         <button
           onClick={exportToCSV}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"

@@ -4,8 +4,10 @@
 
 import EditEventForm from "@/components/admin/EditEventForm";
 import { useSearchParams } from "next/navigation";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 export default function EditEventPage() {
+  useAuthRedirect();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 

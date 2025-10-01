@@ -7,7 +7,7 @@ export default function DonatePage() {
     <div className="flex flex-col min-h-screen">
       <Header />
 
-      <main className="flex-grow max-w-4xl mx-auto px-4 py-20 space-y-10 text-center">
+      <main className="flex-grow max-w-4xl mx-auto px-4 pt-24 pb-20 space-y-10 text-center">
         <h1 className="text-4xl font-bold text-blue-900 mb-4">
           Support Through Giving
         </h1>

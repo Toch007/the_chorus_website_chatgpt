@@ -9,7 +9,7 @@ export default function SponsorsPage() {
   return (
     <>
       <Header />
-      <main className="max-w-5xl mx-auto px-4 py-20 space-y-16 text-center">
+      <main className="max-w-5xl mx-auto px-4 pt-24 pb-20 space-y-16 text-center">
         {/* Hero */}
         <Reveal>
           <h1 className="text-4xl font-bold text-blue-900 mb-4">
@@ -88,22 +88,22 @@ export default function SponsorsPage() {
               <div className="p-6 border rounded-lg shadow bg-gray-50">
                 <h3 className="text-xl font-bold text-blue-700">Bronze</h3>
                 <p className="text-gray-600 mt-2">
-                  Logo on event programs and website.  
-                  2 complimentary concert tickets.
+                  Logo on event programs and website. 2 complimentary concert
+                  tickets.
                 </p>
               </div>
               <div className="p-6 border rounded-lg shadow bg-yellow-50">
                 <h3 className="text-xl font-bold text-yellow-700">Silver</h3>
                 <p className="text-gray-600 mt-2">
-                  Logo on banners, programs, and website.  
-                  4 complimentary tickets and social media mention.
+                  Logo on banners, programs, and website. 4 complimentary
+                  tickets and social media mention.
                 </p>
               </div>
               <div className="p-6 border rounded-lg shadow bg-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">Gold</h3>
                 <p className="text-gray-600 mt-2">
-                  Premium logo placement on all platforms.  
-                  6 tickets, social media features, and stage mentions.
+                  Premium logo placement on all platforms. 6 tickets, social
+                  media features, and stage mentions.
                 </p>
               </div>
             </div>

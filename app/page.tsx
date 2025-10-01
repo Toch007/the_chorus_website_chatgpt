@@ -17,8 +17,10 @@ import Link from "next/link";
 
 export default function HomePage() {
   const [showPopup, setShowPopup] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const hasSeenPopup = sessionStorage.getItem("solomonPopupShown");
     if (!hasSeenPopup) {
       setShowPopup(true);
@@ -31,61 +33,62 @@ export default function HomePage() {
       <Header />
       <Hero />
 
-{/* 🎟️ Popup Modal with Background Image */}
-<AnimatePresence>
-  {showPopup && (
-    <motion.div
-      className="fixed inset-0 z-[999] flex items-center justify-center bg-black/70 backdrop-blur-sm"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 30 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 30 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
-        className="relative rounded-2xl shadow-2xl max-w-lg w-[90%] overflow-hidden"
-      >
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/images/solomon-1.jpg)" }}
-        />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/70" />
-
-        {/* Content */}
-        <div className="relative z-10 p-8 text-center text-white">
-          {/* Close button */}
-          <button
-            onClick={() => setShowPopup(false)}
-            className="absolute top-3 right-3 text-gray-300 hover:text-white"
+      {/* 🎟️ Popup Modal with Background Image */}
+      <AnimatePresence>
+        {isClient && showPopup && (
+          <motion.div
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            ✖
-          </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className="relative rounded-2xl shadow-2xl max-w-lg w-[90%] overflow-hidden"
+            >
+              {/* Background image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: "url(/images/solomon-1.jpg)" }}
+              />
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-black/70" />
 
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Limited Seats Available!
-          </h2>
-          <p className="text-gray-200 mb-6">
-            Don’t miss <span className="font-semibold">Handel’s Solomon</span> — 
-            a dramatized musical performance on{" "}
-            <span className="font-semibold">16 November 2025</span>. 
-            Secure your tickets now before they sell out!
-          </p>
+              {/* Content */}
+              <div className="relative z-10 p-8 text-center text-white">
+                {/* Close button */}
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="absolute top-3 right-3 text-gray-300 hover:text-white"
+                >
+                  ✖
+                </button>
 
-          <Link
-            href="/events/solomon"
-            className="inline-block bg-yellow-400 text-blue-900 px-6 py-3 rounded-lg font-semibold shadow hover:bg-yellow-300 transition"
-          >
-            🎟️ Get Your Tickets
-          </Link>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                  Limited Seats Available!
+                </h2>
+                <p className="text-gray-200 mb-6">
+                  Don’t miss{" "}
+                  <span className="font-semibold">Handel’s Solomon</span> — a
+                  dramatized musical performance on{" "}
+                  <span className="font-semibold">16 November 2025</span>.
+                  Secure your tickets now before they sell out!
+                </p>
+
+                <Link
+                  href="/events/solomon"
+                  className="inline-block bg-yellow-400 text-blue-900 px-6 py-3 rounded-lg font-semibold shadow hover:bg-yellow-300 transition"
+                >
+                  🎟️ Get Your Tickets
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <ParallaxBridge
         image="/images/chorus2.jpg"
