@@ -1,17 +1,25 @@
 import { NextResponse } from "next/server";
-import { db } from "@/firebase/config";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "@/firebase/admin";
 
 export async function GET() {
   try {
-    const donationsRef = collection(db, "donations");
-    const q = query(donationsRef, orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
+    const snapshot = await db
+      .collection("donations")
+      .orderBy("createdAt", "desc")
+      .get();
 
-    const donations = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const donations = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        // Ensure name field exists for older donations
+        name: data.name || "Anonymous",
+        // Convert Firestore timestamp to ISO string for frontend
+        createdAt:
+          data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      };
+    });
 
     return NextResponse.json({ success: true, donations });
   } catch (error) {

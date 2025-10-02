@@ -79,6 +79,7 @@ const PaystackButton: React.FC<PaystackButtonProps> = ({
 export default function DonationForm() {
   const [amount, setAmount] = useState<number>(1000);
   const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!;
@@ -92,6 +93,7 @@ export default function DonationForm() {
         body: JSON.stringify({
           email,
           amount,
+          name: name.trim() || "Anonymous",
           reference: res.reference,
         }),
       });
@@ -103,6 +105,7 @@ export default function DonationForm() {
           `✅ Thank you for your donation of ₦${formatCurrency(amount)}! A confirmation email has been sent to ${email}.`
         );
         setEmail("");
+        setName("");
         setAmount(1000);
       } else {
         alert("❌ Failed to record donation: " + (data.error || data.message));
@@ -119,6 +122,13 @@ export default function DonationForm() {
 
   return (
     <div className="flex flex-col items-center gap-4 mt-8 w-full max-w-sm mx-auto">
+      <input
+        type="text"
+        placeholder="Your full name (optional)"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500"
+      />
       <input
         type="email"
         placeholder="Your email address"

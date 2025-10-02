@@ -18,7 +18,7 @@ const db = getFirestore();
 
 export async function POST(req: Request) {
   try {
-    const { amount, email } = await req.json();
+    const { amount, email, name } = await req.json();
 
     if (!amount || !email) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -30,6 +30,7 @@ export async function POST(req: Request) {
     await db.collection("donations").add({
       amount,
       email,
+      name: name || "Anonymous",
       reference,
       createdAt: new Date(),
     });

@@ -1,24 +1,10 @@
 // app/blog/page.tsx
 
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/firebase/config";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import BlogListPublic from "@/components/blog/BlogListPublic";
-
-// Firebase config (reuse same one as in your config file)
-const firebaseConfig = {
-  apiKey: "AIzaSyCfiM0xnrYTZkJXvWAscOM9dD34tKITBRs",
-  authDomain: "the-chorus-project.firebaseapp.com",
-  projectId: "the-chorus-project",
-  storageBucket: "the-chorus-project.firebasestorage.app",
-  messagingSenderId: "581997206429",
-  appId: "1:581997206429:web:f52457364c73c7ddf72d74",
-  measurementId: "G-4J4K2KHZ3Y",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 type BlogPost = {
   id: string;
@@ -26,6 +12,10 @@ type BlogPost = {
   slug: string;
   excerpt: string;
   image: string;
+  content?: string;
+  author?: string;
+  date?: string;
+  createdAt?: any;
 };
 
 export default async function BlogPage() {

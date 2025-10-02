@@ -12,10 +12,12 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  query,
-  where,
 } from "firebase/firestore";
 import AddMemberForm from "@/components/AddMemberForm";
+import DataTable from "@/components/admin/DataTable";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
+import { Edit, Trash2, Plus, User } from "lucide-react";
+import Image from "next/image";
 
 interface Member {
   id: string;
@@ -32,9 +34,7 @@ export default function AdminMembersPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
   const [editing, setEditing] = useState<Member | null>(null);
-  const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [showAddForm, setShowAddForm] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -84,21 +84,104 @@ export default function AdminMembersPage() {
     }
   };
 
-  const filteredMembers = members.filter((member) =>
-    member.name.toLowerCase().includes(search.toLowerCase()) ||
-    member.title.toLowerCase().includes(search.toLowerCase()) ||
-    member.section.toLowerCase().includes(search.toLowerCase())
-  );
+  const columns = [
+    {
+      key: "image",
+      label: "Photo",
+      sortable: false,
+      render: (value: string, row: Member) => (
+        <div className="flex items-center">
+          {value ? (
+            <Image
+              src={value}
+              alt={row.name}
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+              <User className="w-5 h-5 text-gray-400" />
+            </div>
+          )}
+        </div>
+      ),
+      width: "80px",
+    },
+    {
+      key: "name",
+      label: "Name",
+      sortable: true,
+      render: (value: string, row: Member) => (
+        <div>
+          <div className="font-medium text-gray-900">{value}</div>
+          <div className="text-sm text-gray-500">{row.title}</div>
+        </div>
+      ),
+    },
+    {
+      key: "section",
+      label: "Section",
+      sortable: true,
+      render: (value: string) => (
+        <span
+          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+            value.toLowerCase().includes("soprano")
+              ? "bg-pink-100 text-pink-800"
+              : value.toLowerCase().includes("alto")
+                ? "bg-purple-100 text-purple-800"
+                : value.toLowerCase().includes("tenor")
+                  ? "bg-blue-100 text-blue-800"
+                  : value.toLowerCase().includes("bass")
+                    ? "bg-green-100 text-green-800"
+                    : "bg-gray-100 text-gray-800"
+          }`}
+        >
+          {value}
+        </span>
+      ),
+    },
+    {
+      key: "bio",
+      label: "Bio",
+      sortable: false,
+      render: (value: string) => (
+        <div className="max-w-xs">
+          <p className="text-sm text-gray-600 truncate" title={value}>
+            {value}
+          </p>
+        </div>
+      ),
+    },
+  ];
 
-  const paginatedMembers = filteredMembers.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const totalPages = Math.ceil(filteredMembers.length / itemsPerPage);
+  const actions = [
+    {
+      label: "Edit Member",
+      icon: Edit,
+      onClick: (row: Member) => setEditing(row),
+      variant: "primary" as const,
+    },
+    {
+      label: "Delete Member",
+      icon: Trash2,
+      onClick: (row: Member) => handleDelete(row.id),
+      variant: "danger" as const,
+    },
+  ];
 
   if (loading) {
-    return <div className="text-center mt-20">Loading...</div>;
+    return (
+      <div className="p-6">
+        <AdminPageHeader
+          title="Members Management"
+          description="Manage choir members and their information"
+        />
+        <div className="mt-6">
+          <DataTable data={[]} columns={columns} loading={true} />
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
@@ -106,139 +189,169 @@ export default function AdminMembersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="max-w-2xl mx-auto bg-white shadow rounded p-6 mb-10">
-        <h1 className="text-2xl font-bold mb-4 text-center">Add New Member</h1>
-        <AddMemberForm />
-      </div>
-
-      <div className="max-w-4xl mx-auto bg-white shadow rounded p-6">
-        <h2 className="text-xl font-semibold mb-4">Edit Existing Members</h2>
-
-        <input
-          type="text"
-          placeholder="Search by name, title, or section..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full mb-6 p-2 border rounded"
-        />
-
-        <ul className="divide-y">
-          {paginatedMembers.map((member) => (
-            <li key={member.id} className="py-4">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-semibold">{member.name}</p>
-                  <p className="text-sm text-gray-500">
-                    {member.title} - {member.section}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setEditing(member)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(member.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex justify-between mt-6">
+    <div className="p-6 space-y-6">
+      <AdminPageHeader
+        title="Members Management"
+        description={`Manage ${members.length} choir members and their information`}
+        action={
           <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((p) => p - 1)}
-            className="bg-gray-200 hover:bg-gray-300 text-sm px-4 py-2 rounded disabled:opacity-50"
+            onClick={() => setShowAddForm(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
           >
-            Previous
+            <Plus className="w-4 h-4" />
+            Add New Member
           </button>
-          <span className="text-sm self-center">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((p) => p + 1)}
-            className="bg-gray-200 hover:bg-gray-300 text-sm px-4 py-2 rounded disabled:opacity-50"
-          >
-            Next
-          </button>
+        }
+      />
+
+      {showAddForm && (
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Add New Member
+            </h2>
+            <button
+              onClick={() => setShowAddForm(false)}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          </div>
+          <AddMemberForm />
         </div>
+      )}
 
-        {editing && (
-          <form onSubmit={handleUpdate} className="mt-6 space-y-4">
-            <h3 className="font-bold text-lg">Editing {editing.name}</h3>
-            <input
-              name="name"
-              value={editing.name}
-              onChange={(e) =>
-                setEditing({ ...editing, name: e.target.value })
-              }
-              className="w-full border p-2 rounded"
-              required
-            />
-            <input
-              name="title"
-              value={editing.title}
-              onChange={(e) =>
-                setEditing({ ...editing, title: e.target.value })
-              }
-              className="w-full border p-2 rounded"
-              required
-            />
-            <input
-              name="section"
-              value={editing.section}
-              onChange={(e) =>
-                setEditing({ ...editing, section: e.target.value })
-              }
-              className="w-full border p-2 rounded"
-              required
-            />
-            <input
-              name="image"
-              value={editing.image}
-              onChange={(e) =>
-                setEditing({ ...editing, image: e.target.value })
-              }
-              className="w-full border p-2 rounded"
-              required
-            />
-            <textarea
-              name="bio"
-              value={editing.bio}
-              onChange={(e) =>
-                setEditing({ ...editing, bio: e.target.value })
-              }
-              rows={5}
-              className="w-full border p-2 rounded"
-              required
-            />
-            <div className="flex gap-4">
+      <DataTable
+        data={members}
+        columns={columns}
+        actions={actions}
+        searchable={true}
+        exportable={true}
+        selectable={true}
+        pagination={true}
+        pageSize={10}
+        emptyMessage="No members found. Add your first member to get started."
+      />
+
+      {editing && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Edit Member: {editing.name}
+              </h3>
               <button
-                type="submit"
-                className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded"
-              >
-                Save Changes
-              </button>
-              <button
-                type="button"
                 onClick={() => setEditing(null)}
-                className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded"
+                className="text-gray-400 hover:text-gray-600"
               >
-                Cancel
+                ✕
               </button>
             </div>
-          </form>
-        )}
-      </div>
+
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  name="name"
+                  value={editing.name}
+                  onChange={(e) =>
+                    setEditing({ ...editing, name: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Title
+                </label>
+                <input
+                  name="title"
+                  value={editing.title}
+                  onChange={(e) =>
+                    setEditing({ ...editing, title: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Section
+                </label>
+                <select
+                  name="section"
+                  value={editing.section}
+                  onChange={(e) =>
+                    setEditing({ ...editing, section: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                >
+                  <option value="">Select a section</option>
+                  <option value="Soprano">Soprano</option>
+                  <option value="Alto">Alto</option>
+                  <option value="Tenor">Tenor</option>
+                  <option value="Bass">Bass</option>
+                  <option value="Piano">Piano</option>
+                  <option value="Conductor">Conductor</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Image URL
+                </label>
+                <input
+                  name="image"
+                  value={editing.image}
+                  onChange={(e) =>
+                    setEditing({ ...editing, image: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bio
+                </label>
+                <textarea
+                  name="bio"
+                  value={editing.bio}
+                  onChange={(e) =>
+                    setEditing({ ...editing, bio: e.target.value })
+                  }
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditing(null)}
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
