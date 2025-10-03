@@ -1,23 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { adminStorage, adminAuth } from "@/lib/firebase-admin";
-import { ImageProcessor } from "@/lib/imageProcessor";
-
-interface UploadResponse {
-  success: boolean;
-  url: string;
-  fileName: string;
-  path: string;
-  size: number;
-  originalSize?: number;
-  optimized?: boolean;
-  variants?: {
-    [key: string]: {
-      url: string;
-      path: string;
-      size: number;
-    };
-  };
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -46,151 +28,62 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get("file") as File;
     const folder = (formData.get("folder") as string) || "uploads";
-    const optimize = formData.get("optimize") === "true";
-    const createVariants = formData.get("createVariants") === "true";
-    const quality = parseInt(formData.get("quality") as string) || 85;
-    const maxWidth = parseInt(formData.get("maxWidth") as string) || undefined;
-    const maxHeight =
-      parseInt(formData.get("maxHeight") as string) || undefined;
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // Convert file to buffer
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const originalSize = buffer.length;
+    // Validate file
+    if (file.size > 10 * 1024 * 1024) {
+      // 10MB limit
+      return NextResponse.json(
+        { error: "File size too large (max 10MB)" },
+        { status: 400 }
+      );
+    }
 
-    // Generate base filename components
+    // Generate unique filename
     const timestamp = Date.now();
     const randomId = Math.random().toString(36).substring(2, 8);
+    const extension = file.name.split(".").pop();
     const cleanName = file.name
       .replace(/\.[^/.]+$/, "")
       .replace(/[^a-zA-Z0-9]/g, "-")
       .toLowerCase();
 
+    const fileName = `${folder}/${timestamp}-${randomId}-${cleanName}.${extension}`;
+
+    // Convert file to buffer
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Upload to Firebase Storage using Admin SDK
     const bucket = adminStorage.bucket();
-    let finalBuffer = buffer;
-    let finalContentType = file.type;
-    let finalSize = originalSize;
-    let isOptimized = false;
+    const fileUpload = bucket.file(fileName);
 
-    // Check if it's an image and should be optimized
-    const isImage = file.type.startsWith("image/");
-
-    if (isImage && optimize) {
-      try {
-        // Validate image first
-        const validation = await ImageProcessor.validateFile(buffer);
-        if (!validation.isValid) {
-          return NextResponse.json(
-            { error: validation.error },
-            { status: 400 }
-          );
-        }
-
-        // Process the main image
-        const processed = await ImageProcessor.processImage(buffer, {
-          width: maxWidth,
-          height: maxHeight,
-          quality: quality,
-          format: "webp", // Convert to WebP for better compression
-          maintainAspectRatio: true,
-        });
-
-        finalBuffer = Buffer.from(processed.buffer);
-        finalContentType = processed.contentType;
-        finalSize = processed.size;
-        isOptimized = true;
-
-        console.log(
-          `Image optimized: ${originalSize} -> ${finalSize} bytes (${Math.round((1 - finalSize / originalSize) * 100)}% reduction)`
-        );
-      } catch (error) {
-        console.error("Image optimization failed:", error);
-        // Fall back to original file if optimization fails
-      }
-    }
-
-    // Main file upload
-    const extension = isOptimized ? "webp" : file.name.split(".").pop();
-    const mainFileName = `${folder}/${timestamp}-${randomId}-${cleanName}.${extension}`;
-    const mainFileUpload = bucket.file(mainFileName);
-
-    await mainFileUpload.save(finalBuffer, {
+    await fileUpload.save(buffer, {
       metadata: {
-        contentType: finalContentType,
+        contentType: file.type,
         metadata: {
           originalName: file.name,
           uploadedAt: new Date().toISOString(),
-          optimized: isOptimized.toString(),
-          originalSize: originalSize.toString(),
         },
       },
     });
 
-    await mainFileUpload.makePublic();
-    const mainPublicUrl = `https://storage.googleapis.com/${bucket.name}/${mainFileName}`;
+    // Make file publicly accessible
+    await fileUpload.makePublic();
 
-    const response: UploadResponse = {
+    // Get public URL
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+
+    return NextResponse.json({
       success: true,
-      url: mainPublicUrl,
+      url: publicUrl,
       fileName: file.name,
-      path: mainFileName,
-      size: finalSize,
-      originalSize: originalSize,
-      optimized: isOptimized,
-    };
-
-    // Create image variants if requested
-    if (isImage && createVariants) {
-      try {
-        const variants = await ImageProcessor.createImageVariants(
-          buffer,
-          cleanName
-        );
-        const uploadedVariants: {
-          [key: string]: { url: string; path: string; size: number };
-        } = {};
-
-        for (const [variantName, variantData] of Object.entries(variants)) {
-          const variantPath = `${folder}/variants/${timestamp}-${randomId}-${variantData.fileName}`;
-          const variantFile = bucket.file(variantPath);
-
-          await variantFile.save(Buffer.from(variantData.buffer), {
-            metadata: {
-              contentType: variantData.contentType,
-              metadata: {
-                originalName: file.name,
-                variant: variantName,
-                uploadedAt: new Date().toISOString(),
-                dimensions: JSON.stringify(variantData.dimensions),
-              },
-            },
-          });
-
-          await variantFile.makePublic();
-          const variantUrl = `https://storage.googleapis.com/${bucket.name}/${variantPath}`;
-
-          uploadedVariants[variantName] = {
-            url: variantUrl,
-            path: variantPath,
-            size: variantData.size,
-          };
-        }
-
-        response.variants = uploadedVariants;
-        console.log(
-          `Created ${Object.keys(uploadedVariants).length} image variants`
-        );
-      } catch (error) {
-        console.error("Variant creation failed:", error);
-        // Continue without variants if creation fails
-      }
-    }
-
-    return NextResponse.json(response);
+      path: fileName,
+      size: file.size,
+    });
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json(

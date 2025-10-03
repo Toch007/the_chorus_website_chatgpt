@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "@/components/Reveal";
+import LazyVideo from "@/components/LazyVideo";
 import { useEffect, useRef } from "react";
 
 export default function Hero() {
@@ -28,16 +29,22 @@ export default function Hero() {
       id="hero"
       className="relative h-screen overflow-hidden text-white flex flex-col justify-center items-center text-center px-4"
     >
-      {/* Parallax Video */}
-      <video
+      {/* Optimized Parallax Video */}
+      <div
         ref={videoRef}
-        className="absolute top-0 left-0 w-full h-full object-cover z-0 scale-110 transition-transform duration-100"
-        src="/videos/chorus-video2.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+        className="absolute top-0 left-0 w-full h-full z-0 scale-110 transition-transform duration-100"
+      >
+        <LazyVideo
+          src="/videos/chorus-video2.mp4"
+          poster="/images/hero-poster.jpg"
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+      </div>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />

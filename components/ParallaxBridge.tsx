@@ -2,6 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 
@@ -11,7 +12,7 @@ type ParallaxBridgeProps = {
   heading: string;
   subtext?: string;
   height?: string;
-  ticketUrl?: string; 
+  ticketUrl?: string;
 };
 
 export default function ParallaxBridge({
@@ -23,8 +24,13 @@ export default function ParallaxBridge({
 }: ParallaxBridgeProps) {
   return (
     <section
-      className={`relative ${height} bg-fixed bg-center bg-cover flex items-center justify-center`}
-      style={{ backgroundImage: `url(${image})` }}
+      className={`relative ${height} flex items-center justify-center overflow-hidden`}
+      style={{
+        backgroundImage: `url(${image})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-70" />
 
@@ -49,7 +55,11 @@ export default function ParallaxBridge({
               className="inline-block px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-xl shadow-lg hover:bg-primary/90 transition"
             >
               🎟️ Get Tickets Now
-              <p> Limited seats available — don’t miss this unforgettable performance.</p>
+              <p>
+                {" "}
+                Limited seats available — don’t miss this unforgettable
+                performance.
+              </p>
             </Link>
           </div>
         )}

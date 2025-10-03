@@ -13,6 +13,7 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "../components/Footer";
 import Partners from "@/components/Partners";
 import ParallaxBridge from "@/components/ParallaxBridge";
+import PerformanceMonitor from "@/components/PerformanceMonitor";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -138,6 +139,9 @@ export default function HomePage() {
       <Testimonials />
       <Partners />
       <Footer />
+
+      {/* Performance Monitor - Only shows in development */}
+      <PerformanceMonitor />
     </>
   );
 }

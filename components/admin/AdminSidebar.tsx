@@ -18,6 +18,7 @@ import {
   FolderOpen,
   Settings,
   LogOut,
+  Zap,
   Menu,
   X,
   ChevronRight,
@@ -103,6 +104,11 @@ export default function AdminSidebar({
       name: "File Manager",
       href: "/admin/files",
       icon: FolderOpen,
+    },
+    {
+      name: "Image Optimization",
+      href: "/admin/test-optimization",
+      icon: Zap,
     },
     {
       name: "Applications",

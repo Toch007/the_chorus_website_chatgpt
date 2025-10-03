@@ -23,9 +23,9 @@ import ParallaxBridge from "@/components/ParallaxBridge";
 const joinOptions = [
   {
     icon: <Music className="w-10 h-10 text-blue-700" />,
-    title: "Choir Member",
+    title: "Join the Choir",
     description:
-      "Share your voice with our talented group of singers across all vocal ranges.",
+      "Use your voice to inspire, uplift, and minister through music.",
     link: "/join/choir",
   },
   {
@@ -52,24 +52,16 @@ const joinOptions = [
 
 const faqs = [
   {
-    q: "Do I need experience to join the choir?",
-    a: "Not at all! We welcome singers of all levels. We provide training and support to help everyone improve and contribute meaningfully.",
+    q: "Who can join?",
+    a: "Anyone with a passion for music, service, or creativity is welcome!",
   },
   {
-    q: "What's the time commitment?",
-    a: "We have regular rehearsals twice a week and occasional performances on weekends. We understand life can be busy and work with your schedule.",
+    q: "When are rehearsals?",
+    a: "Rehearsals usually hold on weekends — you'll get exact details after signing up.",
   },
   {
-    q: "Are there any fees involved?",
-    a: "There are no membership fees. We believe music should be accessible to everyone who has a heart for it.",
-  },
-  {
-    q: "Can I join if I'm not a Christian?",
-    a: "While we're a gospel choir, we welcome anyone who appreciates our music and values. Our community is built on love, respect, and inclusion.",
-  },
-  {
-    q: "What if I can't make it to every rehearsal?",
-    a: "We understand that life happens. Just communicate with us, and we'll work together to keep you engaged and up to speed.",
+    q: "Do I need musical experience?",
+    a: "Not at all. We’ll guide and train you — just come with a willing heart.",
   },
 ];
 
@@ -77,29 +69,29 @@ export default function JoinPage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const statistics = [
-    {
-      icon: Users,
-      value: "150+",
+    { 
+      icon: Users, 
+      value: "150+", 
       label: "Active Members",
-      description: "Talented individuals from all walks of life",
+      description: "Talented individuals from all walks of life"
     },
-    {
-      icon: Calendar,
-      value: "50+",
+    { 
+      icon: Calendar, 
+      value: "50+", 
       label: "Annual Events",
-      description: "Concerts, workshops, and community programs",
+      description: "Concerts, workshops, and community programs"
     },
-    {
-      icon: Award,
-      value: "15+",
+    { 
+      icon: Award, 
+      value: "15+", 
       label: "Years of Excellence",
-      description: "Leading contemporary gospel music in Nigeria",
+      description: "Leading contemporary gospel music in Nigeria"
     },
-    {
-      icon: Heart,
-      value: "1000+",
+    { 
+      icon: Heart, 
+      value: "1000+", 
       label: "Lives Touched",
-      description: "Through our music and community outreach",
+      description: "Through our music and community outreach"
     },
   ];
 
@@ -114,9 +106,7 @@ export default function JoinPage() {
             <Reveal>
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full mb-6">
                 <Heart className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-800">
-                  Join Our Musical Family
-                </span>
+                <span className="text-sm font-medium text-blue-800">Join Our Musical Family</span>
               </div>
               <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-900 via-purple-800 to-blue-900 bg-clip-text text-transparent mb-6">
                 Become Part of Something
@@ -124,9 +114,8 @@ export default function JoinPage() {
                 <span className="text-5xl">Extraordinary</span>
               </h1>
               <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-12">
-                Join Nigeria's most dynamic contemporary choir. Whether you're a
-                vocalist, instrumentalist, or supporter, discover your place in
-                our community of passionate musicians and believers.
+                Join Nigeria's most dynamic contemporary choir. Whether you're a vocalist, instrumentalist, 
+                or supporter, discover your place in our community of passionate musicians and believers.
               </p>
 
               {/* Statistics Grid */}
@@ -137,15 +126,9 @@ export default function JoinPage() {
                       <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                         <stat.icon className="w-6 h-6 text-white" />
                       </div>
-                      <div className="text-3xl font-bold text-blue-900 mb-1">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm font-semibold text-gray-800 mb-2">
-                        {stat.label}
-                      </div>
-                      <div className="text-xs text-gray-600">
-                        {stat.description}
-                      </div>
+                      <div className="text-3xl font-bold text-blue-900 mb-1">{stat.value}</div>
+                      <div className="text-sm font-semibold text-gray-800 mb-2">{stat.label}</div>
+                      <div className="text-xs text-gray-600">{stat.description}</div>
                     </div>
                   </Reveal>
                 ))}
@@ -170,7 +153,6 @@ export default function JoinPage() {
             </Reveal>
           </div>
         </section>
-
         <ParallaxBridge
           image="/images/gallery1.jpg"
           heading="A Perfect Harmony"
@@ -185,8 +167,7 @@ export default function JoinPage() {
                 Why Choose The Chorus?
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Discover the unique benefits and opportunities that await you as
-                a member of our musical family
+                Discover the unique benefits and opportunities that await you as a member of our musical family
               </p>
             </div>
           </Reveal>
@@ -197,12 +178,9 @@ export default function JoinPage() {
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Music className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-blue-900 mb-3">
-                  Professional Training
-                </h3>
+                <h3 className="text-xl font-bold text-blue-900 mb-3">Professional Training</h3>
                 <p className="text-gray-600">
-                  Learn from experienced vocal coaches and musicians who will
-                  help you reach your full potential
+                  Learn from experienced vocal coaches and musicians who will help you reach your full potential
                 </p>
               </div>
             </Reveal>
@@ -212,12 +190,9 @@ export default function JoinPage() {
                 <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Heart className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-blue-900 mb-3">
-                  Supportive Community
-                </h3>
+                <h3 className="text-xl font-bold text-blue-900 mb-3">Supportive Community</h3>
                 <p className="text-gray-600">
-                  Join a family of believers who share your passion for music
-                  and spiritual growth
+                  Join a family of believers who share your passion for music and spiritual growth
                 </p>
               </div>
             </Reveal>
@@ -227,12 +202,9 @@ export default function JoinPage() {
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Award className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-blue-900 mb-3">
-                  Performance Opportunities
-                </h3>
+                <h3 className="text-xl font-bold text-blue-900 mb-3">Performance Opportunities</h3>
                 <p className="text-gray-600">
-                  Showcase your talents in concerts, events, and outreach
-                  programs across Nigeria
+                  Showcase your talents in concerts, events, and outreach programs across Nigeria
                 </p>
               </div>
             </Reveal>
@@ -243,13 +215,10 @@ export default function JoinPage() {
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-blue-100">
                 <div className="flex items-center gap-4 mb-4">
                   <CheckCircle className="w-8 h-8 text-green-500" />
-                  <h4 className="text-lg font-semibold text-blue-900">
-                    Flexible Commitment
-                  </h4>
+                  <h4 className="text-lg font-semibold text-blue-900">Flexible Commitment</h4>
                 </div>
                 <p className="text-gray-600">
-                  We understand life can be busy. Our rehearsal schedules are
-                  designed to accommodate different lifestyles and commitments.
+                  We understand life can be busy. Our rehearsal schedules are designed to accommodate different lifestyles and commitments.
                 </p>
               </div>
             </Reveal>
@@ -258,14 +227,10 @@ export default function JoinPage() {
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-purple-100">
                 <div className="flex items-center gap-4 mb-4">
                   <CheckCircle className="w-8 h-8 text-green-500" />
-                  <h4 className="text-lg font-semibold text-blue-900">
-                    Personal Growth
-                  </h4>
+                  <h4 className="text-lg font-semibold text-blue-900">Personal Growth</h4>
                 </div>
                 <p className="text-gray-600">
-                  Beyond music, you'll develop leadership skills, build
-                  confidence, and form lasting friendships that extend beyond
-                  rehearsals.
+                  Beyond music, you'll develop leadership skills, build confidence, and form lasting friendships that extend beyond rehearsals.
                 </p>
               </div>
             </Reveal>
@@ -280,8 +245,7 @@ export default function JoinPage() {
                 Ways to Get Involved
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Choose how you'd like to contribute to our mission of spreading
-                joy through music
+                Choose how you'd like to contribute to our mission of spreading joy through music
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -301,9 +265,7 @@ export default function JoinPage() {
                       <h3 className="text-xl font-bold text-blue-900 mb-3 group-hover:text-purple-800 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed mb-4">
-                        {item.description}
-                      </p>
+                      <p className="text-gray-600 leading-relaxed mb-4">{item.description}</p>
                       <div className="inline-flex items-center text-blue-600 font-semibold group-hover:text-purple-600 transition-colors">
                         Learn More
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -315,7 +277,6 @@ export default function JoinPage() {
             </div>
           </section>
         </Reveal>
-
         {/* Testimonials */}
         <section className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-12">
           <Reveal>
@@ -324,12 +285,11 @@ export default function JoinPage() {
                 Stories from Our Family
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Hear from members who have found their voice and purpose with
-                The Chorus
+                Hear from members who have found their voice and purpose with The Chorus
               </p>
             </div>
           </Reveal>
-
+          
           <div className="grid md:grid-cols-2 gap-8">
             <Reveal delay={0.2}>
               <div className="bg-white/80 backdrop-blur-sm border border-blue-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group">
@@ -339,24 +299,15 @@ export default function JoinPage() {
                   </div>
                   <div className="flex-1">
                     <p className="text-gray-700 leading-relaxed mb-4 italic">
-                      "Joining The Chorus gave me a second family. I've grown
-                      spiritually and musically in ways I never imagined
-                      possible. The support and encouragement here is
-                      incredible."
+                      "Joining The Chorus gave me a second family. I've grown spiritually and musically in ways I never imagined possible."
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">
-                          J
-                        </span>
+                        <span className="text-white font-semibold text-sm">J</span>
                       </div>
                       <div>
-                        <div className="font-semibold text-blue-900">
-                          Joy Adebayo
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          Alto • 3 years with us
-                        </div>
+                        <div className="font-semibold text-blue-900">Joy Adebayo</div>
+                        <div className="text-sm text-gray-600">Alto • 3 years with us</div>
                       </div>
                     </div>
                   </div>
@@ -372,23 +323,15 @@ export default function JoinPage() {
                   </div>
                   <div className="flex-1">
                     <p className="text-gray-700 leading-relaxed mb-4 italic">
-                      "I love the energy, the passion, and the sense of purpose
-                      here. It's powerful how music can unite people and touch
-                      hearts. This community has changed my life."
+                      "I love the energy, the passion, and the sense of purpose here. This is my musical family."
                     </p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-blue-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">
-                          S
-                        </span>
+                        <span className="text-white font-semibold text-sm">S</span>
                       </div>
                       <div>
-                        <div className="font-semibold text-blue-900">
-                          Samuel Okafor
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          Volunteer • 2 years with us
-                        </div>
+                        <div className="font-semibold text-blue-900">Samuel Okafor</div>
+                        <div className="text-sm text-gray-600">Volunteer • 2 years with us</div>
                       </div>
                     </div>
                   </div>
@@ -396,42 +339,32 @@ export default function JoinPage() {
               </div>
             </Reveal>
           </div>
-
-          {/* Additional testimonials */}
-          <div className="grid md:grid-cols-2 gap-8 mt-8">
-            <Reveal delay={0.6}>
-              <div className="bg-white/60 backdrop-blur-sm border border-purple-100 p-6 rounded-2xl hover:bg-white/80 transition-all duration-300">
-                <Quote className="w-5 h-5 text-purple-600 mb-3" />
-                <p className="text-gray-700 text-sm italic mb-3">
-                  "The vocal training here is exceptional. I've discovered parts
-                  of my voice I never knew existed."
+          
+          <div className="text-center"></div>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-blue-50 p-6 rounded-xl shadow">
+                <Quote className="w-6 h-6 text-blue-700 mb-2" />
+                <p className="italic text-gray-700">
+                  “Joining The Chorus gave me a second family. I’ve grown
+                  spiritually and musically.”
                 </p>
-                <div className="text-sm">
-                  <span className="font-semibold text-purple-900">
-                    Maria Santos
-                  </span>
-                  <span className="text-gray-600"> • Soprano</span>
-                </div>
+                <footer className="mt-4 text-sm font-medium text-blue-700">
+                  – Joy, Alto
+                </footer>
               </div>
-            </Reveal>
-
-            <Reveal delay={0.8}>
-              <div className="bg-white/60 backdrop-blur-sm border border-blue-100 p-6 rounded-2xl hover:bg-white/80 transition-all duration-300">
-                <Quote className="w-5 h-5 text-blue-600 mb-3" />
-                <p className="text-gray-700 text-sm italic mb-3">
-                  "Being part of the tech team has been incredibly fulfilling.
-                  We're making a real impact behind the scenes."
+              <div className="bg-blue-50 p-6 rounded-xl shadow">
+                <Quote className="w-6 h-6 text-blue-700 mb-2" />
+                <p className="italic text-gray-700">
+                  “I love the energy, the passion, and the sense of purpose
+                  here. It’s powerful.”
                 </p>
-                <div className="text-sm">
-                  <span className="font-semibold text-blue-900">
-                    David Chen
-                  </span>
-                  <span className="text-gray-600"> • Tech Team</span>
-                </div>
+                <footer className="mt-4 text-sm font-medium text-blue-700">
+                  – Sam, Volunteer
+                </footer>
               </div>
-            </Reveal>
-          </div>
-        </section>
+            </div>
+          </section>
+        </Reveal>
 
         {/* FAQ */}
         <section className="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-12">
@@ -441,12 +374,11 @@ export default function JoinPage() {
                 Frequently Asked Questions
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Get answers to common questions about joining our choir
-                community
+                Get answers to common questions about joining our choir community
               </p>
             </div>
           </Reveal>
-
+          
           <div className="space-y-6 max-w-4xl mx-auto">
             {faqs.map((faq, idx) => (
               <Reveal key={idx} delay={idx * 0.1}>
@@ -455,12 +387,8 @@ export default function JoinPage() {
                     onClick={() => setOpenFAQ(openFAQ === idx ? null : idx)}
                     className="w-full flex justify-between items-center px-8 py-6 text-left text-gray-800 font-semibold hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group"
                   >
-                    <span className="text-lg group-hover:text-blue-800 transition-colors">
-                      {faq.q}
-                    </span>
-                    <div
-                      className={`w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center transform transition-all duration-300 ${openFAQ === idx ? "rotate-180 scale-110" : "group-hover:scale-110"}`}
-                    >
+                    <span className="text-lg group-hover:text-blue-800 transition-colors">{faq.q}</span>
+                    <div className={`w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center transform transition-all duration-300 ${openFAQ === idx ? "rotate-180 scale-110" : "group-hover:scale-110"}`}>
                       <ChevronDown className="w-5 h-5 text-white" />
                     </div>
                   </button>
@@ -477,13 +405,9 @@ export default function JoinPage() {
           {/* Call to Action */}
           <Reveal delay={0.6}>
             <div className="text-center mt-16 p-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-white">
-              <h3 className="text-2xl font-bold mb-4">
-                Ready to Join Our Family?
-              </h3>
+              <h3 className="text-2xl font-bold mb-4">Ready to Join Our Family?</h3>
               <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-                Take the first step towards an incredible musical journey.
-                Whether you're a seasoned performer or just starting out,
-                there's a place for you here.
+                Take the first step towards an incredible musical journey. Whether you're a seasoned performer or just starting out, there's a place for you here.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link

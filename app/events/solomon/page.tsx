@@ -2,15 +2,21 @@
 "use client";
 
 import TicketStore, { Ticket } from "@/components/TicketStore";
+import CountdownTimer from "@/components/CountdownTimer";
+import VenueDetails from "@/components/VenueDetails";
 import { motion } from "framer-motion";
 
 const solomonTickets: Ticket[] = [
   { name: "Bronze", price: 10000, perks: [], color: "bg-amber-500" },
   { name: "Silver", price: 30000, perks: [], color: "bg-slate-400" },
   { name: "Gold", price: 50000, perks: [], color: "bg-yellow-400" },
-  { name: "Diamond", price: 100000, perks: ["🎟 Admits 2 Persons"], color: "bg-blue-600" },
+  {
+    name: "Diamond",
+    price: 100000,
+    perks: ["🎟 Admits 2 Persons"],
+    color: "bg-blue-600",
+  },
 ];
-
 
 export default function SolomonEventPage() {
   return (
@@ -45,6 +51,22 @@ export default function SolomonEventPage() {
           A dramatized musical performance by <strong>The Chorus Abuja</strong>.
         </motion.p>
 
+        {/* Countdown Timer */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          className="mb-8"
+        >
+          <div className="text-yellow-300 text-sm font-semibold mb-4 uppercase tracking-wide">
+            🔥 Limited Time - Event Starts In:
+          </div>
+          <CountdownTimer targetDate="2025-11-16T18:00:00" className="mb-4" />
+          <div className="text-red-400 text-sm font-medium animate-pulse">
+            ⚡ Only 50 tickets remaining!
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,8 +80,21 @@ export default function SolomonEventPage() {
           </div>
         </motion.div>
 
+        {/* Venue Details */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.8, duration: 0.9 }}
+          className="mt-12 w-full max-w-4xl"
+        >
+          <VenueDetails />
+        </motion.div>
+
         <div className="mt-8 text-gray-200 text-sm">
-          📅 <strong>Date:</strong> November 16, 2025 &nbsp;•&nbsp; 📍 <strong>Venue:</strong> Nigerian Society of Engineers Hall, 1012, Sani Abacha Way, CBD, Abuja
+          📅 <strong>Date:</strong> November 16, 2025 &nbsp;•&nbsp; 📍{" "}
+          <strong>Venue:</strong> Nigerian Society of Engineers Hall, 1012, Sani
+          Abacha Way, CBD, Abuja
         </div>
       </div>
     </main>
