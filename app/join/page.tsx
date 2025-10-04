@@ -79,25 +79,25 @@ export default function JoinPage() {
   const statistics = [
     {
       icon: Users,
-      value: "150+",
+      value: "53+",
       label: "Active Members",
       description: "Talented individuals from all walks of life",
     },
     {
       icon: Calendar,
-      value: "50+",
-      label: "Annual Events",
-      description: "Concerts, workshops, and community programs",
+      value: "8",
+      label: "Concerts Performed",
+      description: "Memorable performances that inspire and uplift",
     },
     {
       icon: Award,
-      value: "15+",
+      value: "4+",
       label: "Years of Excellence",
       description: "Leading contemporary gospel music in Nigeria",
     },
     {
       icon: Heart,
-      value: "1000+",
+      value: "1500+",
       label: "Lives Touched",
       description: "Through our music and community outreach",
     },
@@ -351,9 +351,7 @@ export default function JoinPage() {
                         </span>
                       </div>
                       <div>
-                        <div className="font-semibold text-blue-900">
-                          Joy Adebayo
-                        </div>
+                        <div className="font-semibold text-blue-900">Joy</div>
                         <div className="text-sm text-gray-600">
                           Alto • 3 years with us
                         </div>
@@ -407,9 +405,7 @@ export default function JoinPage() {
                   of my voice I never knew existed."
                 </p>
                 <div className="text-sm">
-                  <span className="font-semibold text-purple-900">
-                    Maria Santos
-                  </span>
+                  <span className="font-semibold text-purple-900"></span>
                   <span className="text-gray-600"> • Soprano</span>
                 </div>
               </div>
@@ -423,9 +419,7 @@ export default function JoinPage() {
                   We're making a real impact behind the scenes."
                 </p>
                 <div className="text-sm">
-                  <span className="font-semibold text-blue-900">
-                    David Chen
-                  </span>
+                  <span className="font-semibold text-blue-900">Uzor</span>
                   <span className="text-gray-600"> • Tech Team</span>
                 </div>
               </div>

@@ -45,13 +45,13 @@ export default function Events() {
   return (
     <section className="bg-gray-100 py-16 px-6 md:px-20" id="events">
       <div className="max-w-6xl mx-auto text-center">
-        <Reveal direction="up">
+        <Reveal direction="down" delay={0.1}>
           <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
             Upcoming Performances
           </h2>
         </Reveal>
 
-        <Reveal direction="up" delay={0.2}>
+        <Reveal direction="up" delay={0.3}>
           <p className="text-lg text-gray-700 mb-10">
             Stay inspired. Join us at our next concert, outreach, or festival
             appearance.
@@ -59,7 +59,7 @@ export default function Events() {
         </Reveal>
 
         {upcomingEvents.length === 0 ? (
-          <Reveal direction="up" delay={0.3}>
+          <Reveal direction="left" delay={0.5}>
             <p className="text-gray-600">No upcoming events at the moment.</p>
           </Reveal>
         ) : (
@@ -73,8 +73,12 @@ export default function Events() {
             }`}
           >
             {upcomingEvents.map((event, index) => (
-              <Reveal key={event.id} direction="up" delay={index * 0.2}>
-                <div className="bg-white rounded-2xl shadow overflow-hidden text-left">
+              <Reveal
+                key={event.id}
+                direction={index % 2 === 0 ? "left" : "right"}
+                delay={0.5 + index * 0.1}
+              >
+                <div className="bg-white rounded-2xl shadow hover:shadow-xl overflow-hidden text-left transform hover:-translate-y-1 transition-all duration-300">
                   {event.image && (
                     <Image
                       src={event.image}
@@ -99,10 +103,10 @@ export default function Events() {
           </div>
         )}
 
-        <Reveal direction="left" delay={0.4}>
+        <Reveal direction="up" delay={0.8}>
           <Link
             href="/events"
-            className="inline-block bg-blue-800 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
+            className="inline-block bg-blue-800 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300"
           >
             📅 See All Events
           </Link>

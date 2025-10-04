@@ -5,7 +5,7 @@ import LazyVideo from "@/components/LazyVideo";
 import { useEffect, useRef } from "react";
 
 export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +36,7 @@ export default function Hero() {
       >
         <LazyVideo
           src="/videos/chorus-video2.mp4"
-          poster="/images/hero-poster.jpg"
+          poster="/images/chorus.jpg"
           className="w-full h-full object-cover"
           autoPlay
           muted

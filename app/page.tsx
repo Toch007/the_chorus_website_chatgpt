@@ -72,8 +72,8 @@ export default function HomePage() {
                   Limited Seats Available!
                 </h2>
                 <p className="text-gray-200 mb-6">
-                  Don’t miss{" "}
-                  <span className="font-semibold">Handel’s Solomon</span> — a
+                  Don't miss{" "}
+                  <span className="font-semibold">Handel's Solomon</span> — a
                   dramatized musical performance on{" "}
                   <span className="font-semibold">16 November 2025</span>.
                   Secure your tickets now before they sell out!
@@ -93,8 +93,8 @@ export default function HomePage() {
 
       <ParallaxBridge
         image="/images/chorus2.jpg"
-        heading="Abuja’s Premier Choir"
-        subtext="With over 7 Books performed in 4 years, The Chorus Abuja has filled concert halls and hearts with unforgettable performances."
+        heading="Abuja's Premier Choir"
+        subtext="With over 4 years of excellence and 8 captivating concerts performed, The Chorus Abuja has filled concert halls and hearts with unforgettable performances."
       />
 
       <About />
@@ -120,7 +120,7 @@ export default function HomePage() {
 
       <ParallaxBridge
         image="/images/solomon-1.jpg"
-        heading="Experience Handel’s Solomon"
+        heading="Experience Handel's Solomon"
         subtext="A dramatized musical performance like no other. A story of wisdom, love, and power — told in breathtaking harmony. 16 November, 2025."
         height="h-[100vh]"
         ticketUrl="events/solomon"

@@ -8,6 +8,7 @@
     "seed:events": "tsx scripts/seedEvents.ts",
     "seed:posts": "tsx scripts/seedBlogPosts.ts",
     "seed:members": "tsx scripts/seedMembers.ts",
+    "seed:applications": "tsx scripts/seedApplications.ts",
     "build:scripts": "tsc scripts/seedMembers.ts --outDir dist/scripts",
     "build": "next build",
     "start": "next start",

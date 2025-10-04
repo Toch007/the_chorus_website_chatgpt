@@ -323,7 +323,7 @@ export default function EventsPage() {
         <Reveal>
           <section
             className="relative bg-cover bg-center h-[500px] flex items-center justify-center text-white mx-4 md:mx-8 rounded-2xl overflow-hidden shadow-2xl"
-            style={{ backgroundImage: 'url("/images/solomon.jpg")' }}
+            style={{ backgroundImage: 'url("/images/solomon1.jpg")' }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
             <div className="relative z-10 bg-black/40 backdrop-blur-sm p-10 rounded-2xl text-center max-w-3xl border border-white/20">

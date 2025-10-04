@@ -25,17 +25,23 @@ export default function Reveal({
   const variants = {
     hidden: {
       opacity: 0,
-      y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
-      x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
+      y: direction === "up" ? 50 : direction === "down" ? -50 : 0,
+      x: direction === "left" ? 50 : direction === "right" ? -50 : 0,
+      scale: 0.95,
     },
     visible: {
       opacity: 1,
       y: 0,
       x: 0,
+      scale: 1,
       transition: {
-        duration: 0.6,
+        duration: 0.7,
         delay,
-        ease: easeOut, // ✅ FIXED — imported from framer-motion
+        ease: easeOut,
+        scale: {
+          duration: 0.4,
+          delay: delay + 0.1,
+        },
       },
     },
   };

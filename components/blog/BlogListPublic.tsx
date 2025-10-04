@@ -8,7 +8,7 @@ export default function BlogListPublic({ posts }: { posts: any[] }) {
     (post) => post.title && post.slug && post.excerpt && post.image
   );
 
-  if (posts.length === 0) {
+  if (validPosts.length === 0 && posts.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">📝</div>
