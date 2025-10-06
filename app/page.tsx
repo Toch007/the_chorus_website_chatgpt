@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import Partners from "@/components/Partners";
 import ParallaxBridge from "@/components/ParallaxBridge";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
+import VideoGallery from "@/components/VideoGallery";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -98,25 +99,8 @@ export default function HomePage() {
       />
 
       <About />
-
-      <section className="relative bg-gray-50 py-16 px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
-          See the Power of Music Live
-        </h2>
-        <p className="text-gray-700 max-w-2xl mx-auto mb-8">
-          Our music speaks louder than words. Watch a glimpse of our live
-          performances.
-        </p>
-        <div className="relative max-w-4xl mx-auto aspect-video shadow-lg rounded-xl overflow-hidden">
-          <iframe
-            src="https://www.youtube.com/embed/FfC_dieiw6A?si=Rn7d7AlhXGAYxFoW"
-            title="The Chorus Abuja Performance"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full"
-          />
-        </div>
-      </section>
+      
+      <VideoGallery />
 
       <ParallaxBridge
         image="/images/solomon-1.jpg"
