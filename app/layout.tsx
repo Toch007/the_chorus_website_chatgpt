@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout"; // new client wrapper
-
+import PerformanceTracker from "@/components/PerformanceTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,11 +20,13 @@ export const metadata = {
     default: "The Chorus Abuja",
     template: "%s | The Chorus Abuja",
   },
-  description: "The Chorus Abuja — Elevating hearts and minds through classical music in Nigeria.",
+  description:
+    "The Chorus Abuja — Elevating hearts and minds through classical music in Nigeria.",
   metadataBase: new URL("https://thechorusabuja.com"),
   openGraph: {
     title: "The Chorus Abuja",
-    description: "Elevating hearts and minds through classical music in Nigeria.",
+    description:
+      "Elevating hearts and minds through classical music in Nigeria.",
     url: "https://thechorusabuja.com",
     siteName: "The Chorus Abuja",
     images: [
@@ -40,12 +42,12 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "The Chorus Abuja",
-    description: "Elevating hearts and minds through classical music in Nigeria.",
+    description:
+      "Elevating hearts and minds through classical music in Nigeria.",
     creator: "@thechorusabuja",
     images: ["https://thechorusabuja.com/og-image.png"],
   },
 };
-
 
 export default function RootLayout({
   children,
@@ -54,8 +56,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ClientLayout>{children}</ClientLayout>
+        <PerformanceTracker />
       </body>
     </html>
   );

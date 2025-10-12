@@ -121,31 +121,31 @@ export default function DonationForm() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 mt-8 w-full max-w-sm mx-auto">
+    <div className="flex flex-col items-center gap-6 mt-8 w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
       <input
         type="text"
         placeholder="Your full name (optional)"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-4 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
       />
       <input
         type="email"
         placeholder="Your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-4 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
       />
       <input
         type="number"
         min={100}
         value={amount}
         onChange={(e) => setAmount(Number(e.target.value))}
-        className="w-full px-4 py-2 border rounded text-center"
+        className="w-full px-4 py-4 border border-gray-300 rounded-lg text-center text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
       />
 
       <PaystackButton
-        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition font-semibold disabled:opacity-60"
+        className="w-full bg-green-600 text-white py-4 rounded-lg hover:bg-green-700 active:bg-green-800 transition-colors font-semibold disabled:opacity-60 text-base min-h-[44px] flex items-center justify-center"
         text={loading ? "Processing..." : `Donate ₦${amount}`}
         disabled={!email || amount < 100 || loading}
         publicKey={publicKey}

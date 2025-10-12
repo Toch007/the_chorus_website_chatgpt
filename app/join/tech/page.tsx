@@ -5,6 +5,7 @@ import { db } from "@/firebase/config";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function TechJoinForm() {
   const [formData, setFormData] = useState({
@@ -68,10 +69,21 @@ export default function TechJoinForm() {
     setLoading(true);
 
     try {
+      // Save to Firebase first
       await addDoc(collection(db, "join_tech"), {
         ...formData,
         createdAt: Timestamp.now(),
       });
+
+      // Send auto-reply email
+      const autoReplyData = prepareAutoReplyData("tech", formData);
+      const emailSent = await sendAutoReply(autoReplyData);
+
+      if (!emailSent) {
+        console.warn(
+          "Auto-reply email failed to send, but form was submitted successfully"
+        );
+      }
 
       setSuccess(true);
       setFormData({
@@ -101,7 +113,25 @@ export default function TechJoinForm() {
         <h1 className="text-2xl font-bold mb-6">Join as Tech/Logistics Team</h1>
 
         {success && (
-          <p className="text-green-600 mb-4">Form submitted successfully!</p>
+          <div className="p-6 mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+                ✅
+              </div>
+              <h3 className="font-bold text-lg">
+                Tech Team Application Received!
+              </h3>
+            </div>
+            <p className="text-emerald-700 mb-2">
+              Thank you for your interest in supporting our technical
+              operations! Your tech team application has been submitted.
+            </p>
+            <p className="text-emerald-600 text-sm">
+              📧 <strong>Check your email:</strong> You should receive a
+              confirmation email with details about our review process and next
+              steps.
+            </p>
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">

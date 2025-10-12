@@ -78,7 +78,7 @@ export default function Events() {
                 direction={index % 2 === 0 ? "left" : "right"}
                 delay={0.5 + index * 0.1}
               >
-                <div className="bg-white rounded-2xl shadow hover:shadow-xl overflow-hidden text-left transform hover:-translate-y-1 transition-all duration-300">
+                <div className="bg-white rounded-2xl shadow hover:shadow-xl active:shadow-2xl overflow-hidden text-left transform hover:-translate-y-1 active:translate-y-0 transition-all duration-300 cursor-pointer min-h-[200px]">
                   {event.image && (
                     <Image
                       src={event.image}
@@ -89,13 +89,15 @@ export default function Events() {
                     />
                   )}
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-blue-700">
+                    <h3 className="text-xl font-semibold text-blue-700 mb-2">
                       {event.title}
                     </h3>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 text-sm mb-3">
                       {event.date} • {event.location}
                     </p>
-                    <p className="text-gray-700 mt-4">{event.description}</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {event.description}
+                    </p>
                   </div>
                 </div>
               </Reveal>
@@ -106,7 +108,7 @@ export default function Events() {
         <Reveal direction="up" delay={0.8}>
           <Link
             href="/events"
-            className="inline-block bg-blue-800 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300"
+            className="inline-block bg-blue-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 active:bg-blue-900 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transform transition-all duration-300"
           >
             📅 See All Events
           </Link>

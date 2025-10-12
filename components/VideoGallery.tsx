@@ -1,309 +1,218 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import Reveal from "./Reveal";
+import { useState } from "react";
+import { Play, Pause, Volume2, VolumeX, Music } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
-interface VideoGalleryProps {
-  videos?: {
-    id: string;
-    title: string;
-    description: string;
-    thumbnail?: string;
-    src: string;
-    type: "youtube" | "local";
-    duration?: string;
-  }[];
-  featuredVideo?: {
-    title: string;
-    description: string;
-    src: string;
-    type: "youtube" | "local";
-    thumbnail?: string;
-  };
-}
-
-const defaultVideos = [
+// Video data using your authentic choir content
+const videos = [
   {
-    id: "1",
-    title: "The Chorus Abuja Live Performance",
-    description: "Experience our signature harmonies in this captivating live performance",
-    src: "https://www.youtube.com/embed/FfC_dieiw6A?si=Rn7d7AlhXGAYxFoW",
-    type: "youtube" as const,
-    duration: "4:32",
-    thumbnail: "/images/gallery8.jpeg"
-  },
-  {
-    id: "2", 
-    title: "Behind the Scenes",
-    description: "Get a glimpse of our preparation and rehearsal process",
-    src: "/videos/chorus-video.mp4",
-    type: "local" as const,
-    duration: "2:15",
-    thumbnail: "/images/20220828_174319.jpg"
-  },
-  {
-    id: "3",
-    title: "Community Outreach Performance", 
-    description: "Bringing music to the community - our mission in action",
-    src: "/videos/chorus-video2.mp4",
-    type: "local" as const,
+    id: 1,
+    title: "The Chorus Abuja Performance",
+    description:
+      "Experience our live performance showcasing the harmony and excellence we've built over 4 years.",
+    thumbnail: "/images/chorus.jpg",
+    videoUrl: "https://www.youtube.com/embed/FfC_dieiw6A?si=Rn7d7AlhXGAYxFoW",
     duration: "3:45",
-    thumbnail: "/images/20220828_183913.jpg"
-  }
+    category: "performance",
+  },
+  {
+    id: 2,
+    title: "Rehearsal Sessions",
+    description:
+      "Behind the scenes - see how we prepare for our concerts with dedication and passion.",
+    thumbnail: "/images/20220911_170221.jpg",
+    videoUrl: "/videos/chorus-video2.mp4", // Local video
+    duration: "2:30",
+    category: "rehearsal",
+  },
 ];
 
-export default function VideoGallery({ videos = defaultVideos, featuredVideo }: VideoGalleryProps) {
-  const [selectedVideo, setSelectedVideo] = useState(featuredVideo || videos[0]);
+export default function VideoGallery() {
+  const [activeVideo, setActiveVideo] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [showControls, setShowControls] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handleVideoSelect = (video: typeof videos[0]) => {
-    setSelectedVideo(video);
-    setIsPlaying(false);
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  };
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const resetVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      setIsPlaying(false);
-      videoRef.current.pause();
-    }
-  };
-
-  const enterFullscreen = () => {
-    if (videoRef.current) {
-      videoRef.current.requestFullscreen();
-    }
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isPlaying) {
-        setShowControls(false);
-      }
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [isPlaying, showControls]);
 
   return (
-    <section className="relative bg-gradient-to-b from-gray-50 to-white py-20 px-4">
+    <section
+      className="bg-gradient-to-b from-white via-blue-50/50 to-white py-20 lg:py-24 px-6 md:px-20"
+      id="videos"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <Reveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6">
-              Experience Our Musical Journey
+        <div className="text-center mb-16">
+          <Reveal direction="up" delay={0.1}>
+            <div className="flex justify-center mb-4">
+              <div className="bg-red-100 p-3 rounded-full">
+                <Music className="w-8 h-8 text-red-600" />
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-blue-800 mb-6">
+              See Us in Action
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              From intimate rehearsals to grand performances, witness the passion and 
-              excellence that defines The Chorus Abuja through our video collection.
+          </Reveal>
+
+          <Reveal direction="up" delay={0.3}>
+            <p className="text-xl text-gray-700 mb-12 max-w-3xl mx-auto">
+              Our music speaks louder than words. Watch glimpses of our live
+              performances and experience the passion that drives The Chorus
+              Abuja.
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto mt-6 rounded-full"></div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Video Player */}
-          <div className="lg:col-span-2">
-            <Reveal>
-              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
-                <div className="relative aspect-video bg-black">
-                  {selectedVideo.type === "youtube" ? (
-                    <iframe
-                      src={selectedVideo.src}
-                      title={selectedVideo.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    />
-                  ) : (
-                    <div 
-                      className="relative w-full h-full group cursor-pointer"
-                      onClick={() => setShowControls(true)}
-                      onMouseEnter={() => setShowControls(true)}
-                      onMouseLeave={() => isPlaying && setShowControls(false)}
-                    >
-                      <video
-                        ref={videoRef}
-                        src={selectedVideo.src}
-                        poster={selectedVideo.thumbnail}
-                        className="w-full h-full object-cover"
-                        onPlay={() => setIsPlaying(true)}
-                        onPause={() => setIsPlaying(false)}
-                        onEnded={() => setIsPlaying(false)}
-                      />
-                      
-                      {/* Custom Video Controls */}
-                      <AnimatePresence>
-                        {showControls && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/20 flex items-center justify-center"
-                          >
-                            {/* Center Play Button */}
-                            <button
-                              onClick={togglePlay}
-                              className="bg-white/90 hover:bg-white text-blue-900 rounded-full p-6 shadow-2xl transition-all hover:scale-110"
-                            >
-                              {isPlaying ? (
-                                <Pause size={32} />
-                              ) : (
-                                <Play size={32} className="ml-1" />
-                              )}
-                            </button>
+        <div className="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 gap-8">
+          {/* Main Video Player - Larger on XL screens */}
+          <div className="xl:col-span-3 lg:col-span-2">
+            <Reveal direction="left" delay={0.4}>
+              <div className="relative aspect-video bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+                {activeVideo === 0 ? (
+                  // YouTube Video
+                  <iframe
+                    src={videos[activeVideo].videoUrl}
+                    title={videos[activeVideo].title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                ) : (
+                  // Local Video with Custom Controls
+                  <video
+                    src={videos[activeVideo].videoUrl}
+                    poster={videos[activeVideo].thumbnail}
+                    controls
+                    className="w-full h-full object-cover"
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                  />
+                )}
 
-                            {/* Bottom Controls */}
-                            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                              <div className="flex items-center space-x-3">
-                                <button
-                                  onClick={togglePlay}
-                                  className="text-white hover:text-blue-300 transition-colors"
-                                >
-                                  {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                                </button>
-                                <button
-                                  onClick={toggleMute}
-                                  className="text-white hover:text-blue-300 transition-colors"
-                                >
-                                  {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                                </button>
-                                <button
-                                  onClick={resetVideo}
-                                  className="text-white hover:text-blue-300 transition-colors"
-                                >
-                                  <RotateCcw size={18} />
-                                </button>
-                              </div>
-                              
-                              <button
-                                onClick={enterFullscreen}
-                                className="text-white hover:text-blue-300 transition-colors"
-                              >
-                                <Maximize size={18} />
-                              </button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  )}
-                </div>
-
-                {/* Video Info */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {selectedVideo.title}
+                {/* Video Info Overlay - Enhanced for large screens */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 lg:p-8">
+                  <h3 className="text-white text-xl lg:text-2xl font-bold mb-2 lg:mb-3">
+                    {videos[activeVideo].title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {selectedVideo.description}
+                  <p className="text-gray-200 text-sm lg:text-base leading-relaxed">
+                    {videos[activeVideo].description}
                   </p>
-                  {selectedVideo.duration && (
-                    <div className="mt-4 inline-flex items-center text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
-                      Duration: {selectedVideo.duration}
-                    </div>
-                  )}
+                  <div className="mt-4 flex items-center gap-4">
+                    <span className="text-xs lg:text-sm text-blue-300 bg-blue-900/50 px-3 py-1 rounded-full">
+                      Duration: {videos[activeVideo].duration}
+                    </span>
+                    <span className="text-xs lg:text-sm text-gray-300 capitalize">
+                      {videos[activeVideo].category}
+                    </span>
+                  </div>
                 </div>
               </div>
             </Reveal>
           </div>
 
-          {/* Video Playlist */}
-          <div className="space-y-6">
-            <Reveal delay={0.2}>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Video Collection
-              </h3>
-            </Reveal>
+          {/* Enhanced Playlist Sidebar */}
+          <div className="xl:col-span-1 lg:col-span-1">
+            <Reveal direction="right" delay={0.6}>
+              <div className="bg-white rounded-2xl shadow-lg p-6 lg:sticky lg:top-8">
+                <div className="flex items-center mb-6">
+                  <Music className="w-5 h-5 text-blue-600 mr-2" />
+                  <h3 className="text-lg lg:text-xl font-bold text-gray-900">
+                    Our Videos
+                  </h3>
+                  <span className="ml-auto text-sm text-gray-500">
+                    {videos.length} videos
+                  </span>
+                </div>
 
-            {videos.map((video, index) => (
-              <Reveal key={video.id} delay={0.1 * (index + 3)}>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleVideoSelect(video)}
-                  className={`cursor-pointer p-4 rounded-xl transition-all ${
-                    selectedVideo.id === video.id
-                      ? "bg-blue-50 border-2 border-blue-200 shadow-md"
-                      : "bg-white border border-gray-200 hover:border-blue-300 hover:shadow-md"
-                  }`}
-                >
-                  <div className="flex gap-4">
-                    {/* Thumbnail */}
-                    <div className="relative w-24 h-16 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
-                      {video.thumbnail && (
+                <div className="space-y-3 lg:space-y-4">
+                  {videos.map((video, index) => (
+                    <div
+                      key={video.id}
+                      onClick={() => setActiveVideo(index)}
+                      className={`relative group cursor-pointer rounded-xl overflow-hidden transition-all duration-300 ${
+                        activeVideo === index
+                          ? "ring-2 ring-blue-500 shadow-lg bg-blue-50"
+                          : "hover:shadow-md active:shadow-lg bg-white hover:bg-gray-50"
+                      }`}
+                    >
+                      {/* Thumbnail */}
+                      <div className="relative aspect-video">
                         <img
                           src={video.thumbnail}
                           alt={video.title}
                           className="w-full h-full object-cover"
                         />
-                      )}
-                      <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                        <Play size={16} className="text-white" />
-                      </div>
-                      {video.duration && (
-                        <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
+
+                        {/* Playing Indicator */}
+                        {activeVideo === index && isPlaying ? (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                            <div className="bg-blue-600 rounded-full p-2">
+                              <Volume2 className="w-4 h-4 text-white" />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 group-active:bg-black/30 transition-colors">
+                            <div className="bg-white/90 rounded-full p-3 group-hover:bg-white group-active:bg-gray-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
+                              <Play className="w-5 h-5 text-gray-900 ml-0.5" />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Duration */}
+                        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                           {video.duration}
                         </div>
-                      )}
-                    </div>
+                      </div>
 
-                    {/* Video Info */}
-                    <div className="flex-1 min-w-0">
-                      <h4 className={`font-semibold text-sm leading-tight mb-1 ${
-                        selectedVideo.id === video.id ? "text-blue-900" : "text-gray-900"
-                      }`}>
-                        {video.title}
-                      </h4>
-                      <p className="text-xs text-gray-600 line-clamp-2">
-                        {video.description}
-                      </p>
+                      {/* Video Info */}
+                      <div className="p-3 lg:p-4">
+                        <h4
+                          className={`font-semibold text-sm lg:text-base mb-1 ${
+                            activeVideo === index
+                              ? "text-blue-600"
+                              : "text-gray-900"
+                          }`}
+                        >
+                          {video.title}
+                        </h4>
+                        <p className="text-gray-600 text-xs lg:text-sm line-clamp-2 leading-relaxed">
+                          {video.description}
+                        </p>
+                        <div className="mt-2 flex items-center justify-between">
+                          <span
+                            className={`text-xs px-2 py-1 rounded-full ${
+                              activeVideo === index
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-gray-100 text-gray-600"
+                            }`}
+                          >
+                            {video.category}
+                          </span>
+                          {activeVideo === index && (
+                            <div className="flex items-center text-xs text-blue-600">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full mr-2 animate-pulse"></div>
+                              Now Playing
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              </Reveal>
-            ))}
+                  ))}
+                </div>
 
-            {/* Call to Action */}
-            <Reveal delay={0.5}>
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white text-center">
-                <h4 className="font-bold text-lg mb-3">
-                  Want to See More?
-                </h4>
-                <p className="text-blue-100 text-sm mb-4">
-                  Subscribe to our channel for the latest performances and behind-the-scenes content.
-                </p>
-                <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-sm">
-                  Subscribe Now
-                </button>
+                {/* Enhanced Call to Action */}
+                <div className="mt-8 p-4 lg:p-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl text-white">
+                  <h4 className="font-bold mb-2 lg:text-lg">
+                    Join Our Musical Journey
+                  </h4>
+                  <p className="text-sm lg:text-base text-blue-100 mb-4 leading-relaxed">
+                    Experience the harmony firsthand. Be part of creating
+                    moments that touch hearts and souls.
+                  </p>
+                  <a
+                    href="#join"
+                    className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg text-sm font-semibold hover:bg-blue-50 active:bg-blue-100 transition-colors text-center shadow-lg"
+                  >
+                    🎤 Join The Chorus
+                  </a>
+                </div>
               </div>
             </Reveal>
           </div>

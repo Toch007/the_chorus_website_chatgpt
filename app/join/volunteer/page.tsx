@@ -6,6 +6,7 @@ import Reveal from "@/components/Reveal";
 import { useState } from "react";
 import { db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function JoinVolunteerPage() {
   const [form, setForm] = useState({
@@ -63,11 +64,24 @@ export default function JoinVolunteerPage() {
 
     try {
       setLoading(true);
+
+      // Save to Firebase first
       await addDoc(collection(db, "join_volunteer"), {
         ...form,
         age: parseInt(form.age),
         submittedAt: serverTimestamp(),
       });
+
+      // Send auto-reply email
+      const autoReplyData = prepareAutoReplyData("volunteer", form);
+      const emailSent = await sendAutoReply(autoReplyData);
+
+      if (!emailSent) {
+        console.warn(
+          "Auto-reply email failed to send, but form was submitted successfully"
+        );
+      }
+
       setSuccess(true);
       setForm({
         fullName: "",
@@ -112,9 +126,24 @@ export default function JoinVolunteerPage() {
           >
             {error && <p className="text-red-600">{error}</p>}
             {success && (
-              <p className="text-green-600">
-                ✅ Thank you! We’ll be in touch soon.
-              </p>
+              <div className="p-6 mb-6 bg-green-50 border border-green-200 text-green-800 rounded-lg">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                    ✅
+                  </div>
+                  <h3 className="font-bold text-lg">
+                    Volunteer Application Received!
+                  </h3>
+                </div>
+                <p className="text-green-700 mb-2">
+                  Thank you for your heart to serve with The Chorus Abuja! Your
+                  volunteer application has been submitted.
+                </p>
+                <p className="text-green-600 text-sm">
+                  📧 <strong>Check your email:</strong> You should receive a
+                  confirmation email with next steps and how we'll be in touch.
+                </p>
+              </div>
             )}
 
             <input

@@ -21,80 +21,80 @@ import {
 
 const partnershipTypes = [
   {
-    icon: <Megaphone className="w-8 h-8 text-blue-500" />,
-    title: "Media & Publicity",
+    icon: <Building2 className="w-8 h-8 text-blue-500" />,
+    title: "Venue Partnerships",
     description:
-      "Amplify our voice through media coverage, social platforms, and professional networks.",
+      "Partner with churches, halls, and cultural centers to provide performance spaces for our classical concerts.",
     benefits: [
-      "Event coverage",
-      "Social media collaboration",
-      "Press releases",
-      "Content creation",
+      "Concert venue hosting",
+      "Acoustic excellence",
+      "Community accessibility",
+      "Cultural programming",
     ],
     highlight: true,
   },
   {
-    icon: <Building2 className="w-8 h-8 text-green-500" />,
-    title: "Corporate Partnership",
+    icon: <Users className="w-8 h-8 text-green-500" />,
+    title: "Community Outreach",
     description:
-      "Strategic collaborations with businesses for mutual growth and community impact.",
+      "Collaborate to bring classical music to wider audiences through community events and educational programs.",
     benefits: [
-      "Co-branded events",
-      "Employee engagement",
-      "CSR initiatives",
-      "Networking opportunities",
+      "Free community concerts",
+      "Music appreciation programs",
+      "Youth engagement",
+      "Cultural education",
     ],
     highlight: false,
   },
   {
     icon: <Wrench className="w-8 h-8 text-purple-500" />,
-    title: "Technical & Logistics",
+    title: "Technical Support",
     description:
-      "Provide equipment, transportation, venue support, or technical services for events.",
+      "Provide sound equipment, lighting, or technical expertise to enhance our performance quality.",
     benefits: [
-      "Equipment lending",
-      "Technical support",
-      "Venue partnerships",
-      "Transportation",
+      "Audio equipment",
+      "Lighting support",
+      "Recording services",
+      "Technical expertise",
     ],
     highlight: true,
   },
   {
-    icon: <Users className="w-8 h-8 text-red-500" />,
-    title: "Community Outreach",
+    icon: <Megaphone className="w-8 h-8 text-red-500" />,
+    title: "Media & Promotion",
     description:
-      "Collaborate with us for grassroots events, educational programs, and community impact.",
+      "Help promote our concerts and mission through media coverage and digital platforms.",
     benefits: [
-      "Community events",
-      "Educational workshops",
-      "Youth programs",
-      "Cultural initiatives",
+      "Event promotion",
+      "Media coverage",
+      "Social media support",
+      "Documentation",
     ],
     highlight: false,
   },
   {
-    icon: <Lightbulb className="w-8 h-8 text-yellow-500" />,
-    title: "Creative Collaboration",
+    icon: <Music className="w-8 h-8 text-yellow-500" />,
+    title: "Musical Collaboration",
     description:
-      "Partner with artists, musicians, and creative professionals for unique projects.",
+      "Join us in performances or provide musical expertise and instruments for our classical repertoire.",
     benefits: [
-      "Artistic collaborations",
-      "Creative projects",
-      "Cross-cultural exchange",
-      "Innovation",
+      "Guest performances",
+      "Instrument lending",
+      "Musical direction",
+      "Repertoire development",
     ],
     highlight: true,
   },
   {
-    icon: <Globe className="w-8 h-8 text-indigo-500" />,
-    title: "International Relations",
+    icon: <Heart className="w-8 h-8 text-indigo-500" />,
+    title: "Corporate Support",
     description:
-      "Connect with global organizations for cultural exchange and international projects.",
+      "Partner with businesses for sponsorship, employee engagement, and corporate social responsibility initiatives.",
     benefits: [
-      "Cultural exchange",
-      "International events",
-      "Global networking",
-      "Cross-border projects",
+      "Corporate sponsorship",
+      "Employee programs",
+      "CSR partnerships",
+      "Brand association",
     ],
     highlight: false,
   },
@@ -104,74 +104,82 @@ const partnershipStats = [
   {
     number: "53+",
     label: "Active Members",
-    description: "Passionate musicians and volunteers",
+    description: "Talented musicians and volunteers",
   },
   {
-    number: "150%",
-    label: "Partner Growth",
-    description: "Year over year",
+    number: "4+",
+    label: "Years of Excellence",
+    description: "Building musical excellence in Abuja",
   },
   {
     number: "8",
     label: "Concerts Performed",
-    description: "Successfully executed",
+    description: "Successfully executed performances",
   },
   {
-    number: "95%",
-    label: "Partner Satisfaction",
-    description: "Renewal rate",
+    number: "1500+",
+    label: "Lives Touched",
+    description: "Through our performances and outreach",
   },
 ];
 
 const successStories = [
   {
-    partner: "Unity FM 93.3",
-    type: "Media Partnership",
-    story:
-      "Our media partnership with Unity FM has amplified our reach, with regular show features and live event broadcasts increasing our audience by 200%.",
-    icon: <Radio className="w-8 h-8 text-blue-500" />,
-    impact: "200% Audience Growth",
-  },
-  {
-    partner: "Abuja Cultural Centre",
+    partner: "St. Matthews Anglican Church",
     type: "Venue Partnership",
     story:
-      "Strategic venue partnership has enabled us to host 15+ major concerts, providing world-class facilities for our performances.",
-    icon: <Building2 className="w-8 h-8 text-green-500" />,
-    impact: "15+ Major Events",
+      "Our partnership with St. Matthews Anglican Church Maitama provided the perfect venue for our September 2022 performance of the 12th Mass, showcasing the grandeur of liturgical choral music.",
+    icon: <Building2 className="w-8 h-8 text-blue-500" />,
+    impact: "Sacred Music Performance",
   },
   {
-    partner: "Music Academy Nigeria",
-    type: "Educational Partnership",
+    partner: "Local Community Centers",
+    type: "Outreach Partnership",
     story:
-      "Joint educational programs have trained over 100 young musicians, combining our performance expertise with their academic structure.",
+      "Through partnerships with community centers, we have been able to bring free concerts to families and communities, making classical music accessible to all.",
+    icon: <Users className="w-8 h-8 text-green-500" />,
+    impact: "Community Accessibility",
+  },
+  {
+    partner: "Cultural Organizations",
+    type: "Arts Partnership",
+    story:
+      "Collaborating with cultural organizations has enabled us to preserve and celebrate Nigerian musical heritage while performing classical masterpieces.",
     icon: <Music className="w-8 h-8 text-purple-500" />,
-    impact: "100+ Students Trained",
+    impact: "Cultural Preservation",
   },
 ];
 
 const currentPartners = [
-  { name: "Unity FM 93.3", category: "Media Partner", type: "Media" },
-  { name: "Abuja Cultural Centre", category: "Venue Partner", type: "Venue" },
   {
-    name: "Music Academy Nigeria",
-    category: "Educational Partner",
-    type: "Education",
+    name: "St. Matthews Anglican Church",
+    category: "Venue Partner",
+    type: "Venue",
   },
   {
-    name: "Transcorp Hilton",
-    category: "Hospitality Partner",
-    type: "Hospitality",
+    name: "Community Centers",
+    category: "Outreach Partner",
+    type: "Community",
   },
   {
-    name: "Nigerian Guild of Artists",
-    category: "Creative Partner",
+    name: "Cultural Organizations",
+    category: "Arts Partner",
     type: "Arts",
   },
   {
-    name: "FCT Tourism Board",
-    category: "Government Partner",
-    type: "Government",
+    name: "Local Churches",
+    category: "Venue Partner",
+    type: "Venue",
+  },
+  {
+    name: "Music Enthusiasts",
+    category: "Individual Supporters",
+    type: "Community",
+  },
+  {
+    name: "Educational Institutions",
+    category: "Educational Partner",
+    type: "Education",
   },
 ];
 
@@ -198,7 +206,7 @@ const partnerBenefits = [
 
 export default function PartnersPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-50 scroll-smooth">
       <Header />
 
       <main className="pt-24 pb-20">
@@ -212,9 +220,10 @@ export default function PartnersPage() {
                 </span>
               </h1>
               <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                We welcome partnerships for media, outreach, logistics, events,
-                and more. Let's create something beautiful together and make a
-                lasting impact on our community.
+                Join us in elevating classical music in Nigeria. We seek
+                meaningful partnerships with organizations, venues, and
+                individuals who share our vision of musical excellence and
+                cultural enrichment.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <div className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
@@ -242,8 +251,8 @@ export default function PartnersPage() {
                 Partnership Success
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Our collaborative approach has created meaningful partnerships
-                that benefit everyone
+                Building on our foundation of musical excellence and community
+                impact
               </p>
             </div>
           </Reveal>
@@ -327,8 +336,8 @@ export default function PartnersPage() {
                 Success Stories
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Real examples of how our partnerships have created meaningful
-                impact
+                Examples of successful collaborations that have enhanced our
+                musical mission
               </p>
             </div>
           </Reveal>
@@ -431,7 +440,7 @@ export default function PartnersPage() {
         </section>
 
         {/* Partnership Form */}
-        <section className="max-w-4xl mx-auto px-4 mb-20">
+        <section id="partnership-form" className="max-w-4xl mx-auto px-4 mb-20">
           <Reveal>
             <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100">
               <div className="text-center mb-8">
@@ -439,10 +448,14 @@ export default function PartnersPage() {
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
                   Interested in Partnering?
                 </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
+                <p className="text-gray-600 max-w-2xl mx-auto mb-4">
                   Whether you're a brand, organization, or individual, your
                   support can help us create powerful musical experiences and
                   impact lives. Let's explore how we can work together.
+                </p>
+                <p className="text-sm text-blue-600 font-medium">
+                  💡 Contact us below to discuss partnership opportunities and
+                  learn more about our mission.
                 </p>
               </div>
 
@@ -463,13 +476,13 @@ export default function PartnersPage() {
                 Join our network of partners and be part of a community that's
                 making a real difference through music and cultural initiatives.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-gray-50 transition-colors duration-200">
-                  Download Partnership Guide
-                </button>
-                <button className="px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200">
-                  Schedule a Discussion
-                </button>
+              <div className="flex justify-center">
+                <a
+                  href="#partnership-form"
+                  className="px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
+                >
+                  Get in Touch
+                </a>
               </div>
             </div>
           </Reveal>

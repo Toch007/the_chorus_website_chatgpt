@@ -45,22 +45,22 @@ const impactStats = [
 const donationImpacts = [
   {
     amount: "₦5,000",
-    impact: "Sponsors music sheets for 5 choir members",
+    impact: "Helps support basic operational needs and materials",
     highlight: false,
   },
   {
     amount: "₦15,000",
-    impact: "Funds one workshop session for youth development",
+    impact: "Contributes to music education and choir development",
     highlight: true,
   },
   {
     amount: "₦30,000",
-    impact: "Covers venue costs for a community concert",
+    impact: "Supports concert production and community outreach",
     highlight: false,
   },
   {
     amount: "₦50,000",
-    impact: "Sponsors a full musical training program",
+    impact: "Makes a significant impact on our musical mission",
     highlight: true,
   },
 ];
@@ -68,15 +68,15 @@ const donationImpacts = [
 const testimonials = [
   {
     quote:
-      "Supporting The Chorus has been incredibly rewarding. Seeing how my donation helps nurture young talent makes every naira worth it.",
-    author: "Mrs. Adebayo",
-    role: "Long-time Supporter",
+      "The Chorus Abuja's dedication to classical music excellence and community outreach makes them worthy of support.",
+    author: "Community Supporter",
+    role: "Music Enthusiast",
   },
   {
     quote:
-      "The transparency and impact reports give me confidence that my contributions are making a real difference in our community.",
-    author: "Mr. Johnson",
-    role: "Monthly Donor",
+      "Supporting classical music education and cultural preservation is an investment in our community's artistic future.",
+    author: "Arts Advocate",
+    role: "Cultural Patron",
   },
 ];
 
@@ -162,8 +162,8 @@ export default function DonatePage() {
                 See Your Impact
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Every donation, no matter the size, creates meaningful change in
-                our community.
+                Your donation helps support our classical music mission and
+                enables us to continue our work in the community.
               </p>
             </div>
           </Reveal>

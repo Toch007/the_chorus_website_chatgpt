@@ -5,6 +5,7 @@ import { db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function JoinChoirPage() {
   const [formData, setFormData] = useState({
@@ -104,10 +105,22 @@ export default function JoinChoirPage() {
 
     setLoading(true);
     try {
+      // Save to Firebase first
       await addDoc(collection(db, "join_choir"), {
         ...formData,
         submittedAt: serverTimestamp(),
       });
+
+      // Send auto-reply email
+      const autoReplyData = prepareAutoReplyData("choir", formData);
+      const emailSent = await sendAutoReply(autoReplyData);
+
+      if (!emailSent) {
+        console.warn(
+          "Auto-reply email failed to send, but form was submitted successfully"
+        );
+      }
+
       setSuccess(true);
       setFormData({
         fullName: "",
@@ -145,8 +158,24 @@ export default function JoinChoirPage() {
         </p>
 
         {success && (
-          <div className="p-4 mb-6 bg-green-100 text-green-800 rounded-lg">
-            ✅ Your application has been submitted successfully!
+          <div className="p-6 mb-6 bg-green-50 border border-green-200 text-green-800 rounded-lg">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                ✅
+              </div>
+              <h3 className="font-bold text-lg">
+                Application Submitted Successfully!
+              </h3>
+            </div>
+            <p className="text-green-700 mb-2">
+              Thank you for your interest in joining The Chorus Abuja! Your
+              choir application has been received.
+            </p>
+            <p className="text-green-600 text-sm">
+              📧 <strong>Check your email:</strong> You should receive a
+              confirmation email shortly with details about our audition process
+              and next steps.
+            </p>
           </div>
         )}
 

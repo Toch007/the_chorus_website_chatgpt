@@ -166,13 +166,16 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile Icon */}
+        {/* Mobile Icon - Enhanced for touch */}
         <button
           onClick={toggleMenu}
-          className={`sm:hidden text-3xl transition ${
-            isTransparent ? "text-white" : "text-blue-800"
+          className={`sm:hidden p-2 text-3xl transition-all duration-200 rounded-lg active:scale-95 ${
+            isTransparent
+              ? "text-white hover:bg-white/10"
+              : "text-blue-800 hover:bg-blue-50"
           }`}
           aria-label="Toggle menu"
+          style={{ minWidth: "44px", minHeight: "44px" }} // iOS touch target recommendation
         >
           {menuOpen ? <HiX /> : <HiMenu />}
         </button>
@@ -205,24 +208,26 @@ export default function Header() {
             : "max-h-0 opacity-0 scale-95"
         }`}
       >
-        <div className="px-6 py-4 space-y-3 text-gray-700 font-medium">
+        <div className="px-6 py-6 space-y-1 text-gray-700 font-medium">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={closeMenu}
-              className="block hover:text-blue-800 transition"
+              className="block py-3 px-4 rounded-lg hover:text-blue-800 hover:bg-blue-50 transition-all duration-200 active:bg-blue-100"
+              style={{ minHeight: "44px" }} // Better touch target
             >
               {link.name}
             </Link>
           ))}
 
           {/* Admin Link for Mobile */}
-          <div className="border-t pt-3 mt-3">
+          <div className="border-t pt-4 mt-4">
             <Link
               href="/admin"
               onClick={closeMenu}
-              className="flex items-center text-gray-500 hover:text-blue-600 transition text-sm"
+              className="flex items-center py-3 px-4 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200 text-sm active:bg-gray-100"
+              style={{ minHeight: "44px" }}
             >
               <svg
                 className="w-4 h-4 mr-2"

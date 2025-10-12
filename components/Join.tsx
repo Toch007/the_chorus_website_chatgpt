@@ -31,7 +31,7 @@ export default function Join() {
         <Reveal direction="up" delay={0.7}>
           <Link
             href="/join"
-            className="inline-block bg-blue-800 text-white px-8 py-3 rounded-full font-medium shadow hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 transform transition-all duration-300"
+            className="inline-block bg-blue-800 text-white px-8 py-4 rounded-full font-medium shadow hover:bg-blue-700 active:bg-blue-900 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transform transition-all duration-300"
           >
             ✍️ Join the Journey
           </Link>

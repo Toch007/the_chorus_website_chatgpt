@@ -4,15 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "seed:events": "tsx scripts/seedEvents.ts",
     "seed:posts": "tsx scripts/seedBlogPosts.ts",
     "seed:members": "tsx scripts/seedMembers.ts",
     "seed:applications": "tsx scripts/seedApplications.ts",
     "build:scripts": "tsc scripts/seedMembers.ts --outDir dist/scripts",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "perf:lighthouse": "lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json",
+    "perf:bundle": "npm run build:analyze"
   },
   "dependencies": {
     "@paystack/inline-js": "^2.22.7",
@@ -54,8 +57,9 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@netlify/plugin-nextjs": "^5.13.2",
+    "@next/bundle-analyzer": "^15.5.4",
     "@types/get-stream": "^3.0.1",
-    "@types/node": "^20",
+    "@types/node": "^20.19.19",
     "@types/nodemailer": "^7.0.1",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^19",

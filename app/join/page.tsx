@@ -53,23 +53,23 @@ const joinOptions = [
 const faqs = [
   {
     q: "Do I need experience to join the choir?",
-    a: "Not at all! We welcome singers of all levels. We provide training and support to help everyone improve and contribute meaningfully.",
+    a: "Yes, some musical experience is required to join the choir. While you don't need to be a professional, basic musical knowledge and singing ability are essential. We also have tech and media team positions for those with different skills.",
   },
   {
     q: "What's the time commitment?",
-    a: "We have regular rehearsals twice a week and occasional performances on weekends. We understand life can be busy and work with your schedule.",
+    a: "Our main rehearsals are on Sundays, with additional rehearsal schedules shared with choir members as needed. We also have occasional performances on weekends. We understand life can be busy and work with your schedule.",
   },
   {
     q: "Are there any fees involved?",
-    a: "There are no membership fees. We believe music should be accessible to everyone who has a heart for it.",
+    a: "There are no membership fees for joining the choir. We believe music should be accessible to everyone who has the required skills and dedication.",
   },
   {
     q: "Can I join if I'm not a Christian?",
-    a: "While we're a gospel choir, we welcome anyone who appreciates our music and values. Our community is built on love, respect, and inclusion.",
+    a: "While we're a gospel choir with Christian roots, we welcome anyone who appreciates our music and values. Our community is built on love, respect, and inclusion.",
   },
   {
     q: "What if I can't make it to every rehearsal?",
-    a: "We understand that life happens. Just communicate with us, and we'll work together to keep you engaged and up to speed.",
+    a: "We understand that life happens. Consistent attendance is important for the choir's success, but just communicate with us if you have scheduling conflicts. We'll work together to keep you engaged and up to speed.",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function JoinPage() {
       icon: Award,
       value: "4+",
       label: "Years of Excellence",
-      description: "Leading contemporary gospel music in Nigeria",
+      description: "Leading classical and traditional gospel music in Nigeria",
     },
     {
       icon: Heart,
@@ -124,9 +124,10 @@ export default function JoinPage() {
                 <span className="text-5xl">Extraordinary</span>
               </h1>
               <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-12">
-                Join Nigeria's most dynamic contemporary choir. Whether you're a
+                Join Nigeria's premier classical choir. Whether you're a
                 vocalist, instrumentalist, or supporter, discover your place in
-                our community of passionate musicians and believers.
+                our community of passionate musicians dedicated to classical
+                excellence.
               </p>
 
               {/* Statistics Grid */}
@@ -151,21 +152,47 @@ export default function JoinPage() {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
                 <Link
                   href="/join/choir"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group"
                 >
-                  Join as a Vocalist
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <Music className="w-5 h-5" />
+                  Choir Member
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   href="/join/volunteer"
-                  className="bg-white/90 backdrop-blur-sm text-blue-700 border-2 border-blue-200 px-10 py-4 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group"
+                  className="bg-white/90 backdrop-blur-sm text-blue-700 border-2 border-blue-200 px-6 py-4 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group"
                 >
-                  Volunteer With Us
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <HeartHandshake className="w-5 h-5" />
+                  Volunteer
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
+                <Link
+                  href="/join/media"
+                  className="bg-white/90 backdrop-blur-sm text-purple-700 border-2 border-purple-200 px-6 py-4 rounded-xl hover:bg-purple-50 hover:border-purple-300 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group"
+                >
+                  <Camera className="w-5 h-5" />
+                  Media Team
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/join/tech"
+                  className="bg-white/90 backdrop-blur-sm text-green-700 border-2 border-green-200 px-6 py-4 rounded-xl hover:bg-green-50 hover:border-green-300 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group"
+                >
+                  <Users className="w-5 h-5" />
+                  Tech Team
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Quick Info */}
+              <div className="mt-8 text-center">
+                <p className="text-sm text-gray-600">
+                  Each button above takes you to a dedicated application form.
+                  Scroll down for detailed information about each role.
+                </p>
               </div>
             </Reveal>
           </div>
@@ -277,19 +304,23 @@ export default function JoinPage() {
           <section>
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-900 to-purple-800 bg-clip-text text-transparent mb-4">
-                Ways to Get Involved
+                4 Ways to Get Involved
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
                 Choose how you'd like to contribute to our mission of spreading
-                joy through music
+                joy through music. Each option has a dedicated application form.
               </p>
+              <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-6 py-3 rounded-full text-sm font-medium shadow-sm">
+                <CheckCircle className="w-4 h-4" />
+                All positions are open - Click any option below to apply
+              </div>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {joinOptions.map((item, idx) => (
                 <Reveal key={idx} delay={idx * 0.1}>
                   <Link
                     href={item.link}
-                    className="group bg-white border border-blue-100 shadow-lg rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center block relative overflow-hidden"
+                    className="group bg-white border-2 border-blue-100 shadow-lg rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-2 hover:border-blue-300 transition-all duration-300 text-center block relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10">
@@ -304,9 +335,15 @@ export default function JoinPage() {
                       <p className="text-gray-600 leading-relaxed mb-4">
                         {item.description}
                       </p>
-                      <div className="inline-flex items-center text-blue-600 font-semibold group-hover:text-purple-600 transition-colors">
-                        Learn More
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      <div className="space-y-3">
+                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                          <CheckCircle className="w-3 h-3" />
+                          Currently Accepting Applications
+                        </div>
+                        <div className="inline-flex items-center text-blue-600 font-semibold group-hover:text-purple-600 transition-colors">
+                          Apply Now
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </div>
                       </div>
                     </div>
                   </Link>

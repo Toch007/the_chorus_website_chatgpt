@@ -41,7 +41,7 @@ export default function Members() {
           <Reveal direction="up" delay={0.4}>
             <div className="bg-gray-50 rounded-2xl shadow p-6">
               <Image
-                src="/images/section-leaders.jpg"
+                src="/images/gallery12.jpeg"
                 alt="Instrumentalists"
                 width={400}
                 height={250}

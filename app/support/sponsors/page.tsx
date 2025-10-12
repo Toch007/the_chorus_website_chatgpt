@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -67,7 +68,7 @@ const sponsorshipBenefits = [
 const sponsorshipTiers = [
   {
     name: "Bronze Sponsor",
-    price: "₦100,000 - ₦300,000",
+    description: "Perfect for small businesses looking to support local arts",
     color: "from-amber-600 to-amber-700",
     textColor: "text-amber-600",
     bgColor: "bg-amber-50",
@@ -84,7 +85,8 @@ const sponsorshipTiers = [
   },
   {
     name: "Silver Sponsor",
-    price: "₦350,000 - ₦650,000",
+    description:
+      "Ideal for medium enterprises seeking greater brand visibility",
     color: "from-gray-400 to-gray-600",
     textColor: "text-gray-600",
     bgColor: "bg-gray-50",
@@ -102,7 +104,7 @@ const sponsorshipTiers = [
   },
   {
     name: "Gold Sponsor",
-    price: "₦700,000 - ₦1,500,000",
+    description: "Premium partnership for major corporations and institutions",
     color: "from-yellow-400 to-yellow-600",
     textColor: "text-yellow-600",
     bgColor: "bg-yellow-50",
@@ -145,31 +147,24 @@ const sponsorshipStats = [
 ];
 
 const currentSponsors = [
-  {
-    name: "Heritage Bank",
-    category: "Gold Sponsor",
-    logo: "/images/sponsors/heritage.png",
-  },
-  {
-    name: "MTN Nigeria",
-    category: "Silver Sponsor",
-    logo: "/images/sponsors/mtn.png",
-  },
-  {
-    name: "Dangote Group",
-    category: "Gold Sponsor",
-    logo: "/images/sponsors/dangote.png",
-  },
-  {
-    name: "First Bank",
-    category: "Bronze Sponsor",
-    logo: "/images/sponsors/firstbank.png",
-  },
+  // Currently building our sponsorship network
+  // Interested in becoming our first official sponsor?
+  // Contact us to explore partnership opportunities
 ];
 
 export default function SponsorsPage() {
+  const [selectedTier, setSelectedTier] = useState<string>("");
+
+  const handleTierSelect = (tierName: string) => {
+    setSelectedTier(tierName);
+    // Scroll to contact form
+    document
+      .getElementById("contact-form")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-50 scroll-smooth">
       <Header />
 
       <main className="pt-24 pb-20">
@@ -289,8 +284,9 @@ export default function SponsorsPage() {
                 Partnership Packages
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Choose the sponsorship level that best fits your brand's goals
-                and budget
+                Choose the sponsorship level that best fits your brand's goals.
+                Contact us to learn about package values and customize your
+                partnership.
               </p>
             </div>
           </Reveal>
@@ -322,8 +318,8 @@ export default function SponsorsPage() {
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">
                       {tier.name}
                     </h3>
-                    <p className={`text-xl font-semibold ${tier.textColor}`}>
-                      {tier.price}
+                    <p className="text-sm text-gray-600 text-center">
+                      {tier.description}
                     </p>
                   </div>
 
@@ -337,13 +333,14 @@ export default function SponsorsPage() {
                   </div>
 
                   <button
+                    onClick={() => handleTierSelect(tier.name)}
                     className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 ${
                       tier.popular
                         ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600"
                         : `${tier.bgColor} ${tier.textColor} border ${tier.borderColor} hover:bg-opacity-80`
                     }`}
                   >
-                    Choose {tier.name}
+                    Enquire About Package
                   </button>
                 </div>
               </Reveal>
@@ -351,40 +348,47 @@ export default function SponsorsPage() {
           </div>
         </section>
 
-        {/* Current Sponsors */}
+        {/* Sponsorship Opportunities */}
         <section className="max-w-6xl mx-auto px-4 mb-20">
           <Reveal>
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Our Valued Sponsors
+                Join Our Sponsorship Network
               </h2>
               <p className="text-gray-600">
-                Proud to partner with these amazing organizations
+                Be among the first to partner with us and support classical
+                music excellence in Nigeria
               </p>
             </div>
           </Reveal>
 
-          <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-center">
-              {currentSponsors.map((sponsor, index) => (
-                <Reveal key={index} delay={index * 0.1}>
-                  <div className="text-center group">
-                    <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-2xl flex items-center justify-center group-hover:bg-gray-200 transition-colors duration-200">
-                      <Building className="w-12 h-12 text-gray-400" />
-                    </div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      {sponsor.name}
-                    </h4>
-                    <p className="text-sm text-gray-500">{sponsor.category}</p>
-                  </div>
-                </Reveal>
-              ))}
+          <div className="bg-white rounded-3xl p-12 shadow-lg border border-gray-100">
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl flex items-center justify-center">
+                <Handshake className="w-16 h-16 text-blue-500" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Become Our Pioneer Sponsor
+              </h3>
+              <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+                We are actively seeking our first official sponsors to join us
+                in our mission to elevate classical music in Nigeria. Your
+                partnership will be recognized as foundational to our growth and
+                success.
+              </p>
+              <a
+                href="#contact-form"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-200"
+              >
+                <Trophy className="w-5 h-5 mr-2" />
+                Explore Partnership Opportunities
+              </a>
             </div>
           </div>
         </section>
 
         {/* Contact Form */}
-        <section className="max-w-4xl mx-auto px-4 mb-20">
+        <section id="contact-form" className="max-w-4xl mx-auto px-4 mb-20">
           <Reveal>
             <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100">
               <div className="text-center mb-8">
@@ -392,13 +396,24 @@ export default function SponsorsPage() {
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
                   Ready to Partner With Us?
                 </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
+                <p className="text-gray-600 max-w-2xl mx-auto mb-4">
                   Let's create a customized sponsorship package that aligns with
                   your brand goals and maximizes your impact.
                 </p>
+                <p className="text-sm text-blue-600 font-medium">
+                  💡 Interested in package pricing? Contact us below for
+                  detailed information and custom quotes.
+                </p>
+                {selectedTier && (
+                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      <strong>Selected Package:</strong> {selectedTier}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <SupportForm purpose="Sponsorship" />
+              <SupportForm purpose="Sponsorship" selectedTier={selectedTier} />
             </div>
           </Reveal>
         </section>
@@ -415,13 +430,13 @@ export default function SponsorsPage() {
                 Join our community of sponsors and be part of nurturing the next
                 generation of musical talent in Abuja.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-gray-50 transition-colors duration-200">
-                  Download Sponsorship Package
-                </button>
-                <button className="px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200">
-                  Schedule a Meeting
-                </button>
+              <div className="flex justify-center">
+                <a
+                  href="#contact-form"
+                  className="px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
+                >
+                  Get in Touch
+                </a>
               </div>
             </div>
           </Reveal>

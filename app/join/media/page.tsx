@@ -5,6 +5,7 @@ import { db } from "@/firebase/config";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function MediaJoinForm() {
   const [formData, setFormData] = useState({
@@ -65,10 +66,21 @@ export default function MediaJoinForm() {
     setLoading(true);
 
     try {
+      // Save to Firebase first
       await addDoc(collection(db, "join_media"), {
         ...formData,
         createdAt: Timestamp.now(),
       });
+
+      // Send auto-reply email
+      const autoReplyData = prepareAutoReplyData("media", formData);
+      const emailSent = await sendAutoReply(autoReplyData);
+
+      if (!emailSent) {
+        console.warn(
+          "Auto-reply email failed to send, but form was submitted successfully"
+        );
+      }
 
       setSuccess(true);
       setFormData({
@@ -98,7 +110,25 @@ export default function MediaJoinForm() {
         <h1 className="text-2xl font-bold mb-6">Join as Media Team</h1>
 
         {success && (
-          <p className="text-green-600 mb-4">Form submitted successfully!</p>
+          <div className="p-6 mb-6 bg-purple-50 border border-purple-200 text-purple-800 rounded-lg">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                ✅
+              </div>
+              <h3 className="font-bold text-lg">
+                Media Team Application Received!
+              </h3>
+            </div>
+            <p className="text-purple-700 mb-2">
+              Thank you for your interest in joining our creative team! Your
+              media application has been submitted successfully.
+            </p>
+            <p className="text-purple-600 text-sm">
+              📧 <strong>Check your email:</strong> You should receive a
+              confirmation email with details about our review process and next
+              steps.
+            </p>
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">

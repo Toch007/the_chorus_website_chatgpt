@@ -15,7 +15,9 @@ import Partners from "@/components/Partners";
 import ParallaxBridge from "@/components/ParallaxBridge";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
 import VideoGallery from "@/components/VideoGallery";
+import CriticalResources from "@/components/CriticalResources";
 import Link from "next/link";
+import ImageGallery from "@/components/ImageGallery";
 
 export default function HomePage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -98,9 +100,15 @@ export default function HomePage() {
         subtext="With over 4 years of excellence and 8 captivating concerts performed, The Chorus Abuja has filled concert halls and hearts with unforgettable performances."
       />
 
+      <CriticalResources
+        images={[
+          "/images/chorus.jpg",
+          "/images/20220828_174319.jpg",
+          "/images/20220911_170221.jpg",
+        ]}
+      />
+
       <About />
-      
-      <VideoGallery />
 
       <ParallaxBridge
         image="/images/solomon-1.jpg"
@@ -111,8 +119,9 @@ export default function HomePage() {
       />
 
       <Events />
+      <VideoGallery />
+      <ImageGallery />
       <Join />
-      <Members />
 
       <ParallaxBridge
         image="/images/gallery8.jpeg"
@@ -120,6 +129,7 @@ export default function HomePage() {
         subtext="Where African rhythms meet classical excellence — carrying history forward through music."
       />
 
+      <Members />
       <Testimonials />
       <Partners />
       <Footer />

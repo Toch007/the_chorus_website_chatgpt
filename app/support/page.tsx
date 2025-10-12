@@ -105,7 +105,7 @@ export default function SupportPage() {
       icon: Zap,
       title: "Innovation in Music",
       description:
-        "Contemporary arrangements and modern approaches to gospel music",
+        "Creative arrangements and harmonious approaches to gospel music",
     },
   ];
 

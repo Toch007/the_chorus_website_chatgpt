@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase/config";
 import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import DataTable from "@/components/admin/DataTable";
@@ -29,6 +29,43 @@ export default function AdminJoinFormPage() {
   const [applications, setApplications] = useState<JoinApplication[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Helper function to convert Firestore data to React-friendly format
+  const convertFirestoreData = (data: any): any => {
+    if (data === null || data === undefined) {
+      return data;
+    }
+
+    if (data instanceof Timestamp) {
+      return data.toDate().toLocaleString();
+    }
+
+    if (Array.isArray(data)) {
+      return data.map(convertFirestoreData);
+    }
+
+    if (typeof data === "object" && data.constructor === Object) {
+      // Check if this is a Firestore timestamp-like object
+      if (data.seconds !== undefined && data.nanoseconds !== undefined) {
+        try {
+          const timestamp = new Timestamp(data.seconds, data.nanoseconds);
+          return timestamp.toDate().toLocaleString();
+        } catch (error) {
+          console.warn("Failed to convert timestamp-like object:", data);
+          return "Invalid Date";
+        }
+      }
+
+      // Process regular objects recursively
+      const converted: any = {};
+      for (const [key, value] of Object.entries(data)) {
+        converted[key] = convertFirestoreData(value);
+      }
+      return converted;
+    }
+
+    return data;
+  };
+
   useEffect(() => {
     if (!form) return;
 
@@ -36,11 +73,16 @@ export default function AdminJoinFormPage() {
       try {
         const colRef = collection(db, `join_${form}`);
         const snapshot = await getDocs(colRef);
-        const data = snapshot.docs.map((doc) => ({
+        const rawData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        })) as JoinApplication[];
-        setApplications(data);
+        }));
+
+        // Convert Firestore data to React-friendly format
+        const convertedData = rawData.map((item) =>
+          convertFirestoreData(item)
+        ) as JoinApplication[];
+        setApplications(convertedData);
       } catch (error) {
         console.error("Error fetching applications:", error);
       } finally {
@@ -112,6 +154,7 @@ export default function AdminJoinFormPage() {
           );
         }
 
+        // Handle long text content
         if (typeof value === "string" && value.length > 100) {
           return (
             <div className="max-w-xs">
@@ -122,7 +165,41 @@ export default function AdminJoinFormPage() {
           );
         }
 
-        return <span className="text-sm text-gray-600">{value || "N/A"}</span>;
+        // Handle arrays
+        if (Array.isArray(value)) {
+          return (
+            <div className="text-sm text-gray-600">
+              {value.length > 0 ? value.join(", ") : "None"}
+            </div>
+          );
+        }
+
+        // Handle boolean values
+        if (typeof value === "boolean") {
+          return (
+            <span
+              className={`text-sm px-2 py-1 rounded-full ${
+                value
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
+              }`}
+            >
+              {value ? "Yes" : "No"}
+            </span>
+          );
+        }
+
+        // Handle objects (shouldn't happen after conversion, but just in case)
+        if (typeof value === "object" && value !== null) {
+          return <span className="text-sm text-gray-500">Complex Data</span>;
+        }
+
+        // Handle primitive values
+        return (
+          <span className="text-sm text-gray-600">
+            {value?.toString() || "N/A"}
+          </span>
+        );
       },
     }));
   };

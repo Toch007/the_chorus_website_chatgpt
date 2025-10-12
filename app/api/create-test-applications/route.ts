@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       voicePart: "Soprano",
       readsMusic: "yes",
       choirExperience:
-        "I have sung in church choir for 3 years and love contemporary gospel music.",
+        "I have sung in church choir for 3 years and love classical gospel music.",
       instrument: "Piano (intermediate level)",
       preferredDays: ["Tuesday", "Saturday"],
       heardAboutUs: "Friend recommendation",
