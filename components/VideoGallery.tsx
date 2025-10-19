@@ -14,7 +14,7 @@ const videos = [
     thumbnail: "/images/chorus.jpg",
     videoUrl: "https://www.youtube.com/embed/FfC_dieiw6A?si=Rn7d7AlhXGAYxFoW",
     duration: "3:45",
-    category: "performance",
+    category: "rehearsal",
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const videos = [
     thumbnail: "/images/20220911_170221.jpg",
     videoUrl: "/videos/chorus-video2.mp4", // Local video
     duration: "2:30",
-    category: "rehearsal",
+    category: "performance",
   },
 ];
 

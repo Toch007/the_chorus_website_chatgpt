@@ -9,7 +9,12 @@ import { motion } from "framer-motion";
 const solomonTickets: Ticket[] = [
   { name: "Bronze", price: 10000, perks: [], color: "bg-amber-500" },
   { name: "Silver", price: 30000, perks: [], color: "bg-slate-400" },
-  { name: "Gold", price: 50000, perks: [], color: "bg-yellow-400" },
+  {
+    name: "Gold",
+    price: 50000,
+    perks: ["🎟 Admits 2 Persons"],
+    color: "bg-yellow-400"
+  },
   {
     name: "Diamond",
     price: 100000,
@@ -72,7 +77,7 @@ export default function SolomonEventPage() {
           </div>
           <CountdownTimer targetDate="2025-11-16T18:00:00" className="mb-4" />
           <div className="text-red-400 text-sm font-medium animate-pulse">
-            ⚡ Only 50 tickets remaining!
+            ⚡ Only 20 tickets remaining!
           </div>
         </motion.div>
 
@@ -244,7 +249,7 @@ export default function SolomonEventPage() {
             </h4>
             <div className="grid md:grid-cols-2 gap-6 text-sm">
               <blockquote className="italic text-gray-200 border-l-2 border-yellow-400 pl-4">
-                "Absolutely breathtaking! The way they brought Handel's music to
+                "Absolutely breathtaking! The way they brought Mendelssohn's music to
                 life was incredible. You could feel every emotion in their
                 voices."
                 <cite className="block mt-2 text-yellow-300 font-medium">
@@ -296,7 +301,14 @@ export default function SolomonEventPage() {
             </div>
             <div className="text-gray-300 text-sm">
               Questions? Call{" "}
-              <strong className="text-yellow-300">+234 815 847 9297</strong>
+              <div className="mt-2 space-y-1">
+                <div>
+                  <strong className="text-yellow-300">Mr Raphael – 0813 109 3319</strong>
+                </div>
+                <div>
+                  <strong className="text-yellow-300">Engr Samuel – 0813 557 8298</strong>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

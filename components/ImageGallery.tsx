@@ -44,7 +44,7 @@ const galleryImages = [
     category: "performances"
   },
   {
-    src: "/images/Creation Concert.jpg",
+    src: "/images/Creation concert.jpg",
     alt: "Our First Concert Ever",
     category: "community"
   },

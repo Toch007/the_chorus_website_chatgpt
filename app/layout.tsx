@@ -23,6 +23,27 @@ export const metadata = {
   description:
     "The Chorus Abuja — Elevating hearts and minds through classical music in Nigeria.",
   metadataBase: new URL("https://thechorusabuja.com"),
+  icons: {
+    icon: [
+      {
+        url: "/icons/icon-144x144.png",
+        sizes: "144x144",
+        type: "image/png",
+      },
+      {
+        url: "/icons/icon-144x144.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/icons/icon-144x144.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/icons/icon-144x144.png",
+    apple: "/icons/icon-144x144.png",
+  },
   openGraph: {
     title: "The Chorus Abuja",
     description:

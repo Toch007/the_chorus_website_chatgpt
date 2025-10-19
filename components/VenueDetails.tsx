@@ -26,7 +26,8 @@ export default function VenueDetails({ className = "" }: VenueDetailsProps) {
     date: "November 16, 2025",
     time: "6:00 PM",
     capacity: "500 seats",
-    phone: "+234 815 847 9297",
+    phone: "0813 109 3319", // Mr Raphael
+    secondaryPhone: "0813 557 8298", // Engr Samuel
     coordinates: {
       lat: 9.0579,
       lng: 7.4951,
@@ -184,12 +185,26 @@ export default function VenueDetails({ className = "" }: VenueDetailsProps) {
           {/* Contact Info */}
           <div className="text-center text-sm text-gray-300 border-t border-white/10 pt-4">
             <p>Need help? Contact us at:</p>
-            <a
-              href={`tel:${venueInfo.phone}`}
-              className="text-yellow-300 hover:text-yellow-200 font-medium"
-            >
-              {venueInfo.phone}
-            </a>
+            <div className="space-y-1 mt-2">
+              <div>
+                <span className="text-gray-400">Mr Raphael: </span>
+                <a
+                  href={`tel:${venueInfo.phone}`}
+                  className="text-yellow-300 hover:text-yellow-200 font-medium"
+                >
+                  {venueInfo.phone}
+                </a>
+              </div>
+              <div>
+                <span className="text-gray-400">Engr Samuel: </span>
+                <a
+                  href={`tel:${venueInfo.secondaryPhone}`}
+                  className="text-yellow-300 hover:text-yellow-200 font-medium"
+                >
+                  {venueInfo.secondaryPhone}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>

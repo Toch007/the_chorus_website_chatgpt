@@ -297,8 +297,8 @@ export default function AdminMembersPage() {
                   <option value="Alto">Alto</option>
                   <option value="Tenor">Tenor</option>
                   <option value="Bass">Bass</option>
-                  <option value="Piano">Piano</option>
-                  <option value="Conductor">Conductor</option>
+                  <option value="Accompanists">Accompanists</option>
+                  <option value="Music Director">Music Director</option>
                 </select>
               </div>
 
