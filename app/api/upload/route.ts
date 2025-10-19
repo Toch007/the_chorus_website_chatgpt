@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { adminStorage, adminAuth } from "@/lib/firebase-admin";
-import { ImageProcessor } from "@/lib/imageProcessor";
+// import { ImageProcessor } from "@/lib/imageProcessor"; // Temporarily disabled for deployment
 
 interface UploadResponse {
   success: boolean;
@@ -76,42 +76,9 @@ export async function POST(request: NextRequest) {
     let finalSize = originalSize;
     let isOptimized = false;
 
-    // Check if it's an image and should be optimized
-    const isImage = file.type.startsWith("image/");
-
-    if (isImage && optimize) {
-      try {
-        // Validate image first
-        const validation = await ImageProcessor.validateFile(buffer);
-        if (!validation.isValid) {
-          return NextResponse.json(
-            { error: validation.error },
-            { status: 400 }
-          );
-        }
-
-        // Process the main image
-        const processed = await ImageProcessor.processImage(buffer, {
-          width: maxWidth,
-          height: maxHeight,
-          quality: quality,
-          format: "webp", // Convert to WebP for better compression
-          maintainAspectRatio: true,
-        });
-
-        finalBuffer = Buffer.from(processed.buffer);
-        finalContentType = processed.contentType;
-        finalSize = processed.size;
-        isOptimized = true;
-
-        console.log(
-          `Image optimized: ${originalSize} -> ${finalSize} bytes (${Math.round((1 - finalSize / originalSize) * 100)}% reduction)`
-        );
-      } catch (error) {
-        console.error("Image optimization failed:", error);
-        // Fall back to original file if optimization fails
-      }
-    }
+    // Image processing temporarily disabled for deployment compatibility
+    // const isImage = file.type.startsWith("image/");
+    // Image optimization will be re-enabled once deployment compatibility is resolved
 
     // Main file upload
     const extension = isOptimized ? "webp" : file.name.split(".").pop();
@@ -143,52 +110,7 @@ export async function POST(request: NextRequest) {
       optimized: isOptimized,
     };
 
-    // Create image variants if requested
-    if (isImage && createVariants) {
-      try {
-        const variants = await ImageProcessor.createImageVariants(
-          buffer,
-          cleanName
-        );
-        const uploadedVariants: {
-          [key: string]: { url: string; path: string; size: number };
-        } = {};
-
-        for (const [variantName, variantData] of Object.entries(variants)) {
-          const variantPath = `${folder}/variants/${timestamp}-${randomId}-${variantData.fileName}`;
-          const variantFile = bucket.file(variantPath);
-
-          await variantFile.save(Buffer.from(variantData.buffer), {
-            metadata: {
-              contentType: variantData.contentType,
-              metadata: {
-                originalName: file.name,
-                variant: variantName,
-                uploadedAt: new Date().toISOString(),
-                dimensions: JSON.stringify(variantData.dimensions),
-              },
-            },
-          });
-
-          await variantFile.makePublic();
-          const variantUrl = `https://storage.googleapis.com/${bucket.name}/${variantPath}`;
-
-          uploadedVariants[variantName] = {
-            url: variantUrl,
-            path: variantPath,
-            size: variantData.size,
-          };
-        }
-
-        response.variants = uploadedVariants;
-        console.log(
-          `Created ${Object.keys(uploadedVariants).length} image variants`
-        );
-      } catch (error) {
-        console.error("Variant creation failed:", error);
-        // Continue without variants if creation fails
-      }
-    }
+    // Image variants creation temporarily disabled for deployment compatibility
 
     return NextResponse.json(response);
   } catch (error) {
