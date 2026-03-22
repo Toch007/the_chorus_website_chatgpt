@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HiMenu, HiX } from "react-icons/hi";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,6 +17,8 @@ export default function Header() {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
+
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -64,12 +66,58 @@ export default function Header() {
     }
   }, [hovered]);
 
+  // Focus trap & keyboard handling for mobile menu
+  useEffect(() => {
+    if (!menuOpen || !menuRef.current) return;
+
+    const prevActive = document.activeElement as HTMLElement | null;
+    const focusableSelector =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    const nodes = Array.from(
+      menuRef.current.querySelectorAll<HTMLElement>(focusableSelector),
+    );
+    const first = nodes[0];
+    const last = nodes[nodes.length - 1];
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeMenu();
+      }
+
+      if (e.key === "Tab" && nodes.length > 0) {
+        // If Shift+Tab on first element, move to last
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
+
+        // If Tab on last element, move to first
+        if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKey);
+
+    // Move focus into the menu container when opened
+    (first ?? menuRef.current)?.focus?.();
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      // return focus to previous element
+      prevActive?.focus?.();
+    };
+  }, [menuOpen]);
+
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Members", href: "/members" },
+    { name: "Members Portal", href: "/members/login" },
     { name: "Events", href: "/events" },
-    { name: "Blog", href: "/blog" }, // ✅ added
+    { name: "Blog", href: "/blog" },
+    { name: "Downloads", href: "/downloads" },
     { name: "Contact Us", href: "/contact" },
     { name: "Join", href: "/join" },
     { name: "Support Us", href: "/support" },
@@ -111,6 +159,8 @@ export default function Header() {
         {/* Desktop Nav */}
         <div className="hidden sm:flex items-center space-x-6">
           <nav
+            role="navigation"
+            aria-label="Main"
             className={`flex space-x-6 font-medium transition-colors duration-300 ${
               isTransparent ? "text-white" : "text-gray-700"
             }`}
@@ -121,15 +171,22 @@ export default function Header() {
                 href={link.href}
                 className="relative group hover:text-blue-400 transition duration-300"
               >
-                <motion.span
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="block"
-                >
-                  {link.name}
-                  <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full" />
-                </motion.span>
+                {reduceMotion ? (
+                  <span className="block">
+                    {link.name}
+                    <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full" />
+                  </span>
+                ) : (
+                  <motion.span
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="block"
+                  >
+                    {link.name}
+                    <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full" />
+                  </motion.span>
+                )}
               </Link>
             ))}
           </nav>
@@ -175,6 +232,9 @@ export default function Header() {
               : "text-blue-800 hover:bg-blue-50"
           }`}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          aria-haspopup="true"
           style={{ minWidth: "44px", minHeight: "44px" }} // iOS touch target recommendation
         >
           {menuOpen ? <HiX /> : <HiMenu />}
@@ -195,6 +255,7 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            aria-hidden="true"
           />
         )}
       </AnimatePresence>
@@ -202,6 +263,11 @@ export default function Header() {
       {/* Mobile Nav */}
       <div
         ref={menuRef}
+        id="mobile-nav"
+        role="navigation"
+        aria-label="Mobile"
+        aria-hidden={!menuOpen}
+        tabIndex={-1}
         className={`sm:hidden fixed top-[72px] left-0 w-full bg-white z-50 shadow-md transition-all duration-300 ease-in-out overflow-hidden ${
           menuOpen
             ? "max-h-96 opacity-100 scale-100"

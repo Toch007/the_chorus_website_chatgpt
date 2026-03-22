@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout"; // new client wrapper
 import PerformanceTracker from "@/components/PerformanceTracker";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ export const metadata = {
   },
   description:
     "The Chorus Abuja — Elevating hearts and minds through classical music in Nigeria.",
-  metadataBase: new URL("https://thechorusabuja.com"),
+  metadataBase: new URL("https://thechorusabuja.org"),
   icons: {
     icon: [
       {
@@ -48,11 +49,11 @@ export const metadata = {
     title: "The Chorus Abuja",
     description:
       "Elevating hearts and minds through classical music in Nigeria.",
-    url: "https://thechorusabuja.com",
+    url: "https://thechorusabuja.org",
     siteName: "The Chorus Abuja",
     images: [
       {
-        url: "https://thechorusabuja.com/og-image.png",
+        url: "https://thechorusabuja.org/og-image.png",
         width: 1200,
         height: 630,
         alt: "The Chorus Abuja",
@@ -66,7 +67,7 @@ export const metadata = {
     description:
       "Elevating hearts and minds through classical music in Nigeria.",
     creator: "@thechorusabuja",
-    images: ["https://thechorusabuja.com/og-image.png"],
+    images: ["https://thechorusabuja.org/og-image.png"],
   },
 };
 
@@ -80,8 +81,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientLayout>{children}</ClientLayout>
-        <PerformanceTracker />
+        <ErrorBoundary>
+          <ClientLayout>{children}</ClientLayout>
+          <PerformanceTracker />
+        </ErrorBoundary>
       </body>
     </html>
   );

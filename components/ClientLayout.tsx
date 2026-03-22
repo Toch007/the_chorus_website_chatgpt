@@ -13,6 +13,10 @@ export default function ClientLayout({
 
   return (
     <>
+      {/* Skip link for keyboard users */}
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <AnimatePresence mode="wait">
         <motion.div
           key={pathname}

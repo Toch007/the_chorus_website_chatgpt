@@ -15,16 +15,34 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
     }
 
-    const event = JSON.parse(body);
+    // Parse JSON with error handling
+    let event;
+    try {
+      event = JSON.parse(body);
+    } catch (parseError) {
+      console.error("❌ JSON parsing error:", parseError);
+      return NextResponse.json({ error: "Invalid JSON payload" }, { status: 400 });
+    }
 
     if (event.event === "charge.success") {
       const { reference, metadata, customer } = event.data;
+
+      // Parse cart with error handling
+      let cart = {};
+      if (metadata?.cart) {
+        try {
+          cart = JSON.parse(metadata.cart);
+        } catch (cartParseError) {
+          console.error("❌ Cart parsing error:", cartParseError);
+          // Continue with empty cart rather than failing the entire webhook
+        }
+      }
 
       await issueTickets({
         reference,
         buyerEmail: customer.email,
         buyerName: metadata?.buyerName || "Guest",
-        cart: metadata?.cart ? JSON.parse(metadata.cart) : {},
+        cart,
       });
     }
 

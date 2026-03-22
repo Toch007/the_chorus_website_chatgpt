@@ -251,13 +251,13 @@ export default function AdminPartnersPage() {
               <div className="flex gap-2">
                 <div className="flex-1">
                   <input
-                    type="url"
+                    type="text"
                     value={formData.logo}
                     onChange={(e) =>
                       setFormData({ ...formData, logo: e.target.value })
                     }
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="/images/partners/logo.png"
+                    placeholder="/images/partners/logo.png or https://example.com/logo.png"
                     required
                   />
                 </div>

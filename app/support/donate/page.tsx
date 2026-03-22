@@ -86,36 +86,47 @@ export default function DonatePage() {
       <Header />
 
       <main className="pt-24 pb-20">
-        {/* Hero Section */}
-        <section className="max-w-6xl mx-auto px-4 text-center mb-20">
-          <Reveal>
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        {/* Hero Section with Background Image */}
+        <section className="relative mb-20 overflow-hidden">
+          {/* Background Image with Overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/images/donate.jpg')",
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900/90 via-purple-900/85 to-blue-900/90"></div>
+          </div>
+
+          {/* Content */}
+          <div className="relative max-w-6xl mx-auto px-4 py-24 text-center">
+            <Reveal>
+              <div className="max-w-4xl mx-auto">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
                   Make a Difference
-                </span>
-              </h1>
-              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                Your generosity fuels our mission to nurture musical talent,
-                build communities, and create transformative experiences through
-                the power of music.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                  <Shield className="w-4 h-4" />
-                  100% Secure
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                  <Award className="w-4 h-4" />
-                  Tax Deductible
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
-                  <Heart className="w-4 h-4" />
-                  Direct Impact
+                </h1>
+                <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+                  Your generosity fuels our mission to nurture musical talent,
+                  build communities, and create transformative experiences
+                  through the power of music.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full text-sm font-medium">
+                    <Shield className="w-4 h-4" />
+                    100% Secure
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full text-sm font-medium">
+                    <Award className="w-4 h-4" />
+                    Tax Deductible
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full text-sm font-medium">
+                    <Heart className="w-4 h-4" />
+                    Direct Impact
+                  </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </section>
 
         {/* Impact Statistics */}

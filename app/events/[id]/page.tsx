@@ -1,5 +1,4 @@
-import { db } from "@/firebase/config";
-import { doc, getDoc } from "firebase/firestore";
+import { adminFirestore } from "@/lib/firebase-admin";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -20,10 +19,9 @@ type EventType = {
 // ✅ Load event from Firestore
 async function getEvent(id: string): Promise<EventType | null> {
   try {
-    const ref = doc(db, "events", id);
-    const snapshot = await getDoc(ref);
+    const snapshot = await adminFirestore.collection("events").doc(id).get();
 
-    if (!snapshot.exists()) return null;
+    if (!snapshot.exists) return null;
 
     return {
       id: snapshot.id,

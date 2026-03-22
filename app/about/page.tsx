@@ -13,16 +13,29 @@ export default function AboutPage() {
     <>
       <Header />
       <main className="bg-white text-gray-800">
-        <section className="bg-gradient-to-r from-blue-50 to-white pt-24 px-4 pb-16">
-          <div className="max-w-5xl mx-auto text-center space-y-6">
+        {/* Hero Section with Background Image */}
+        <section className="relative pt-24 px-4 pb-16 overflow-hidden">
+          {/* Background Image with Overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/images/chorus-members.jpeg')",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/60"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900/70 via-blue-800/60 to-purple-900/70"></div>
+          </div>
+
+          {/* Content */}
+          <div className="relative max-w-5xl mx-auto text-center space-y-6">
             <Reveal>
-              <h1 className="text-5xl md:text-6xl font-extrabold text-blue-800 mb-4">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4">
                 About Us
               </h1>
             </Reveal>
             <Reveal delay={0.2}>
-              <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-                <strong className="text-blue-900">The Chorus Abuja</strong> is a
+              <p className="text-lg md:text-xl text-blue-100 max-w-4xl mx-auto leading-relaxed">
+                <strong className="text-white">The Chorus Abuja</strong> is a
                 non-denominational ensemble of multi-talented musicians based in
                 Abuja, Nigeria. Founded in January 2021, our group has grown
                 into a vibrant collective of singers, instrumentalists, and
@@ -33,25 +46,25 @@ export default function AboutPage() {
             {/* Statistics */}
             <Reveal delay={0.4}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
-                <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                  <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-blue-900">4+</div>
-                  <div className="text-sm text-gray-600">Years Active</div>
+                <div className="bg-white/15 backdrop-blur-md border border-white/40 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all hover:bg-white/25 hover:scale-105">
+                  <Calendar className="w-8 h-8 text-yellow-300 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">4+</div>
+                  <div className="text-sm text-blue-200">Years Active</div>
                 </div>
-                <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                  <Music className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-blue-900">7+</div>
-                  <div className="text-sm text-gray-600">Major Works</div>
+                <div className="bg-white/15 backdrop-blur-md border border-white/40 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all hover:bg-white/25 hover:scale-105">
+                  <Music className="w-8 h-8 text-yellow-300 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">7+</div>
+                  <div className="text-sm text-blue-200">Major Works</div>
                 </div>
-                <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                  <Users className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-blue-900">40+</div>
-                  <div className="text-sm text-gray-600">Active Members</div>
+                <div className="bg-white/15 backdrop-blur-md border border-white/40 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all hover:bg-white/25 hover:scale-105">
+                  <Users className="w-8 h-8 text-yellow-300 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">40+</div>
+                  <div className="text-sm text-blue-200">Active Members</div>
                 </div>
-                <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-                  <Award className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-blue-900">500+</div>
-                  <div className="text-sm text-gray-600">Lives Touched</div>
+                <div className="bg-white/15 backdrop-blur-md border border-white/40 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all hover:bg-white/25 hover:scale-105">
+                  <Award className="w-8 h-8 text-yellow-300 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">500+</div>
+                  <div className="text-sm text-blue-200">Lives Touched</div>
                 </div>
               </div>
             </Reveal>

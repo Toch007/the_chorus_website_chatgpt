@@ -187,81 +187,155 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
       )}
 
       {/* Ticket Options */}
+      {/* Fancy Tier Cards */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {tickets.map((ticket) => (
-          <div
-            key={ticket.name}
-            className={`rounded-xl overflow-hidden shadow-lg bg-white flex flex-col ${
-              ticket.name === "Diamond"
-                ? "ring-4 ring-blue-400 animate-pulse"
-                : ""
-            }`}
-          >
-            <div
-              className={`${ticket.color ?? "bg-blue-700"} p-4 text-white text-center`}
-            >
-              <h3 className="text-xl font-bold">{ticket.name}</h3>
-              <p className="text-lg font-semibold mt-1">
-                ₦{formatCurrency(ticket.price)}
-              </p>
-            </div>
+        {tickets.map((ticket) => {
+          const tierMeta: Record<
+            string,
+            { icon: string; gradient: string; glow: string; badge?: string }
+          > = {
+            Bronze: {
+              icon: "🎫",
+              gradient: "from-amber-800 via-amber-600 to-yellow-700",
+              glow: "shadow-amber-500/40",
+            },
+            Silver: {
+              icon: "⭐",
+              gradient: "from-slate-500 via-gray-400 to-slate-600",
+              glow: "shadow-slate-400/40",
+            },
+            Gold: {
+              icon: "👑",
+              gradient: "from-yellow-500 via-amber-400 to-yellow-600",
+              glow: "shadow-yellow-400/60",
+              badge: "Most Popular",
+            },
+            Diamond: {
+              icon: "💎",
+              gradient: "from-blue-600 via-purple-500 to-indigo-700",
+              glow: "shadow-blue-500/60",
+              badge: "Premium",
+            },
+          };
+          const meta = tierMeta[ticket.name] ?? {
+            icon: "🎟️",
+            gradient: "from-blue-700 to-blue-900",
+            glow: "shadow-blue-500/40",
+          };
+          const inCart = cart[ticket.name] ?? 0;
 
-            <div className="p-4 flex-1 flex flex-col justify-between">
-              {ticket.perks.length > 0 && (
-                <ul className="text-sm text-gray-700 mb-4 space-y-1">
-                  {ticket.perks.map((p, i) => (
-                    <li key={i}>• {p}</li>
-                  ))}
-                </ul>
+          return (
+            <div
+              key={ticket.name}
+              className={`relative rounded-2xl overflow-hidden flex flex-col shadow-2xl ${meta.glow} transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group`}
+            >
+              {/* Badge */}
+              {meta.badge && (
+                <div className="absolute top-3 right-3 z-10 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-white/30">
+                  {meta.badge}
+                </div>
               )}
 
-              <div className="flex justify-between items-center">
-                <button
-                  onClick={() => addToCart(ticket)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md transition"
-                >
-                  Add to Cart
-                </button>
-                <span className="text-xs text-gray-500">Per ticket</span>
+              {/* Gradient body */}
+              <div
+                className={`bg-gradient-to-br ${meta.gradient} p-6 flex-1 flex flex-col items-center text-center text-white relative overflow-hidden`}
+              >
+                {/* Shimmer streak */}
+                <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rotate-45 blur-2xl group-hover:translate-x-40 transition-transform duration-700 pointer-events-none" />
+
+                <div className="text-5xl mb-3 drop-shadow-lg">{meta.icon}</div>
+                <h3 className="text-2xl font-extrabold tracking-wide mb-1">
+                  {ticket.name}
+                </h3>
+                <div className="w-8 h-0.5 bg-white/40 rounded mb-3" />
+                <div className="text-3xl font-black">
+                  ₦{formatCurrency(ticket.price)}
+                </div>
+                <p className="text-xs text-white/70 mt-1 uppercase tracking-widest">
+                  per ticket
+                </p>
+
+                {ticket.perks.length > 0 && (
+                  <ul className="mt-4 space-y-1 text-sm text-white/90 w-full text-left">
+                    {ticket.perks.map((p, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-white/60">✓</span> {p}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* In-cart indicator */}
+                {inCart > 0 && (
+                  <div className="mt-4 flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm font-semibold border border-white/30">
+                    <span>🧾</span> {inCart} in cart
+                  </div>
+                )}
               </div>
+
+              {/* Add to Cart footer */}
+              <button
+                onClick={() => addToCart(ticket)}
+                className="w-full bg-white/10 hover:bg-white/25 backdrop-blur-sm text-white font-bold py-4 text-sm uppercase tracking-widest border-t border-white/20 transition-all duration-200 active:scale-95"
+              >
+                + Add to Cart
+              </button>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Cart & Buyer Info */}
-      <div className="bg-white/90 backdrop-blur-md rounded-xl p-6 shadow-md max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold text-blue-900 mb-4">🛒 Your Cart</h2>
+      <div className="mt-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border border-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl max-w-3xl mx-auto text-white">
+        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span className="text-2xl">🛒</span>
+          <span>Your Cart</span>
+          {Object.keys(cart).length > 0 && (
+            <span className="ml-auto bg-yellow-500 text-gray-900 text-sm font-bold px-3 py-1 rounded-full">
+              {Object.values(cart).reduce((a, b) => a + b, 0)} ticket
+              {Object.values(cart).reduce((a, b) => a + b, 0) !== 1 ? "s" : ""}
+            </span>
+          )}
+        </h2>
 
         {Object.keys(cart).length === 0 ? (
-          <p className="text-gray-600 mb-4">No tickets selected yet.</p>
+          <div className="text-center py-8 text-gray-400 border border-dashed border-gray-600 rounded-xl mb-6">
+            <div className="text-4xl mb-2">🎫</div>
+            <p>No tickets selected yet. Choose a tier above.</p>
+          </div>
         ) : (
-          <ul className="space-y-3 mb-4">
+          <ul className="space-y-3 mb-6">
             {Object.entries(cart).map(([name, qty]) => {
-              const t = tickets.find((x) => x.name === name)!;
+              const t = tickets.find((x) => x.name === name);
+              if (!t) {
+                console.error(`Ticket not found in cart: ${name}`);
+                return null;
+              }
               return (
                 <li
                   key={name}
-                  className="flex justify-between items-center bg-green-500 rounded p-3 shadow-sm"
+                  className="flex justify-between items-center bg-white/5 border border-white/10 rounded-xl px-5 py-4"
                 >
                   <div>
-                    <div className="font-medium">{name}</div>
-                    <div className="text-xs text-gray-500">
-                      ₦{formatCurrency(t.price)} each
+                    <div className="font-semibold text-white">{name}</div>
+                    <div className="text-xs text-gray-400 mt-0.5">
+                      ₦{formatCurrency(t.price)} × {qty} ={" "}
+                      <span className="text-yellow-400 font-bold">
+                        ₦{formatCurrency(t.price * qty)}
+                      </span>
                     </div>
                   </div>
-
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => removeFromCart(t)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
+                      className="w-8 h-8 flex items-center justify-center bg-red-500/20 hover:bg-red-500/40 text-red-300 rounded-lg font-bold transition"
                     >
                       −
                     </button>
-                    <div className="min-w-[36px] text-center">{qty}</div>
+                    <div className="w-8 text-center font-bold">{qty}</div>
                     <button
                       onClick={() => addToCart(t)}
-                      className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
+                      className="w-8 h-8 flex items-center justify-center bg-green-500/20 hover:bg-green-500/40 text-green-300 rounded-lg font-bold transition"
                     >
                       +
                     </button>
@@ -272,53 +346,59 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
           </ul>
         )}
 
-        <div className="space-y-3 mb-4">
+        <div className="space-y-3 mb-6">
           <input
             type="text"
             placeholder="Your full name *"
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
-            className={`w-full px-4 py-2 border rounded-md transition-colors ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors ${
               buyerName.trim()
-                ? "border-green-300 bg-green-50"
-                : "border-gray-300"
+                ? "border-green-500/50 focus:ring-green-500/30"
+                : "border-white/10 focus:ring-white/10"
             }`}
             required
           />
           <input
             type="email"
-            placeholder="Your email address *"
+            placeholder="Your email address * (tickets will be sent here)"
             value={buyerEmail}
             onChange={(e) => setBuyerEmail(e.target.value)}
-            className={`w-full px-4 py-2 border rounded-md transition-colors ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors ${
               buyerEmail.includes("@")
-                ? "border-green-300 bg-green-50"
-                : "border-gray-300"
+                ? "border-green-500/50 focus:ring-green-500/30"
+                : "border-white/10 focus:ring-white/10"
             }`}
             required
           />
           {(!buyerName.trim() || !buyerEmail.trim()) && totalAmount > 0 && (
-            <p className="text-red-600 text-sm flex items-center">
-              <span className="mr-1">⚠️</span>
-              Please fill in your name and email address to proceed
+            <p className="text-amber-400 text-sm flex items-center gap-2">
+              <span>⚠️</span>
+              Please fill in your name and email to proceed
             </p>
           )}
         </div>
 
-        <div className="flex items-center justify-between mb-4">
-          <div className="text-lg font-semibold">Total:</div>
-          <div className="text-xl font-bold text-blue-900">
+        <div className="flex items-center justify-between mb-6 px-4 py-3 bg-white/5 border border-white/10 rounded-xl">
+          <div className="text-gray-300 font-medium">Total Amount</div>
+          <div className="text-2xl font-extrabold text-yellow-400">
             ₦{formatCurrency(totalAmount)}
           </div>
         </div>
 
         <PaystackButton
-          className={`flex-1 font-bold px-4 py-2 rounded-md transition-all duration-200 ${
+          className={`w-full font-bold py-4 rounded-xl text-base uppercase tracking-wide transition-all duration-200 ${
             loading
-              ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-              : "bg-yellow-500 text-blue-900 hover:bg-yellow-400"
-          } disabled:opacity-60`}
-          text={loading ? "🔄 Processing Payment..." : "💳 Proceed to Payment"}
+              ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+              : totalAmount === 0 || !buyerName.trim() || !buyerEmail.trim()
+                ? "bg-gray-700 text-gray-500 cursor-not-allowed"
+                : "bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 hover:from-yellow-300 hover:to-amber-400 shadow-lg shadow-yellow-500/30 hover:shadow-yellow-500/50 active:scale-95"
+          }`}
+          text={
+            loading
+              ? "🔄 Processing Payment..."
+              : "💳 Proceed to Secure Payment"
+          }
           disabled={
             totalAmount === 0 ||
             loading ||
@@ -327,7 +407,7 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
           }
           publicKey={process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!}
           email={buyerEmail}
-          amount={totalAmount * 100} // in kobo
+          amount={totalAmount * 100}
           reference={`TICKET-${crypto.randomUUID()}`}
           onSuccess={handleSuccess}
           onClose={() => alert("Transaction closed")}
@@ -346,6 +426,11 @@ export default function TicketStore({ tickets }: TicketStoreProps) {
             ],
           }}
         />
+
+        <p className="text-center text-xs text-gray-500 mt-4 flex items-center justify-center gap-1">
+          <span>🔒</span> Secured by Paystack &bull; Tickets delivered to your
+          email instantly after payment
+        </p>
       </div>
     </div>
   );

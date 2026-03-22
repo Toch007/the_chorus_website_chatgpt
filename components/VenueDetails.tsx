@@ -24,7 +24,7 @@ export default function VenueDetails({ className = "" }: VenueDetailsProps) {
     name: "Nigerian Society of Engineers Hall",
     address: "1012, Sani Abacha Way, CBD, Abuja",
     date: "November 16, 2025",
-    time: "6:00 PM",
+    time: "5:00 PM",
     capacity: "500 seats",
     phone: "0813 109 3319", // Mr Raphael
     secondaryPhone: "0813 557 8298", // Engr Samuel
@@ -37,7 +37,7 @@ export default function VenueDetails({ className = "" }: VenueDetailsProps) {
   const facilities = [
     { icon: Car, text: "Free Parking Available" },
     { icon: Users, text: "Wheelchair Accessible" },
-    { icon: Clock, text: "Doors Open 5:30 PM" },
+    { icon: Clock, text: "Doors Open 4:00 PM (Red Carpet)" },
     { icon: Phone, text: "24/7 Event Support" },
   ];
 
@@ -151,13 +151,11 @@ export default function VenueDetails({ className = "" }: VenueDetailsProps) {
               className="border border-white/20 rounded-lg overflow-hidden"
             >
               <iframe
-                src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}&q=Nigerian+Society+of+Engineers+Hall,Sani+Abacha+Way,Abuja,Nigeria`}
+                src="https://storage.googleapis.com/maps-solutions-kn8borlmk3/commutes/kl7h/commutes.html"
                 width="100%"
                 height="400"
                 style={{ border: 0 }}
-                allowFullScreen
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
                 className="w-full h-full"
               />
             </motion.div>

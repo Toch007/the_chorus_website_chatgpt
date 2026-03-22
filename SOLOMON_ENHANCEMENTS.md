@@ -4,7 +4,7 @@
 
 ### **1. Countdown Timer** ⏰
 
-- **Real-time countdown** to November 16, 2025, 6:00 PM
+- **Real-time countdown** to November 16, 2025, 5:00 PM (Red Carpet at 4:00 PM)
 - **Visual appeal** with animated number changes
 - **Urgency messaging** - "Limited Time - Event Starts In"
 - **Scarcity indicator** - "Only 50 tickets remaining!"

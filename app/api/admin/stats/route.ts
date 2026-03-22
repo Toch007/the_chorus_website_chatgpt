@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { db } from "@/firebase/admin";
 
+// Disable caching for real-time stats
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   try {
     // Fetch all collections in parallel
@@ -35,10 +39,16 @@ export async function GET() {
       return eventDate && eventDate.startsWith(currentMonth);
     }).length;
 
+    // Count only active (subscribed) newsletter subscribers
+    const activeSubscribers = subscribersSnap.docs.filter((doc) => {
+      const status = doc.data().status;
+      return !status || status === "subscribed"; // Include old subscribers without status field
+    }).length;
+
     const stats = {
       totalMembers: membersSnap.size,
       totalEvents: eventsSnap.size,
-      newsletterSubscribers: subscribersSnap.size,
+      newsletterSubscribers: activeSubscribers,
       pendingApplications:
         choirAppsSnap.size +
         volunteerAppsSnap.size +

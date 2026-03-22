@@ -12,6 +12,62 @@ interface Partner {
   website?: string;
 }
 
+// Infinite scroll component for partner logos
+function InfiniteScroll({
+  partners,
+  direction = "left",
+}: {
+  partners: Partner[];
+  direction?: "left" | "right";
+}) {
+  // Duplicate partners array for seamless loop
+  const duplicatedPartners = [...partners, ...partners];
+
+  return (
+    <div className="relative overflow-hidden py-8">
+      <div
+        className={`flex gap-16 ${
+          direction === "left" ? "animate-scroll-left" : "animate-scroll-right"
+        }`}
+        style={{
+          width: "fit-content",
+        }}
+      >
+        {duplicatedPartners.map((partner, index) => {
+          const content = (
+            <div
+              key={`${partner.id}-${index}`}
+              className="flex-shrink-0 w-32 h-20 flex items-center justify-center"
+            >
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={120}
+                height={60}
+                className="object-contain grayscale hover:grayscale-0 transition duration-300 max-w-full max-h-full"
+              />
+            </div>
+          );
+
+          return partner.website ? (
+            <a
+              key={`${partner.id}-${index}`}
+              href={partner.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0"
+            >
+              {content}
+            </a>
+          ) : (
+            content
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Partners() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +75,11 @@ export default function Partners() {
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const response = await fetch("/api/partners");
+        const response = await fetch("/api/partners", {
+          // Prevent caching to always get fresh data
+          cache: "no-store",
+          next: { revalidate: 0 },
+        });
         const result = await response.json();
 
         if (result.success && result.partners) {
@@ -35,7 +95,26 @@ export default function Partners() {
     };
 
     fetchPartners();
+
+    // Optional: Refetch every 30 seconds to get updates
+    const interval = setInterval(fetchPartners, 30000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  // Split partners into rows for alternating scroll directions
+  const getPartnerRows = () => {
+    if (partners.length === 0) return [];
+
+    const itemsPerRow = Math.ceil(partners.length / 2);
+    const row1 = partners.slice(0, itemsPerRow);
+    const row2 = partners.slice(itemsPerRow);
+
+    return [row1, row2].filter((row) => row.length > 0);
+  };
+
+  const partnerRows = getPartnerRows();
+
   return (
     <section className="bg-white py-16 px-6 md:px-20" id="partners">
       <div className="max-w-6xl mx-auto text-center">
@@ -54,45 +133,26 @@ export default function Partners() {
 
         <Reveal delay={0.3}>
           {loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 items-center justify-center mb-12">
-              {[...Array(4)].map((_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="h-16 bg-gray-200 rounded-lg"></div>
+            <div className="space-y-4 mb-12">
+              {[...Array(2)].map((_, rowIndex) => (
+                <div key={rowIndex} className="flex gap-8 overflow-hidden">
+                  {[...Array(4)].map((_, index) => (
+                    <div key={index} className="animate-pulse flex-shrink-0">
+                      <div className="h-16 w-32 bg-gray-200 rounded-lg"></div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
           ) : partners.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 items-center justify-center mb-12">
-              {partners.map((partner) => {
-                const content = (
-                  <Image
-                    src={partner.logo}
-                    alt={partner.name}
-                    width={120}
-                    height={60}
-                    className="object-contain grayscale hover:grayscale-0 transition duration-300"
-                  />
-                );
-
-                return partner.website ? (
-                  <a
-                    key={partner.id}
-                    href={partner.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center"
-                  >
-                    {content}
-                  </a>
-                ) : (
-                  <div
-                    key={partner.id}
-                    className="flex items-center justify-center"
-                  >
-                    {content}
-                  </div>
-                );
-              })}
+            <div className="space-y-0 mb-12">
+              {partnerRows.map((row, rowIndex) => (
+                <InfiniteScroll
+                  key={rowIndex}
+                  partners={row}
+                  direction={rowIndex % 2 === 0 ? "left" : "right"}
+                />
+              ))}
             </div>
           ) : (
             <div className="text-center py-12 mb-12">

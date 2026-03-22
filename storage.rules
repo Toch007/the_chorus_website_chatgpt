@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Public read access for all files (so images can be displayed on website)
+    // Only authenticated admin users can write
+    match /{allPaths=**} {
+      // Anyone can read (public access for website images)
+      allow read: if true;
+      
+      // Only authenticated users can write/delete
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Specific folder rules (optional - more granular control)
+    
+    // Events folder
+    match /events/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Partners folder
+    match /partners/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Blog folder
+    match /blog/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Members folder
+    match /members/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Media folder
+    match /media/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Documents folder
+    match /documents/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // General uploads folder
+    match /uploads/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Tickets folder
+    match /tickets/{fileName} {
+      allow read: if true;
+      allow write, delete: if request.auth != null;
+    }
+  }
+}

@@ -19,6 +19,8 @@ import {
   TrendingUp,
   Activity,
   ExternalLink,
+  Send,
+  RefreshCw,
 } from "lucide-react";
 
 interface DashboardStats {
@@ -47,12 +49,26 @@ export default function AdminDashboard() {
     totalPartners: 0,
   });
   const [statsLoading, setStatsLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         router.replace("/admin/login");
       } else {
+        // Verify user is an admin
+        const response = await fetch(
+          `/api/admin/verify-admin?email=${encodeURIComponent(user.email || "")}`,
+        );
+        const data = await response.json();
+
+        if (!data.isAdmin) {
+          alert("Access denied. You do not have admin privileges.");
+          await signOut(auth);
+          router.replace("/admin/login");
+          return;
+        }
+
         setAuthenticated(true);
         fetchDashboardStats();
       }
@@ -62,6 +78,17 @@ export default function AdminDashboard() {
     return () => unsubscribe();
   }, [router]);
 
+  // Auto-refresh dashboard stats every 30 seconds
+  useEffect(() => {
+    if (!authenticated) return;
+
+    const interval = setInterval(() => {
+      fetchDashboardStats();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [authenticated]);
+
   const fetchDashboardStats = async () => {
     try {
       const response = await fetch("/api/admin/stats");
@@ -69,6 +96,7 @@ export default function AdminDashboard() {
 
       if (result.success && result.stats) {
         setStats(result.stats);
+        setLastUpdated(new Date());
       } else {
         console.error("Failed to fetch dashboard stats:", result.message);
         // Set default stats if API fails
@@ -126,10 +154,22 @@ export default function AdminDashboard() {
                 Welcome back! Here's your choir management overview.
               </p>
             </div>
-            <div className="hidden lg:block">
-              <div className="text-sm text-gray-500">
-                Last updated: {new Date().toLocaleDateString()}
-              </div>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={fetchDashboardStats}
+                disabled={statsLoading}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <RefreshCw
+                  className={`w-4 h-4 ${statsLoading ? "animate-spin" : ""}`}
+                />
+                <span className="hidden sm:inline">Refresh</span>
+              </button>
+              {lastUpdated && (
+                <div className="text-sm text-gray-500">
+                  Updated: {lastUpdated.toLocaleTimeString()}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -275,6 +315,17 @@ export default function AdminDashboard() {
               </Link>
 
               <Link
+                href="/admin/event-rsvps"
+                className="flex items-center justify-between p-4 bg-gray-50 hover:bg-teal-50 rounded-lg border border-gray-200 hover:border-teal-200 transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-teal-600" />
+                  <span className="font-medium text-gray-900">Event RSVPs</span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-teal-600" />
+              </Link>
+
+              <Link
                 href="/admin/blog"
                 className="flex items-center justify-between p-4 bg-gray-50 hover:bg-purple-50 rounded-lg border border-gray-200 hover:border-purple-200 transition-all group"
               >
@@ -301,6 +352,19 @@ export default function AdminDashboard() {
               </Link>
 
               <Link
+                href="/admin/messaging"
+                className="flex items-center justify-between p-4 bg-gray-50 hover:bg-purple-50 rounded-lg border border-gray-200 hover:border-purple-200 transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <Send className="w-5 h-5 text-purple-600" />
+                  <span className="font-medium text-gray-900">
+                    Send Messages
+                  </span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-purple-600" />
+              </Link>
+
+              <Link
                 href="/admin/tickets"
                 className="flex items-center justify-between p-4 bg-gray-50 hover:bg-yellow-50 rounded-lg border border-gray-200 hover:border-yellow-200 transition-all group"
               >
@@ -324,6 +388,22 @@ export default function AdminDashboard() {
                   </span>
                 </div>
                 <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-indigo-600" />
+              </Link>
+
+              <Link
+                href="/admin/members-portal"
+                className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 rounded-lg border-2 border-blue-200 hover:border-blue-300 transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-blue-600" />
+                  <span className="font-medium text-gray-900">
+                    Members Portal Admin
+                  </span>
+                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">
+                    NEW
+                  </span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
               </Link>
             </div>
           </div>

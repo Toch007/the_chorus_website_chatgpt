@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.qrserver.com",
+        port: "",
+        pathname: "/v1/create-qr-code/**",
+      },
     ],
     formats: ["image/webp", "image/avif"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -41,6 +47,10 @@ const nextConfig: NextConfig = {
     ],
     scrollRestoration: true,
   },
+
+  serverExternalPackages: ["firebase-admin"],
+
+  transpilePackages: ["pdf-lib", "@pdf-lib/standard-fonts"],
 
   // Build optimization
   compiler: {
@@ -92,8 +102,41 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  eslint: {
-    ignoreDuringBuilds: true,
+  turbopack: {
+    resolveAlias: {
+      '../postinstall.mjs': './lib/empty.js',
+      './postinstall.mjs': './lib/empty.js',
+    },
+  },
+
+  webpack: (config, { isServer }) => {
+    //Handle ESM packages
+    config.resolve.extensionAlias = {
+      ".js": [".js", ".ts", ".tsx"],
+      ".mjs": [".mjs", ".mts"],
+    };
+
+    // Add NormalModuleReplacementPlugin to ignore postinstall.mjs
+    config.plugins.push(
+      new (require("webpack").NormalModuleReplacementPlugin)(
+        /postinstall\.mjs$/,
+        require.resolve("./lib/empty.js"),
+      ),
+    );
+
+    // Ignore optional dependencies that cause issues
+    config.externals = config.externals || [];
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+      };
+    }
+
+    return config;
   },
 };
 

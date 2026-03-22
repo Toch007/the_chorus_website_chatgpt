@@ -1,0 +1,146 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===== FEEDBACK COLLECTION =====
+    // Allow anyone to submit feedback (POST)
+    // Only authenticated admins can read/delete (GET/DELETE)
+    match /feedback/{feedbackId} {
+      // Allow anyone to create feedback
+      allow create: if true;
+      
+      // Only authenticated users can read/delete
+      allow read, delete: if request.auth != null;
+    }
+    
+    // ===== NEWSLETTER SUBSCRIBERS COLLECTION =====
+    // Allow anyone to subscribe/unsubscribe
+    // Only authenticated admins can read full list
+    match /newsletterSubscribers/{subscriberId} {
+      // Allow anyone to create (subscribe)
+      allow create: if true;
+      
+      // Allow anyone to update (unsubscribe)
+      allow update: if true;
+      
+      // Only authenticated users can read the full list
+      allow read: if request.auth != null;
+      
+      // Only authenticated users can delete
+      allow delete: if request.auth != null;
+    }
+    
+    // ===== BLOG POSTS COLLECTION =====
+    match /blogPosts/{postId} {
+      // Anyone can read blog posts
+      allow read: if true;
+      
+      // Only authenticated admins can create/update/delete
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // ===== POSTS COLLECTION (Alternative blog storage) =====
+    match /posts/{postId} {
+      // Anyone can read posts
+      allow read: if true;
+      
+      // Only authenticated admins can create/update/delete
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // ===== EVENTS COLLECTION =====
+    match /events/{eventId} {
+      // Anyone can read events
+      allow read: if true;
+      
+      // Only authenticated admins can create/update/delete
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // ===== MEMBERS COLLECTION =====
+    match /members/{memberId} {
+      // Anyone can read members
+      allow read: if true;
+      
+      // Only authenticated admins can create/update/delete
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // ===== TICKETS COLLECTION =====
+    match /tickets/{ticketId} {
+      // Anyone can read tickets (for validation)
+      allow read: if true;
+      
+      // Anyone can create tickets (purchases)
+      allow create: if true;
+      
+      // Only authenticated admins can update/delete
+      allow update, delete: if request.auth != null;
+    }
+    
+    // ===== DONATIONS COLLECTION =====
+    match /donations/{donationId} {
+      // Anyone can create donations
+      allow create: if true;
+      
+      // Only authenticated admins can read/delete
+      allow read, delete: if request.auth != null;
+    }
+    
+    // ===== JOIN REQUESTS COLLECTION =====
+    match /joinRequests/{requestId} {
+      // Anyone can create join requests
+      allow create: if true;
+      
+      // Only authenticated admins can read/update/delete
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    // ===== JOIN FORM COLLECTIONS =====
+    // join_choir, join_volunteer, join_media, join_tech
+    match /join_choir/{applicationId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    match /join_volunteer/{applicationId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    match /join_media/{applicationId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    match /join_tech/{applicationId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    // ===== PARTNERS COLLECTION =====
+    match /partners/{partnerId} {
+      // Anyone can read partners
+      allow read: if true;
+      
+      // Only authenticated admins can create/update/delete
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // ===== SUPPORT REQUESTS COLLECTION =====
+    match /supportRequests/{requestId} {
+      // Anyone can create support requests
+      allow create: if true;
+      
+      // Only authenticated admins can read/delete
+      allow read, delete: if request.auth != null;
+    }
+    
+    // ===== DEFAULT RULE =====
+    // Deny all other collections by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

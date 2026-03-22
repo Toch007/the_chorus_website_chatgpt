@@ -2,12 +2,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { db, storage } from "@/firebase/config";
+import { db } from "@/firebase/config";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { ref, deleteObject } from "firebase/storage";
+// import { ref, deleteObject } from "firebase/storage";
 import Image from "next/image";
 import Link from "next/link";
-
 
 type Event = {
   id: string;
@@ -43,15 +42,18 @@ export default function AdminEventList() {
   }, []);
 
   const handleDelete = async (eventId: string, imageUrl: string) => {
-    const confirm = window.confirm("Are you sure you want to delete this event?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this event?",
+    );
     if (!confirm) return;
 
     try {
       await deleteDoc(doc(db, "events", eventId));
-      if (imageUrl) {
-        const imageRef = ref(storage, imageUrl);
-        await deleteObject(imageRef);
-      }
+      // Temporarily disabled:
+      // if (imageUrl) {
+      //   const imageRef = ref(storage, imageUrl);
+      //   await deleteObject(imageRef);
+      // }
       setEvents(events.filter((e) => e.id !== eventId));
     } catch (error) {
       console.error("Error deleting event:", error);
@@ -86,7 +88,9 @@ export default function AdminEventList() {
               <p className="text-sm">{event.venue}</p>
               <span
                 className={`inline-block mt-2 px-3 py-1 text-xs font-semibold rounded-full ${
-                  event.status === "upcoming" ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"
+                  event.status === "upcoming"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-gray-200 text-gray-700"
                 }`}
               >
                 {event.status}
@@ -94,11 +98,11 @@ export default function AdminEventList() {
               <div className="flex justify-end gap-2 mt-4">
                 {/* Placeholder for future Edit */}
                 <Link
-  href={`/admin/events/edit/${event.id}`}
-  className="text-blue-600 hover:underline"
->
-  Edit
-</Link>
+                  href={`/admin/events/edit/${event.id}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  Edit
+                </Link>
                 <button
                   onClick={() => handleDelete(event.id, event.imageUrl)}
                   className="text-red-600 hover:underline"

@@ -3,8 +3,8 @@
 
 import { useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { ref, deleteObject } from "firebase/storage";
-import { db, storage } from "@/firebase/config";
+// import { ref, deleteObject } from "firebase/storage";
+import { db } from "@/firebase/config";
 import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import DataTable from "@/components/admin/DataTable";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
@@ -48,16 +48,17 @@ export default function AdminEventsPage() {
 
   const handleDelete = async (id: string, imageUrl: string) => {
     const confirm = window.confirm(
-      "Are you sure you want to delete this event?"
+      "Are you sure you want to delete this event?",
     );
     if (!confirm) return;
 
     try {
       await deleteDoc(doc(db, "events", id));
-      if (imageUrl) {
-        const imageRef = ref(storage, imageUrl);
-        await deleteObject(imageRef);
-      }
+      // Temporarily disabled:
+      // if (imageUrl) {
+      //  const imageRef = ref(storage, imageUrl);
+      //   await deleteObject(imageRef);
+      // }
       setEvents((prev) => prev.filter((event) => event.id !== id));
     } catch (error) {
       console.error("Error deleting event:", error);

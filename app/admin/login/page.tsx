@@ -21,10 +21,23 @@ export default function LoginPage() {
     setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if user is an admin by querying a separate admin collection
+      const response = await fetch(`/api/admin/verify-admin?email=${encodeURIComponent(email)}`);
+      const data = await response.json();
+
+      if (!data.isAdmin) {
+        setError("Access denied. You do not have admin privileges.");
+        await auth.signOut();
+        setLoading(false);
+        return;
+      }
+
       router.push("/admin"); // Redirect after login
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Invalid credentials");
     } finally {
       setLoading(false);
     }

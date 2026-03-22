@@ -23,6 +23,7 @@ import {
   X,
   ChevronRight,
   Home,
+  MessageSquare,
 } from "lucide-react";
 
 interface NavItem {
@@ -84,6 +85,18 @@ export default function AdminSidebar({
       name: "Newsletter",
       href: "/admin/newsletter",
       icon: Mail,
+      children: [
+        {
+          name: "Subscribers",
+          href: "/admin/newsletter",
+          icon: Users,
+        },
+        {
+          name: "Send Newsletter",
+          href: "/admin/newsletter/send",
+          icon: Mail,
+        },
+      ],
     },
     {
       name: "Tickets",
@@ -94,6 +107,11 @@ export default function AdminSidebar({
       name: "Donations",
       href: "/admin/donations",
       icon: Heart,
+    },
+    {
+      name: "Feedback",
+      href: "/admin/feedback",
+      icon: MessageSquare,
     },
     {
       name: "Partners",

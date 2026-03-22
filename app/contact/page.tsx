@@ -126,13 +126,28 @@ export default function ContactPage() {
     <>
       <Header />
       <main className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <section className="relative bg-blue-900 text-white pt-24 pb-20 px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
-          <p className="max-w-2xl mx-auto text-lg opacity-90">
-            Whether for bookings, collaborations, or joining our choir family —
-            we’d love to hear from you.
-          </p>
+        {/* Hero Section with Background Image */}
+        <section className="relative text-white pt-24 pb-20 px-6 text-center overflow-hidden">
+          {/* Background Image with Overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/images/groupp.jpg')",
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900/90 via-purple-900/85 to-blue-900/90"></div>
+          </div>
+
+          {/* Content */}
+          <div className="relative">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Get in Touch
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg text-blue-100">
+              Whether for bookings, collaborations, or joining our choir family
+              — we'd love to hear from you.
+            </p>
+          </div>
         </section>
 
         {/* Contact Info Cards */}

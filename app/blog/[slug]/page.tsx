@@ -1,7 +1,6 @@
 // app/blog/[slug]/page.tsx
 
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "@/firebase/config";
+import { adminFirestore } from "@/lib/firebase-admin";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,8 +52,10 @@ export async function generateMetadata(props: any): Promise<Metadata> {
   const slug = (await params).slug;
 
   try {
-    const q = query(collection(db, "posts"), where("slug", "==", slug));
-    const snapshot = await getDocs(q);
+    const snapshot = await adminFirestore
+      .collection("posts")
+      .where("slug", "==", slug)
+      .get();
 
     if (snapshot.empty) {
       return {
@@ -93,8 +94,10 @@ export default async function BlogDetailPage(props: any) {
   const { params } = props;
   const slug = (await params).slug;
 
-  const q = query(collection(db, "posts"), where("slug", "==", slug));
-  const snapshot = await getDocs(q);
+  const snapshot = await adminFirestore
+    .collection("posts")
+    .where("slug", "==", slug)
+    .get();
 
   if (snapshot.empty) {
     notFound();

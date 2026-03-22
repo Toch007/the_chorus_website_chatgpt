@@ -1,7 +1,12 @@
 // scripts/seedBlogPosts.ts
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import "dotenv/config";
 
 // Firebase config
@@ -12,7 +17,7 @@ const firebaseConfig = {
   storageBucket: "the-chorus-project.firebasestorage.app",
   messagingSenderId: "581997206429",
   appId: "1:581997206429:web:f52457364c73c7ddf72d74",
-  measurementId: "G-4J4K2KHZ3Y"
+  measurementId: "G-4J4K2KHZ3Y",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -22,7 +27,8 @@ const posts = [
   {
     title: "Handel's Solomon: A Journey Through Wisdom and Music",
     slug: "handels-solomon-journey-wisdom-music",
-    excerpt: "Discover the majestic story behind Handel's Solomon and what makes this oratorio a cornerstone of classical choral music.",
+    excerpt:
+      "Discover the majestic story behind Handel's Solomon and what makes this oratorio a cornerstone of classical choral music.",
     content: `# Handel's Solomon: A Journey Through Wisdom and Music
 
 George Frideric Handel's *Solomon* stands as one of the most magnificent oratorios ever composed, and The Chorus Abuja is thrilled to bring this masterpiece to life on November 16, 2025, at the Nigerian Society of Engineers Hall.
@@ -74,7 +80,7 @@ The preparation for *Solomon* has been intensive. Our members have spent months:
 
 *Solomon* offers audiences a complete artistic experience – combining the power of live music with profound storytelling. Whether you're a classical music enthusiast or someone curious about choral performance, this concert promises to be transformative.
 
-The performance takes place on **November 16, 2025, at 6:00 PM** at the Nigerian Society of Engineers Hall, 1012 Sani Abacha Way, CBD, Abuja.
+The performance takes place on **November 16, 2025, at 5:00 PM** (Red Carpet at 4:00 PM) at the Nigerian Society of Engineers Hall, 1012 Sani Abacha Way, CBD, Abuja.
 
 Don't miss this opportunity to experience one of baroque music's greatest achievements, performed by The Chorus Abuja with the passion and excellence that has made us Abuja's premier classical ensemble.
 
@@ -82,12 +88,14 @@ Don't miss this opportunity to experience one of baroque music's greatest achiev
     image: "/images/solomon-1.jpg",
     author: "The Chorus Abuja",
     category: "Performance",
-    readTime: 6
+    readTime: 6,
   },
   {
-    title: "The Heart of Classical Music: Why Choral Tradition Matters in Modern Nigeria",
+    title:
+      "The Heart of Classical Music: Why Choral Tradition Matters in Modern Nigeria",
     slug: "classical-music-choral-tradition-modern-nigeria",
-    excerpt: "Exploring how The Chorus Abuja preserves and celebrates classical choral traditions while making them relevant for contemporary Nigerian audiences.",
+    excerpt:
+      "Exploring how The Chorus Abuja preserves and celebrates classical choral traditions while making them relevant for contemporary Nigerian audiences.",
     content: `# The Heart of Classical Music: Why Choral Tradition Matters in Modern Nigeria
 
 In a world increasingly dominated by digital sounds and fleeting musical trends, The Chorus Abuja stands as a guardian of something precious: the living tradition of classical choral music. But why does this matter in modern Nigeria? Why should we care about music written centuries ago in distant lands?
@@ -175,12 +183,13 @@ Experience the power of this tradition with The Chorus Abuja. Our music speaks t
     image: "/images/chorus-members.jpeg",
     author: "Kelechi Nnam, Music Director",
     category: "Music Education",
-    readTime: 8
+    readTime: 8,
   },
   {
     title: "From Engineer to Music Director: The Journey of Kelechi Nnam",
     slug: "engineer-music-director-kelechi-nnam-journey",
-    excerpt: "Meet the passionate leader behind The Chorus Abuja - a trained engineer who found his calling in classical choral music.",
+    excerpt:
+      "Meet the passionate leader behind The Chorus Abuja - a trained engineer who found his calling in classical choral music.",
     content: `# From Engineer to Music Director: The Journey of Kelechi Nnam
 
 In the world of professional music, traditional pathways often seem clearly defined. But for Kelechi Nnam, Music Director of The Chorus Abuja, the road to musical leadership wound through engineering laboratories and business boardrooms before finding its true destination on the conductor's podium.
@@ -300,12 +309,13 @@ The engineer-musician-businessman continues to prove that the best leaders often
     image: "/images/kelechi2.jpg",
     author: "The Chorus Abuja",
     category: "Leadership",
-    readTime: 10
+    readTime: 10,
   },
   {
     title: "Building Harmony: The Diverse Voices Behind The Chorus Abuja",
     slug: "building-harmony-diverse-voices-chorus-abuja",
-    excerpt: "Meet the remarkable individuals who make up The Chorus Abuja - from engineers to doctors, lawyers to teachers, all united by their love for choral excellence.",
+    excerpt:
+      "Meet the remarkable individuals who make up The Chorus Abuja - from engineers to doctors, lawyers to teachers, all united by their love for choral excellence.",
     content: `# Building Harmony: The Diverse Voices Behind The Chorus Abuja
 
 What happens when you bring together a software engineer, a medical doctor, a lawyer, a data analyst, and a fashion designer? If they all share a passion for choral music, you get The Chorus Abuja – a remarkable ensemble that proves great music emerges from the intersection of diverse talents and shared commitment.
@@ -462,8 +472,8 @@ Great music doesn't require leaving your professional identity behind – it inv
     image: "/images/chorus-members.jpeg",
     author: "The Chorus Abuja",
     category: "Community",
-    readTime: 9
-  }
+    readTime: 9,
+  },
 ];
 
 async function seedBlogPosts() {
@@ -479,4 +489,6 @@ async function seedBlogPosts() {
   console.log("✅ Blog posts seeded successfully.");
 }
 
-seedBlogPosts().catch((error) => console.error("❌ Error seeding posts:", error));
+seedBlogPosts().catch((error) =>
+  console.error("❌ Error seeding posts:", error)
+);

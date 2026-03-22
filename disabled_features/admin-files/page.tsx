@@ -107,8 +107,9 @@ export default function AdminFilesPage() {
   }, [selectedFolder, user, authLoading]);
 
   const handleFileUpload = async (url: string, filename: string) => {
-    // Refresh the file list
+    // Refresh the file list after upload
     await fetchFiles(selectedFolder);
+    setShowUploadForm(false); // Close upload form after successful upload
     alert(`✅ File uploaded successfully: ${filename}`);
   };
 

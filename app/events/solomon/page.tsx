@@ -1,27 +1,9 @@
 // app/events/solomon/page.tsx
 "use client";
 
-import TicketStore, { Ticket } from "@/components/TicketStore";
-import CountdownTimer from "@/components/CountdownTimer";
 import VenueDetails from "@/components/VenueDetails";
+import ProgramDownload from "@/components/ProgramDownload";
 import { motion } from "framer-motion";
-
-const solomonTickets: Ticket[] = [
-  { name: "Bronze", price: 10000, perks: [], color: "bg-amber-500" },
-  { name: "Silver", price: 30000, perks: [], color: "bg-slate-400" },
-  {
-    name: "Gold",
-    price: 50000,
-    perks: ["🎟 Admits 2 Persons"],
-    color: "bg-yellow-400"
-  },
-  {
-    name: "Diamond",
-    price: 100000,
-    perks: ["🎟 Admits 2 Persons"],
-    color: "bg-blue-600",
-  },
-];
 
 export default function SolomonEventPage() {
   return (
@@ -65,20 +47,20 @@ export default function SolomonEventPage() {
           power, love, and divine wisdom.
         </motion.p>
 
-        {/* Countdown Timer */}
+        {/* Event Concluded Message */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
-          className="mb-8"
+          className="mb-8 bg-green-500/20 border border-green-400/50 rounded-xl p-6 max-w-2xl"
         >
-          <div className="text-yellow-300 text-sm font-semibold mb-4 uppercase tracking-wide">
-            🔥 Limited Time - Event Starts In:
+          <div className="text-green-300 text-lg font-semibold mb-2">
+            ✅ Concert Concluded
           </div>
-          <CountdownTimer targetDate="2025-11-16T18:00:00" className="mb-4" />
-          <div className="text-red-400 text-sm font-medium animate-pulse">
-            ⚡ Only 20 tickets remaining!
-          </div>
+          <p className="text-gray-200">
+            Thank you to everyone who attended this magnificent performance on
+            November 16, 2025.
+          </p>
         </motion.div>
 
         {/* Concert Description */}
@@ -182,19 +164,6 @@ export default function SolomonEventPage() {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.9 }}
-          className="w-full max-w-6xl"
-        >
-          {/* TicketStore is a reusable component; tickets are provided here only */}
-          <div className="px-4 py-8 rounded-2xl">
-            <TicketStore tickets={solomonTickets as Ticket[]} />
-          </div>
-        </motion.div>
-
         {/* Why Choose This Concert */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -249,9 +218,9 @@ export default function SolomonEventPage() {
             </h4>
             <div className="grid md:grid-cols-2 gap-6 text-sm">
               <blockquote className="italic text-gray-200 border-l-2 border-yellow-400 pl-4">
-                "Absolutely breathtaking! The way they brought Mendelssohn's music to
-                life was incredible. You could feel every emotion in their
-                voices."
+                "Absolutely breathtaking! The way they brought Mendelssohn's
+                music to life was incredible. You could feel every emotion in
+                their voices."
                 <cite className="block mt-2 text-yellow-300 font-medium">
                   — Sarah M., Elijah Concert Attendee
                 </cite>
@@ -265,6 +234,17 @@ export default function SolomonEventPage() {
               </blockquote>
             </div>
           </div>
+        </motion.div>
+
+        {/* Program Download */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.95, duration: 0.9 }}
+          className="mt-12 w-full max-w-4xl"
+        >
+          <ProgramDownload />
         </motion.div>
 
         {/* Venue Details */}
@@ -297,16 +277,20 @@ export default function SolomonEventPage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <div className="bg-red-500/20 border border-red-400 rounded-full px-4 py-2 text-red-300 text-sm font-medium animate-pulse">
-              ⚡ Limited Seats - Book Today!
+              🔥 Only 40 Tickets Left - Bronze Almost Sold Out!
             </div>
             <div className="text-gray-300 text-sm">
               Questions? Call{" "}
               <div className="mt-2 space-y-1">
                 <div>
-                  <strong className="text-yellow-300">Mr Raphael – 0813 109 3319</strong>
+                  <strong className="text-yellow-300">
+                    Mr Raphael – 0813 109 3319
+                  </strong>
                 </div>
                 <div>
-                  <strong className="text-yellow-300">Engr Samuel – 0813 557 8298</strong>
+                  <strong className="text-yellow-300">
+                    Engr Samuel – 0813 557 8298
+                  </strong>
                 </div>
               </div>
             </div>

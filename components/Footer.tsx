@@ -57,7 +57,7 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-12 px-6 md:px-20 relative">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
           {/* Logo & tagline */}
           <div>
             <div className="flex items-center justify-center md:justify-start mb-3 gap-2">
@@ -73,8 +73,54 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Newsletter */}
-          <NewsletterSignup showTitle={true} />
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-semibold mb-3">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/about" className="text-gray-200 hover:text-yellow-400 transition">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/events" className="text-gray-200 hover:text-yellow-400 transition">
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link href="/join" className="text-gray-200 hover:text-yellow-400 transition">
+                  Join Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-200 hover:text-yellow-400 transition">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Member Portal */}
+          <div>
+            <h4 className="text-lg font-semibold mb-3">Member Portal</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/members/login" className="text-yellow-400 hover:text-yellow-300 transition font-medium">
+                  Member Login
+                </Link>
+              </li>
+              <li>
+                <Link href="/members/signup" className="text-gray-200 hover:text-yellow-400 transition">
+                  Member Signup
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/login" className="text-gray-200 hover:text-yellow-400 transition">
+                  Admin Login
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           {/* Social Links */}
           <div>
@@ -93,6 +139,11 @@ export default function Footer() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Newsletter - Full Width Section */}
+        <div className="max-w-6xl mx-auto mt-10 pt-8 border-t border-blue-700">
+          <NewsletterSignup showTitle={true} />
         </div>
 
         {/* Divider & Copyright */}
