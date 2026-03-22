@@ -25,8 +25,6 @@ export default function QRCodeGenerator({
         url,
         {
           errorCorrectionLevel: level,
-          type: "image/png",
-          quality: 0.95,
           margin: includeMargin ? 2 : 0,
           width: size,
           color: {
