@@ -13,6 +13,7 @@ import {
   Printer,
   BookOpen,
   Sparkles,
+  Heart,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -417,6 +418,29 @@ export default function HymnOfPraiseProgramPage() {
               </div>
             </Reveal>
           </div>
+        </section>
+
+        {/* Donation Section */}
+        <section className="px-6 py-12 max-w-3xl mx-auto">
+          <Reveal>
+            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-8 text-center shadow-md">
+              <div className="text-4xl mb-3">🎶</div>
+              <h3 className="text-2xl font-bold text-amber-800 mb-2">
+                Enjoyed Tonight's Concert?
+              </h3>
+              <p className="text-amber-700 mb-6 leading-relaxed">
+                Your generosity helps The Chorus Abuja continue bringing world-class
+                choral music to Abuja. Every contribution — large or small — makes a
+                difference.
+              </p>
+              <Link
+                href="/support/donate"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                <Heart size={20} /> Support The Chorus
+              </Link>
+            </div>
+          </Reveal>
         </section>
 
         {/* Print Styles */}
