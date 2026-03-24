@@ -8,7 +8,6 @@ import {
   Calendar,
   ArrowRight,
   Music,
-  Clock,
   MapPin,
   Snowflake,
 } from "lucide-react";
