@@ -54,9 +54,9 @@ export default function Header() {
       // Hide after idle, unless hovered
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
       scrollTimeout.current = setTimeout(() => {
-        if (typeof window !== "undefined" && window.scrollY > 80 && !hovered)
+        if (typeof window !== "undefined" && window.scrollY > 300 && !hovered)
           setVisible(false);
-      }, 1500);
+      }, 3000);
     };
 
     if (typeof window !== "undefined") {

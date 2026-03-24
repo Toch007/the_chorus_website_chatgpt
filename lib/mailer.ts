@@ -34,21 +34,25 @@ export async function sendTicketEmail({
     await resend.emails.send({
       from,
       to,
-      subject: `Your ${tier} Ticket 🎶`,
+      subject: `Your ${tier} Ticket — Mendelssohn's Paul 🎶`,
       text: `Dear ${buyerName || "Guest"},
 
-Thank you for purchasing your ${tier} ticket to Handel’s Solomon – Live Performance.
+Thank you for purchasing your ${tier} ticket to Mendelssohn's Paul — The Chorus Abuja 5th Anniversary Grand Concert.
 
-Reference: ${reference}
+Ticket Reference: ${reference}
 
-Your ticket is attached as a PDF. Please present it at the entrance.
+Your ticket is attached as a PDF. Please present it at the entrance (printed or on your phone).
 Diamond tickets admit 2 persons.
 
 Event Details:
-Date: November 16, 2025
-Venue: Nigerian Society of Engineers Hall,
-1012, Sani Abacha Way, CBD, Abuja
+Date: Sunday, September 13, 2026
+Doors Open: 4:00 PM | Concert Starts: 5:00 PM
+Venue: NUC Auditorium, Muhammadu Buhari Way,
+Maitama, Abuja, FCT
 
+We look forward to sharing this special evening with you.
+
+With warm regards,
 The Chorus Abuja
 info@thechorusabuja.org
 `,
@@ -57,11 +61,21 @@ info@thechorusabuja.org
           <div style="text-align: center; margin-bottom: 20px;">
             <img src="${LOGO_URL}" alt="The Chorus Abuja" style="width: 80px; height: 80px; border-radius: 12px;" />
           </div>
-          <h2 style="color: #1d4ed8; text-align: center;">🎟 Your ${tier} Ticket</h2>
-          <p>Dear ${buyerName || "Guest"},</p>
-          <p>Thank you for purchasing your <strong>${tier}</strong> ticket. Your PDF ticket is attached.</p>
-          <p><strong>Reference:</strong> ${reference}</p>
-          <p>Please present the attached PDF at the entrance. Diamond tickets admit 2 persons.</p>
+          <h2 style="color: #1d4ed8; text-align: center;">🎟 Your ${tier} Ticket — Mendelssohn's Paul</h2>
+          <p style="font-size: 16px;">Dear <strong>${buyerName || "Guest"}</strong>,</p>
+          <p>Thank you for joining us for <strong>Mendelssohn's Paul (Paulus, Op. 36)</strong> — our 5th Anniversary Grand Concert. We are delighted to have you with us for this special milestone.</p>
+          <p>Your <strong>${tier}</strong> ticket (attached as PDF) grants you entry. Please present it at the entrance — printed or on your phone.</p>
+          <div style="background: #eff6ff; border-left: 4px solid #1d4ed8; padding: 14px 18px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 0 0 4px; font-size: 13px; color: #555;">Ticket Reference</p>
+            <p style="margin: 0; font-size: 15px; font-weight: bold; color: #1d4ed8; font-family: monospace;">${reference}</p>
+          </div>
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 14px 18px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin: 0 0 8px; font-weight: bold; color: #166534;">📅 Event Details</p>
+            <p style="margin: 3px 0; font-size: 14px;"><strong>Date:</strong> Sunday, September 13, 2026</p>
+            <p style="margin: 3px 0; font-size: 14px;"><strong>Doors Open:</strong> 4:00 PM &nbsp;|&nbsp; <strong>Concert:</strong> 5:00 PM</p>
+            <p style="margin: 3px 0; font-size: 14px;"><strong>Venue:</strong> NUC Auditorium, Muhammadu Buhari Way, Maitama, Abuja</p>
+          </div>
+          ${tier === "Diamond" ? "<p style='background:#fef9c3;padding:10px 14px;border-radius:6px;font-size:13px;color:#713f12;border:1px solid #fde68a;'>⭐ Your <strong>Diamond</strong> ticket admits <strong>2 persons</strong>.</p>" : ""}
           <hr style="margin: 20px 0;"/>
           <p style="font-size: 13px; color: #777; text-align: center;">
             The Chorus Abuja · <a href="mailto:info@thechorusabuja.org" style="color: #1d4ed8;">info@thechorusabuja.org</a>

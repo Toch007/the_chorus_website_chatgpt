@@ -66,7 +66,7 @@ export default function AnniversaryBanner() {
                       </h3>
                       <p className="text-sm md:text-base text-amber-50">
                         Join us in September for our anniversary concert
-                        featuring Mendelssohn's "St. Paul"
+                        featuring Mendelssohn's Paulus (Op. 36)
                       </p>
                     </div>
                   </div>

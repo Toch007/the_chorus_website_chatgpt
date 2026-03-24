@@ -18,7 +18,7 @@ export default function PaulEventPage() {
       {/* Full-viewport background with flier image */}
       <div
         className="absolute inset-0 -z-10 bg-center bg-cover bg-fixed"
-        style={{ backgroundImage: "url('/images/Paul.jpeg')" }}
+        style={{ backgroundImage: "url('/images/paul.jpeg')" }}
         aria-hidden
       />
 

@@ -264,7 +264,7 @@ export default function EventsPage() {
               <div className="group bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden hover:-translate-y-3 cursor-pointer">
                 <div
                   className="relative h-80 md:h-96 bg-cover bg-center"
-                  style={{ backgroundImage: "url('/images/Paul.jpeg')" }}
+                  style={{ backgroundImage: "url('/images/paul.jpeg')" }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 

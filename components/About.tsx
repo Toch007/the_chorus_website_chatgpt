@@ -21,8 +21,7 @@ export default function About() {
         </Reveal>
         <Reveal direction="right" delay={0.6}>
           <p className="text-lg text-gray-700 leading-relaxed mt-4">
-            Through meticulous rehearsals and captivating performances, we aim
-            to inspire...
+            Through meticulous rehearsals and captivating performances, we have brought to life some of the world's greatest choral masterworks — from Haydn's <em>The Creation</em> to Handel's <em>Solomon</em> — inspiring audiences and deepening Abuja's appreciation for classical music.
           </p>
         </Reveal>
 
