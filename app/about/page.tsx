@@ -54,7 +54,9 @@ export default function AboutPage() {
                 <div className="bg-white/15 backdrop-blur-md border border-white/40 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all hover:bg-white/25 hover:scale-105">
                   <Music className="w-8 h-8 text-yellow-300 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-white">10+</div>
-                  <div className="text-sm text-blue-200">Concerts Performed</div>
+                  <div className="text-sm text-blue-200">
+                    Concerts Performed
+                  </div>
                 </div>
                 <div className="bg-white/15 backdrop-blur-md border border-white/40 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all hover:bg-white/25 hover:scale-105">
                   <Users className="w-8 h-8 text-yellow-300 mx-auto mb-2" />

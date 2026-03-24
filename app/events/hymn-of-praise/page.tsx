@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -9,80 +8,28 @@ import {
   Clock,
   MapPin,
   Music,
-  DollarSign,
   Share2,
-  Download,
   Heart,
-  Users,
   ArrowRight,
   CheckCircle2,
+  DollarSign,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function HymnOfPraisePage() {
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    guests: "1",
-    newsletter: false,
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch("/api/events/rsvp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          eventId: "hymn-of-praise-2026",
-          eventName: "Hymn of Praise - March 22, 2026",
-          name: formData.name,
-          email: formData.email,
-          guests: parseInt(formData.guests),
-          newsletter: formData.newsletter,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit RSVP");
-      }
-
-      setIsRegistered(true);
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Felix Mendelssohn's Hymn of Praise - The Chorus Abuja",
-          text: "Join us for a spectacular performance of Mendelssohn's Hymn of Praise at First Baptist Church, Garki on March 22, 2026!",
+          title: "Felix Mendelssohn's Hymn of Praise — The Chorus Abuja",
+          text: "What a magnificent evening! The Chorus Abuja performed Mendelssohn's Hymn of Praise at First Baptist Church, Garki on March 22, 2026.",
           url: window.location.href,
         });
       } catch (err) {
         console.log("Error sharing:", err);
       }
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href);
       alert("Event link copied to clipboard!");
     }
@@ -106,9 +53,10 @@ export default function HymnOfPraisePage() {
 
           <div className="relative max-w-6xl mx-auto">
             <Reveal direction="up" delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/30 backdrop-blur-sm border border-purple-300/50 text-purple-100 rounded-full font-semibold mb-6">
-                <Calendar className="w-4 h-4" />
-                March 22, 2026
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/40 text-white rounded-full font-semibold mb-6">
+                <CheckCircle2 className="w-4 h-4 text-green-300" />
+                <span className="text-green-200 font-bold">Concluded</span>
+                <span className="text-white/60">· March 22, 2026</span>
               </div>
             </Reveal>
 
@@ -148,28 +96,26 @@ export default function HymnOfPraisePage() {
 
             <Reveal direction="up" delay={0.5}>
               <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
-                <a
-                  href="#register"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-500 text-white font-bold rounded-lg hover:bg-purple-600 transition-all shadow-lg hover:shadow-xl"
-                >
-                  <Users className="w-5 h-5" />
-                  RSVP for Free
-                  <ArrowRight className="w-5 h-5" />
-                </a>
                 <Link
                   href="/events/hymn-of-praise/program"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-500 text-white font-bold rounded-lg hover:bg-amber-600 transition-all shadow-lg hover:shadow-xl"
                 >
                   <Music className="w-5 h-5" />
-                  View Program
+                  View Concert Program
                   <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  href="/events/paul"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-bold rounded-lg hover:bg-white/20 transition-all"
+                >
+                  Our Next Concert →
                 </Link>
                 <button
                   onClick={handleShare}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-bold rounded-lg hover:bg-white/20 transition-all"
                 >
                   <Share2 className="w-5 h-5" />
-                  Share Event
+                  Share
                 </button>
               </div>
             </Reveal>
@@ -331,141 +277,47 @@ export default function HymnOfPraisePage() {
           </div>
         </section>
 
-        {/* RSVP Section */}
+        {/* Thank You Section */}
         <section
           id="register"
-          className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white"
+          className="py-16 px-4 bg-gradient-to-b from-purple-50 to-white"
         >
           <div className="max-w-2xl mx-auto">
             <Reveal>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  RSVP (Optional)
+              <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-12 text-center border-2 border-purple-200 shadow-lg">
+                <CheckCircle2 className="w-16 h-16 text-purple-600 mx-auto mb-6" />
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Thank You for an Unforgettable Evening!
                 </h2>
-                <p className="text-xl text-gray-600">
-                  While entry is free, we'd love to know you're coming!
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                  What a beautiful night of worship and music on March 22nd at First Baptist Church, Garki.
+                  Thank you to every audience member, volunteer, and supporter who made the Hymn of Praise a truly special occasion.
                 </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    href="/events/hymn-of-praise/program"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-all"
+                  >
+                    <Music className="w-5 h-5" />
+                    Revisit the Program
+                  </Link>
+                  <Link
+                    href="/events/paul"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 text-white font-semibold rounded-lg hover:bg-amber-600 transition-all"
+                  >
+                    Our Next Concert
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="/support/donate"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
+                  >
+                    <Heart className="w-5 h-5 text-red-500" />
+                    Support Us
+                  </Link>
+                </div>
               </div>
             </Reveal>
-
-            {!isRegistered ? (
-              <Reveal delay={0.2}>
-                <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
-                  {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
-                      {error}
-                    </div>
-                  )}
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
-                        placeholder="Enter your full name"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
-                        placeholder="your.email@example.com"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Number of Guests (including you)
-                      </label>
-                      <select
-                        value={formData.guests}
-                        onChange={(e) =>
-                          setFormData({ ...formData, guests: e.target.value })
-                        }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
-                      >
-                        <option value="1">1 (Just me)</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5+</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="flex items-start gap-3">
-                        <input
-                          type="checkbox"
-                          checked={formData.newsletter}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              newsletter: e.target.checked,
-                            })
-                          }
-                          className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
-                        />
-                        <span className="text-sm text-gray-600">
-                          Send me updates about future concerts and events from
-                          The Chorus Abuja
-                        </span>
-                      </label>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isLoading ? "Processing..." : "Confirm RSVP"}
-                    </button>
-                  </form>
-                </div>
-              </Reveal>
-            ) : (
-              <Reveal>
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-12 text-center border-2 border-green-200">
-                  <CheckCircle2 className="w-20 h-20 text-green-600 mx-auto mb-6" />
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                    You're All Set!
-                  </h3>
-                  <p className="text-xl text-gray-700 mb-6">
-                    We look forward to seeing you on March 22nd at 4:00 PM!
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button
-                      onClick={handleShare}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-all"
-                    >
-                      <Share2 className="w-5 h-5" />
-                      Share with Friends
-                    </button>
-                    <Link
-                      href="/events"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-all"
-                    >
-                      View Other Events
-                    </Link>
-                  </div>
-                </div>
-              </Reveal>
-            )}
           </div>
         </section>
 
@@ -474,28 +326,25 @@ export default function HymnOfPraisePage() {
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                More Upcoming Events
+                What's Next
               </h2>
               <p className="text-xl text-gray-300 mb-8">
-                This is just the beginning! We have more exciting performances
-                planned for 2026.
+                Our 2026 concert series continues with two more unforgettable performances.
               </p>
               <div className="grid md:grid-cols-2 gap-6">
                 <Link
-                  href="/events/5th-anniversary"
+                  href="/events/paul"
                   className="p-6 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-xl hover:from-amber-600 hover:to-yellow-700 transition-all text-left"
                 >
-                  <div className="text-sm font-semibold mb-2">
-                    September 2026
-                  </div>
+                  <div className="text-sm font-semibold mb-2">September 13, 2026</div>
                   <h3 className="text-2xl font-bold mb-2">
                     5th Anniversary Concert
                   </h3>
                   <p className="text-amber-100 mb-4">
-                    Featuring Mendelssohn's "St. Paul"
+                    Mendelssohn's Paul (Paulus, Op. 36) — NUC Auditorium, Maitama
                   </p>
                   <div className="flex items-center gap-2 text-sm font-medium">
-                    Learn More <ArrowRight className="w-4 h-4" />
+                    Get Tickets <ArrowRight className="w-4 h-4" />
                   </div>
                 </Link>
 

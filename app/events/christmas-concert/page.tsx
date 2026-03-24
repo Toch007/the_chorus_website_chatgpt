@@ -552,21 +552,25 @@ export default function ChristmasConcertPage() {
                 Don't miss our other spectacular performances this year
               </p>
               <div className="grid md:grid-cols-2 gap-6">
-                <Link
-                  href="/events/hymn-of-praise"
-                  className="p-6 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all text-left"
-                >
-                  <div className="text-sm font-semibold mb-2">
+                <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 text-left opacity-80">
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-white/20 rounded-full text-xs font-bold mb-3">
+                    <span className="w-2 h-2 rounded-full bg-green-400 inline-block" />
+                    Concluded
+                  </div>
+                  <div className="text-sm font-semibold mb-2 text-purple-300">
                     March 22, 2026
                   </div>
                   <h3 className="text-2xl font-bold mb-2">Hymn of Praise</h3>
                   <p className="text-purple-100 mb-4">
                     Mendelssohn's masterwork + Negro Spirituals
                   </p>
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </div>
-                </Link>
+                  <Link
+                    href="/events/hymn-of-praise/program"
+                    className="flex items-center gap-2 text-sm font-medium text-purple-200 hover:text-white transition"
+                  >
+                    View Program <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
 
                 <Link
                   href="/events/5th-anniversary"

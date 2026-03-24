@@ -67,7 +67,9 @@ export default function HomePage() {
               Support the Music
             </h2>
             <p className="text-lg text-blue-100 leading-relaxed mb-8 max-w-2xl mx-auto">
-              The Chorus Abuja is sustained by the generosity of music lovers like you. Your donation — no matter the size — helps us rehearse, perform, and keep classical music alive in Abuja.
+              The Chorus Abuja is sustained by the generosity of music lovers
+              like you. Your donation — no matter the size — helps us rehearse,
+              perform, and keep classical music alive in Abuja.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

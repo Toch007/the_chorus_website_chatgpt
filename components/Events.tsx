@@ -30,59 +30,38 @@ export default function Events() {
           </p>
         </Reveal>
 
-        {/* March Concert - Hymn of Praise */}
+        {/* Hymn of Praise — Concluded */}
         <Reveal direction="up" delay={0.4}>
-          <div className="mb-12 bg-gradient-to-br from-purple-900 to-blue-900 rounded-2xl overflow-hidden shadow-xl">
-            <div className="grid md:grid-cols-2 gap-0">
-              <div className="relative h-64 md:h-auto">
+          <div className="mb-10 rounded-2xl overflow-hidden border border-purple-200 bg-white shadow-md">
+            <div className="grid md:grid-cols-3 gap-0">
+              <div className="relative h-48 md:h-auto">
                 <Image
                   src="/images/Hymn_of_praise.jpg"
                   alt="Hymn of Praise Concert"
                   fill
-                  className="object-cover"
+                  className="object-cover grayscale-[30%]"
                 />
-                <div className="absolute top-4 left-4">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/90 backdrop-blur-sm rounded-full font-bold text-white text-sm">
-                    <Calendar className="w-4 h-4" />
-                    March 22, 2026
+                <div className="absolute inset-0 bg-purple-900/40" />
+                <div className="absolute top-3 left-3">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 text-purple-800 rounded-full font-bold text-xs">
+                    <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
+                    Concluded
                   </span>
                 </div>
               </div>
-
-              <div className="p-8 md:p-10 text-left flex flex-col justify-center text-white">
-                <div className="inline-flex items-center gap-2 mb-4">
-                  <Music className="w-6 h-6 text-purple-300" />
-                  <span className="text-sm font-semibold uppercase tracking-wide text-purple-200">
-                    Easter Preparation
-                  </span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  Hymn of Praise
-                </h3>
-                <p className="text-lg text-purple-100 mb-4 leading-relaxed">
-                  Experience Mendelssohn's magnificent "Lobgesang" plus selected
-                  Negro Spirituals. A spiritually uplifting evening preparing
-                  our hearts for Easter.
+              <div className="md:col-span-2 p-6 flex flex-col justify-center text-left">
+                <p className="text-xs font-bold uppercase tracking-widest text-purple-400 mb-1">March 22, 2026 · First Baptist Church, Garki</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Mendelssohn's Hymn of Praise</h3>
+                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                  Thank you to everyone who joined us for a magnificent evening of Mendelssohn's <em>Lobgesang</em> and Negro Spirituals. What a beautiful night of music and worship.
                 </p>
-                <div className="space-y-2 text-sm text-purple-200 mb-6">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span>Doors: 4:00 PM | Concert: 5:00 PM</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>First Baptist Church, Garki, Abuja</span>
-                  </div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 rounded-full font-semibold text-green-300 mt-2">
-                    ✓ FREE ENTRY
-                  </div>
-                </div>
                 <Link
-                  href="/events/hymn-of-praise"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-purple-500 text-white font-bold rounded-lg hover:bg-purple-600 transition-all w-fit shadow-lg hover:shadow-xl"
+                  href="/events/hymn-of-praise/program"
+                  className="inline-flex items-center gap-2 px-5 py-2 bg-purple-100 text-purple-800 font-semibold rounded-lg hover:bg-purple-200 transition-all w-fit text-sm"
                 >
-                  RSVP Now
-                  <ArrowRight className="w-5 h-5" />
+                  <Music className="w-4 h-4" />
+                  View Concert Program
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
@@ -116,7 +95,7 @@ export default function Events() {
                   </span>
                 </div>
                 <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  Mendelssohn's "St. Paul"
+                  Mendelssohn's Paul (Paulus)
                 </h3>
                 <p className="text-lg text-amber-50 mb-6 leading-relaxed">
                   Join us for a spectacular anniversary celebration featuring
