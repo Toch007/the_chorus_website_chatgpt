@@ -40,7 +40,9 @@ export default function TicketsAdminPage() {
   const fetchTickets = async (status?: string) => {
     setLoading(true);
     try {
-      const url = status ? `/api/tickets?status=${status}` : `/api/tickets`;
+      const url = status
+        ? `/api/admin/tickets?status=${status}`
+        : `/api/admin/tickets`;
       const res = await fetch(url);
       const data = await res.json();
       setTickets(data.tickets || []);
@@ -55,7 +57,7 @@ export default function TicketsAdminPage() {
   const retryTicket = async (ticketId: string) => {
     setRetrying(ticketId);
     try {
-      const res = await fetch("/api/tickets", {
+      const res = await fetch("/api/admin/tickets", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ticketId }),
