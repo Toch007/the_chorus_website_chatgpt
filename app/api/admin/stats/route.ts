@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import { db } from "@/firebase/admin";
+import { verifyAdminRequest } from "@/lib/verifyAdminRequest";
 
 // Disable caching for real-time stats
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET() {
+export async function GET(req: Request) {
+  const auth = await verifyAdminRequest(req);
+  if (auth instanceof NextResponse) return auth;
+
   try {
     // Fetch all collections in parallel
     const [

@@ -1,8 +1,12 @@
 // app/api/admin/tickets/route.ts
 import { NextResponse } from "next/server";
 import { db } from "@/firebase/admin";
+import { verifyAdminRequest } from "@/lib/verifyAdminRequest";
 
 export async function GET(req: Request) {
+  const auth = await verifyAdminRequest(req);
+  if (auth instanceof NextResponse) return auth;
+
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status");
@@ -45,6 +49,9 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  const auth = await verifyAdminRequest(req);
+  if (auth instanceof NextResponse) return auth;
+
   try {
     const { ticketId } = await req.json();
     if (!ticketId) {

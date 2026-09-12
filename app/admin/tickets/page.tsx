@@ -40,10 +40,14 @@ export default function TicketsAdminPage() {
   const fetchTickets = async (status?: string) => {
     setLoading(true);
     try {
+      const { getAuth } = await import("firebase/auth");
+      const token = await getAuth().currentUser?.getIdToken();
       const url = status
         ? `/api/admin/tickets?status=${status}`
         : `/api/admin/tickets`;
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await res.json();
       setTickets(data.tickets || []);
     } catch (err) {
@@ -57,9 +61,14 @@ export default function TicketsAdminPage() {
   const retryTicket = async (ticketId: string) => {
     setRetrying(ticketId);
     try {
+      const { getAuth } = await import("firebase/auth");
+      const token = await getAuth().currentUser?.getIdToken();
       const res = await fetch("/api/admin/tickets", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ ticketId }),
       });
       const data = await res.json();

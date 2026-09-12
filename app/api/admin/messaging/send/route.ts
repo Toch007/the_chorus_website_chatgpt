@@ -1,23 +1,14 @@
 // app/api/admin/messaging/send/route.ts
 import { NextResponse } from "next/server";
 import { resend } from "@/lib/resend";
-import { adminAuth } from "@/lib/firebase-admin";
 import { db } from "@/firebase/admin";
+import { verifyAdminRequest } from "@/lib/verifyAdminRequest";
 
 export async function POST(req: Request) {
-  try {
-    // Verify admin authentication
-    const authHeader = req.headers.get("authorization");
-    if (!authHeader?.startsWith("Bearer ")) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const auth = await verifyAdminRequest(req);
+  if (auth instanceof NextResponse) return auth;
 
-    const token = authHeader.split("Bearer ")[1];
-    try {
-      await adminAuth.verifyIdToken(token);
-    } catch (error) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
+  try {
 
     const {
       from,
