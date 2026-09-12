@@ -80,9 +80,15 @@ const nextConfig: NextConfig = {
             key: "X-XSS-Protection",
             value: "1; mode=block",
           },
+        ],
+      },
+      {
+        // API responses (e.g. admin auth checks) must never be cached by browsers/CDN.
+        source: "/api/(.*)",
+        headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: "no-store, must-revalidate",
           },
         ],
       },
