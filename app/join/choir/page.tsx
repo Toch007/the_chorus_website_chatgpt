@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { db } from "@/firebase/config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function JoinChoirPage() {
   const [formData, setFormData] = useState({
@@ -27,6 +24,8 @@ export default function JoinChoirPage() {
     declaration: false,
   });
 
+  const [honeypot, setHoneypot] = useState("");
+  const [formLoadedAt] = useState(() => Date.now());
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -105,20 +104,21 @@ export default function JoinChoirPage() {
 
     setLoading(true);
     try {
-      // Save to Firebase first
-      await addDoc(collection(db, "join_choir"), {
-        ...formData,
-        submittedAt: serverTimestamp(),
+      const res = await fetch("/api/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType: "choir",
+          data: formData,
+          honeypot,
+          formLoadedAt,
+        }),
       });
-
-      // Send auto-reply email
-      const autoReplyData = prepareAutoReplyData("choir", formData);
-      const emailSent = await sendAutoReply(autoReplyData);
-
-      if (!emailSent) {
-        console.warn(
-          "Auto-reply email failed to send, but form was submitted successfully"
-        );
+      const result = await res.json();
+      if (!result.success) {
+        console.warn("Application submission failed:", result.error);
+        setLoading(false);
+        return;
       }
 
       setSuccess(true);
@@ -180,6 +180,18 @@ export default function JoinChoirPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Honeypot field: hidden from real users, bots often fill it */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            className="absolute -left-[9999px] w-px h-px opacity-0"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+
           {/* Full Name */}
           <div>
             <label className="block mb-1 font-medium">Full Name *</label>

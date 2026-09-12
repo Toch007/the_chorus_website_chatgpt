@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { db } from "@/firebase/config";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function MediaJoinForm() {
   const [formData, setFormData] = useState({
@@ -22,6 +19,8 @@ export default function MediaJoinForm() {
     declaration: false,
   });
 
+  const [honeypot, setHoneypot] = useState("");
+  const [formLoadedAt] = useState(() => Date.now());
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -66,20 +65,21 @@ export default function MediaJoinForm() {
     setLoading(true);
 
     try {
-      // Save to Firebase first
-      await addDoc(collection(db, "join_media"), {
-        ...formData,
-        createdAt: Timestamp.now(),
+      const res = await fetch("/api/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType: "media",
+          data: formData,
+          honeypot,
+          formLoadedAt,
+        }),
       });
-
-      // Send auto-reply email
-      const autoReplyData = prepareAutoReplyData("media", formData);
-      const emailSent = await sendAutoReply(autoReplyData);
-
-      if (!emailSent) {
-        console.warn(
-          "Auto-reply email failed to send, but form was submitted successfully"
-        );
+      const result = await res.json();
+      if (!result.success) {
+        console.warn("Application submission failed:", result.error);
+        setLoading(false);
+        return;
       }
 
       setSuccess(true);
@@ -132,6 +132,17 @@ export default function MediaJoinForm() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Honeypot field: hidden from real users, bots often fill it */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            className="absolute -left-[9999px] w-px h-px opacity-0"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
           <input
             name="fullName"
             placeholder="Full Name"

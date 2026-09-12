@@ -4,9 +4,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { useState } from "react";
-import { db } from "@/firebase/config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { sendAutoReply, prepareAutoReplyData } from "@/lib/autoReplyService";
 
 export default function JoinVolunteerPage() {
   const [form, setForm] = useState({
@@ -23,6 +20,8 @@ export default function JoinVolunteerPage() {
     declaration: false,
   });
 
+  const [honeypot, setHoneypot] = useState("");
+  const [formLoadedAt] = useState(() => Date.now());
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -65,21 +64,21 @@ export default function JoinVolunteerPage() {
     try {
       setLoading(true);
 
-      // Save to Firebase first
-      await addDoc(collection(db, "join_volunteer"), {
-        ...form,
-        age: parseInt(form.age),
-        submittedAt: serverTimestamp(),
+      const res = await fetch("/api/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType: "volunteer",
+          data: { ...form, age: parseInt(form.age) },
+          honeypot,
+          formLoadedAt,
+        }),
       });
-
-      // Send auto-reply email
-      const autoReplyData = prepareAutoReplyData("volunteer", form);
-      const emailSent = await sendAutoReply(autoReplyData);
-
-      if (!emailSent) {
-        console.warn(
-          "Auto-reply email failed to send, but form was submitted successfully"
-        );
+      const result = await res.json();
+      if (!result.success) {
+        setError(result.error || "Something went wrong. Try again.");
+        setLoading(false);
+        return;
       }
 
       setSuccess(true);
@@ -124,6 +123,18 @@ export default function JoinVolunteerPage() {
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded-xl p-8 space-y-6"
           >
+            {/* Honeypot field: hidden from real users, bots often fill it */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="absolute -left-[9999px] w-px h-px opacity-0"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
+
             {error && <p className="text-red-600">{error}</p>}
             {success && (
               <div className="p-6 mb-6 bg-green-50 border border-green-200 text-green-800 rounded-lg">

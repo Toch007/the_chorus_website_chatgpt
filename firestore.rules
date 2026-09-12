@@ -99,24 +99,31 @@ service cloud.firestore {
     
     // ===== JOIN FORM COLLECTIONS =====
     // join_choir, join_volunteer, join_media, join_tech
+    // Writes only via /api/join (Admin SDK, rate-limited + honeypot-checked).
+    // Direct client writes are blocked here to stop bot spam.
     match /join_choir/{applicationId} {
-      allow create: if true;
+      allow create: if false;
       allow read, update, delete: if request.auth != null;
     }
     
     match /join_volunteer/{applicationId} {
-      allow create: if true;
+      allow create: if false;
       allow read, update, delete: if request.auth != null;
     }
     
     match /join_media/{applicationId} {
-      allow create: if true;
+      allow create: if false;
       allow read, update, delete: if request.auth != null;
     }
     
     match /join_tech/{applicationId} {
-      allow create: if true;
+      allow create: if false;
       allow read, update, delete: if request.auth != null;
+    }
+
+    // Server-only rate-limit bookkeeping for /api/join
+    match /_joinRateLimits/{ip} {
+      allow read, write: if false;
     }
     
     // ===== PARTNERS COLLECTION =====
