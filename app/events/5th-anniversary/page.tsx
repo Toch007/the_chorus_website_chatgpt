@@ -344,7 +344,7 @@ export default function FifthAnniversaryPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="/events/paul"
+                  href="/events/paul/tickets"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-white text-amber-600 font-bold rounded-full hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   🎟️ Book Tickets

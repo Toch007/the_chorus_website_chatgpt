@@ -32,7 +32,7 @@ export default function ParallaxBridge({
         backgroundAttachment: "fixed",
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-70" />
+      <div className="absolute inset-0 bg-black bg-opacity-40" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}

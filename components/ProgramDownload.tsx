@@ -1,30 +1,29 @@
 "use client";
 
 import { Download, QrCode } from "lucide-react";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import QRCodeGenerator from "@/components/QRCodeGenerator";
 
 interface ProgramDownloadProps {
   compact?: boolean;
   className?: string;
+  programUrl?: string;
+  title?: string;
+  qrLinkHref?: string;
 }
 
 export default function ProgramDownload({
   compact = false,
   className = "",
+  programUrl = "/documents/Paul_Concert_Programme.pdf",
+  title = "Concert Program",
+  qrLinkHref = "/program",
 }: ProgramDownloadProps) {
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const programUrl = "/documents/Handel-Solomon Program.pdf";
-
-  useEffect(() => {
-    // Generate QR code using QR Server API
-    if (typeof window !== "undefined") {
-      const fullUrl = `${window.location.origin}${programUrl}`;
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(fullUrl)}`;
-      setQrCodeUrl(qrUrl);
-    }
-  }, []);
+  const fullUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${programUrl}`
+      : programUrl;
 
   const handleDownload = () => {
     window.open(programUrl, "_blank");
@@ -40,14 +39,14 @@ export default function ProgramDownload({
           <div className="flex items-center gap-3">
             <QrCode className="w-8 h-8 text-yellow-400" />
             <div>
-              <h3 className="text-lg font-bold text-white">Concert Program</h3>
+              <h3 className="text-lg font-bold text-white">{title}</h3>
               <p className="text-sm text-gray-300">Download or scan to view</p>
             </div>
           </div>
 
           <div className="flex gap-3">
             <Link
-              href="/program"
+              href={qrLinkHref}
               className="bg-white/10 hover:bg-white/20 border border-white/30 text-white px-4 py-2 rounded-full transition-all text-sm flex items-center gap-2"
             >
               <QrCode className="w-4 h-4" />
@@ -78,7 +77,7 @@ export default function ProgramDownload({
       <div className="text-center mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-yellow-300 mb-2 flex items-center justify-center gap-2">
           <QrCode className="w-7 h-7" />
-          Download Concert Program
+          Download {title}
         </h2>
         <p className="text-gray-300">
           Scan the QR code or click the button below
@@ -88,24 +87,9 @@ export default function ProgramDownload({
       <div className="grid md:grid-cols-2 gap-8 items-center">
         {/* QR Code */}
         <div className="flex flex-col items-center">
-          {qrCodeUrl ? (
-            <div className="bg-white p-4 rounded-xl shadow-xl">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={qrCodeUrl}
-                alt="Program Download QR Code"
-                width={200}
-                height={200}
-                className="w-full max-w-[200px]"
-              />
-            </div>
-          ) : (
-            <div className="bg-white p-4 rounded-xl shadow-xl w-[200px] h-[200px] flex items-center justify-center">
-              <div className="animate-pulse text-gray-400 text-sm">
-                Loading...
-              </div>
-            </div>
-          )}
+          <div className="bg-white p-4 rounded-xl shadow-xl">
+            <QRCodeGenerator url={fullUrl} size={200} />
+          </div>
           <p className="text-gray-400 text-sm mt-3">Scan with phone camera</p>
         </div>
 
@@ -139,7 +123,7 @@ export default function ProgramDownload({
           </button>
 
           <Link
-            href="/program"
+            href={qrLinkHref}
             className="block text-center text-sm text-gray-400 hover:text-yellow-300 mt-3 transition-colors"
           >
             View full download page →

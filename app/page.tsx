@@ -16,6 +16,9 @@ import VideoGallery from "@/components/VideoGallery";
 import CriticalResources from "@/components/CriticalResources";
 import ImageGallery from "@/components/ImageGallery";
 import AnniversaryBanner from "@/components/AnniversaryBanner";
+import NextConcert from "@/components/NextConcert";
+import StickyTicketBar from "@/components/StickyTicketBar";
+import ConcertModal from "@/components/ConcertModal";
 
 export default function HomePage() {
   return (
@@ -26,8 +29,10 @@ export default function HomePage() {
       <main id="main-content" tabIndex={-1}>
         <Hero />
 
+        <NextConcert />
+
         <ParallaxBridge
-          image="/images/chorus2.jpg"
+          image="/images/support.jpg"
           heading="Abuja's Premier Choir"
           subtext="Celebrating 5 years of excellence with 10+ captivating concerts performed, The Chorus Abuja has filled concert halls and hearts with unforgettable performances."
         />
@@ -79,7 +84,7 @@ export default function HomePage() {
                 ❤️ Make a Donation
               </a>
               <a
-                href="/events/paul"
+                href="/events/paul/tickets"
                 className="inline-block border-2 border-white/40 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-all duration-300"
               >
                 🎟 Get Concert Tickets
@@ -93,6 +98,10 @@ export default function HomePage() {
         {/* Performance Monitor - Only shows in development */}
         <PerformanceMonitor />
       </main>
+
+      {/* Global overlays */}
+      <StickyTicketBar />
+      <ConcertModal />
     </>
   );
 }

@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 import { ArrowLeft, Music } from "lucide-react";
 import Link from "next/link";
 
-export default function LoudAwfulThunderLyricsPage() {
+export default function HonourAndArmsLyricsPage() {
   return (
     <>
       <Header />
@@ -26,11 +26,11 @@ export default function LoudAwfulThunderLyricsPage() {
             <Reveal>
               <div className="mb-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-                  Loud As The Awful Thunder
+                  Honour and Arms
                 </h1>
                 <p className="text-xl text-gray-600">
                   <Music className="inline mr-2" size={24} />
-                  Tenor Solo
+                  Bass Solo
                 </p>
                 <p className="text-lg text-amber-700 font-semibold">
                   Composer: George Frideric Handel
@@ -45,10 +45,12 @@ export default function LoudAwfulThunderLyricsPage() {
                   About This Aria
                 </h3>
                 <p className="text-amber-900">
-                  A powerful tenor solo that demands great vocal control and
-                  dramatic presence. The music mirrors the intensity of the
-                  text, with dramatic leaps and powerful phrases that showcase
-                  the strength and beauty of the tenor voice.
+                  A commanding bass aria from Handel's oratorio <em>Samson</em>.
+                  Sung by Harapha, the giant of Gath, it drips with arrogance
+                  and contempt — yet is tinged with a coward's reluctance. The
+                  music perfectly captures the bluster and swagger of a bully
+                  who disdains a weakened opponent, making it one of Handel's
+                  most dramatically vivid bass solos.
                 </p>
               </div>
             </Reveal>
@@ -62,10 +64,13 @@ export default function LoudAwfulThunderLyricsPage() {
 
                 <div className="space-y-6 text-gray-800 leading-relaxed">
                   <div className="space-y-2">
-                    <p>Loud as the thunder’s awful voice,</p>
-                    <p>In notes of triumph, notes of praise,</p>
-                    <p>So high great Dagon’s name we’ll raise:</p>
-                    <p>That heav’n and earth may hear how we rejoice!</p>
+                    <p>Honour and arms scorn such a foe,</p>
+                    <p>Though I could end thee at a blow;</p>
+                    <p>Poor victory,</p>
+                    <p>To conquer thee,</p>
+                    <p>Or glory in thy overthrow!</p>
+                    <p>Vanquish a slave that is half slain:</p>
+                    <p>So mean a triumph I disdain.</p>
                   </div>
                 </div>
               </div>
@@ -79,23 +84,22 @@ export default function LoudAwfulThunderLyricsPage() {
                 </h3>
                 <ul className="text-blue-900 space-y-2">
                   <li>
-                    • <strong>Tempo:</strong> Allegro maestoso (Stately and
-                    powerful)
+                    • <strong>Tempo:</strong> Allegro (Bold and decisive)
                   </li>
                   <li>
-                    • <strong>Key:</strong> D major
+                    • <strong>Source:</strong> <em>Samson</em>, HWV 57 (1743)
                   </li>
                   <li>
-                    • <strong>Vocal Demand:</strong> Requires strong high notes
-                    and brilliant tone
+                    • <strong>Vocal Demand:</strong> Rich, resonant bass tone
+                    with clear diction
                   </li>
                   <li>
-                    • <strong>Character:</strong> Majestic, powerful, and
-                    authoritative
+                    • <strong>Character:</strong> Arrogant, sneering, and
+                    dramatically imposing
                   </li>
                   <li>
-                    • <strong>Dynamics:</strong> Use broad dynamic range to
-                    convey power
+                    • <strong>Dynamics:</strong> Strong projection throughout;
+                    contempt conveyed in every phrase
                   </li>
                 </ul>
               </div>

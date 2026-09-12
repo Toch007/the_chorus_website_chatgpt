@@ -42,7 +42,7 @@ Thank you for purchasing your ${tier} ticket to Mendelssohn's Paul — The Choru
 Ticket Reference: ${reference}
 
 Your ticket is attached as a PDF. Please present it at the entrance (printed or on your phone).
-Diamond tickets admit 2 persons.
+
 
 Event Details:
 Date: Sunday, September 13, 2026

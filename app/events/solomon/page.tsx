@@ -244,7 +244,11 @@ export default function SolomonEventPage() {
           transition={{ delay: 0.95, duration: 0.9 }}
           className="mt-12 w-full max-w-4xl"
         >
-          <ProgramDownload />
+          <ProgramDownload
+            programUrl="/documents/Handel-Solomon Program.pdf"
+            title="Handel's Solomon Program"
+            qrLinkHref="/events/solomon"
+          />
         </motion.div>
 
         {/* Venue Details */}

@@ -114,7 +114,7 @@ export default function Header() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Members Portal", href: "/members/login" },
+    { name: "Members", href: "/members" },
     { name: "Events", href: "/events" },
     { name: "Blog", href: "/blog" },
     { name: "Downloads", href: "/downloads" },

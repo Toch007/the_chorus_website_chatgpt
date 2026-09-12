@@ -290,8 +290,10 @@ export default function HymnOfPraisePage() {
                   Thank You for an Unforgettable Evening!
                 </h2>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  What a beautiful night of worship and music on March 22nd at First Baptist Church, Garki.
-                  Thank you to every audience member, volunteer, and supporter who made the Hymn of Praise a truly special occasion.
+                  What a beautiful night of worship and music on March 22nd at
+                  First Baptist Church, Garki. Thank you to every audience
+                  member, volunteer, and supporter who made the Hymn of Praise a
+                  truly special occasion.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
@@ -329,19 +331,23 @@ export default function HymnOfPraisePage() {
                 What's Next
               </h2>
               <p className="text-xl text-gray-300 mb-8">
-                Our 2026 concert series continues with two more unforgettable performances.
+                Our 2026 concert series continues with two more unforgettable
+                performances.
               </p>
               <div className="grid md:grid-cols-2 gap-6">
                 <Link
                   href="/events/paul"
                   className="p-6 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-xl hover:from-amber-600 hover:to-yellow-700 transition-all text-left"
                 >
-                  <div className="text-sm font-semibold mb-2">September 13, 2026</div>
+                  <div className="text-sm font-semibold mb-2">
+                    September 13, 2026
+                  </div>
                   <h3 className="text-2xl font-bold mb-2">
                     5th Anniversary Concert
                   </h3>
                   <p className="text-amber-100 mb-4">
-                    Mendelssohn's Paul (Paulus, Op. 36) — NUC Auditorium, Maitama
+                    Mendelssohn's Paul (Paulus, Op. 36) — NUC Auditorium,
+                    Maitama
                   </p>
                   <div className="flex items-center gap-2 text-sm font-medium">
                     Get Tickets <ArrowRight className="w-4 h-4" />

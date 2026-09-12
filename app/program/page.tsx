@@ -2,24 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Download, FileText, QrCode } from "lucide-react";
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import QRCodeGenerator from "@/components/QRCodeGenerator";
 
 export default function ProgramDownloadPage() {
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const programUrl = "/documents/Handel-Solomon Program.pdf";
+  const programUrl = "/documents/Paul_Concert_Programme.pdf";
   const fullUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}${programUrl}`
-      : "";
-
-  useEffect(() => {
-    // Generate QR code using Google Charts API
-    if (fullUrl) {
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(fullUrl)}`;
-      setQrCodeUrl(qrUrl);
-    }
-  }, [fullUrl]);
+      : programUrl;
 
   const handleDownload = () => {
     window.open(programUrl, "_blank");
@@ -37,12 +27,12 @@ export default function ProgramDownloadPage() {
         >
           <div className="inline-block bg-yellow-400/20 backdrop-blur-sm border border-yellow-400/30 rounded-full px-6 py-2 mb-6">
             <span className="text-yellow-300 font-semibold">
-              📅 November 16, 2025
+              📅 September 13, 2026
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
-            Handel's <span className="text-yellow-300">Solomon</span>
+            Mendelssohn's <span className="text-yellow-300">Paul</span>
           </h1>
 
           <p className="text-xl text-gray-200 mb-2">Concert Program</p>
@@ -67,32 +57,17 @@ export default function ProgramDownloadPage() {
                 </h2>
               </div>
 
-              {qrCodeUrl ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="bg-white p-6 rounded-xl shadow-2xl inline-block"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={qrCodeUrl}
-                    alt="QR Code for Program Download"
-                    width={300}
-                    height={300}
-                    className="w-full max-w-[300px]"
-                  />
-                  <p className="text-gray-600 text-sm mt-4">
-                    Scan with your phone camera
-                  </p>
-                </motion.div>
-              ) : (
-                <div className="bg-white p-6 rounded-xl shadow-2xl w-[300px] h-[300px] flex items-center justify-center">
-                  <div className="animate-pulse text-gray-400">
-                    Generating QR Code...
-                  </div>
-                </div>
-              )}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="bg-white p-6 rounded-xl shadow-2xl inline-block"
+              >
+                <QRCodeGenerator url={fullUrl} size={300} />
+                <p className="text-gray-600 text-sm mt-4">
+                  Scan with your phone camera
+                </p>
+              </motion.div>
             </div>
 
             {/* Right: Download Button & Info */}
@@ -112,7 +87,7 @@ export default function ProgramDownloadPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-yellow-400 mt-1">🎵</span>
-                    <span>Detailed information about Handel's Solomon</span>
+                    <span>Detailed information about Mendelssohn's Paul</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-yellow-400 mt-1">👥</span>
@@ -159,7 +134,7 @@ export default function ProgramDownloadPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
               <div>
                 <p className="font-semibold text-white mb-1">📍 Venue</p>
-                <p>NSE Hall, CBD Abuja</p>
+                <p>NUC Auditorium, Maitama, Abuja</p>
               </div>
               <div>
                 <p className="font-semibold text-white mb-1">🕐 Time</p>
@@ -189,8 +164,8 @@ export default function ProgramDownloadPage() {
               onClick={() => {
                 if (navigator.share) {
                   navigator.share({
-                    title: "Handel's Solomon - Program",
-                    text: "Download the program for tonight's performance of Handel's Solomon",
+                    title: "Mendelssohn's Paul - Program",
+                    text: "Download the program for tonight's performance of Mendelssohn's Paul",
                     url: fullUrl,
                   });
                 }

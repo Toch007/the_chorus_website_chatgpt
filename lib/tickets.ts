@@ -57,7 +57,7 @@ export async function issueTickets({
           buyerEmail,
           tier,
           status: "unused",
-          remainingUses: tier === "Diamond" ? 2 : 1, // Diamond admits 2
+          remainingUses: 1,
           createdAt: Timestamp.now(),
         });
 

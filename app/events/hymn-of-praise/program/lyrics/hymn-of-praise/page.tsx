@@ -99,7 +99,7 @@ export default function HymnOfPraiseLyricsPage() {
                   {/* Movement 2 */}
                   <div className="border-b-2 border-gray-200 pb-6">
                     <h3 className="text-2xl font-bold text-purple-800 mb-4">
-                      II. Praise Thou the Lord (Chorus)
+                      II. Praise Thou the Lord (Soprano Solo and Chorus)
                     </h3>
                     <div className="p-4 bg-blue-50 rounded">
                       <p className="font-semibold text-blue-900 mb-2">
@@ -184,7 +184,7 @@ export default function HymnOfPraiseLyricsPage() {
                   {/* Movement 6 */}
                   <div className="border-b-2 border-gray-200 pb-6">
                     <h3 className="text-2xl font-bold text-purple-800 mb-4">
-                      VI. The Sorrows of Death (Chorus)
+                      VI. The Sorrows of Death (Tenor Solo)
                     </h3>
                     <div className="p-4 bg-blue-50 rounded">
                       <p className="font-semibold text-blue-900 mb-2">
@@ -202,7 +202,7 @@ export default function HymnOfPraiseLyricsPage() {
                   {/* Movement 7 */}
                   <div className="border-b-2 border-gray-200 pb-6">
                     <h3 className="text-2xl font-bold text-purple-800 mb-4">
-                      VII. The Night is Departing (Tenor & Chorus)
+                      VII. The Night is Departing (Chorus)
                     </h3>
                     <div className="p-4 bg-blue-50 rounded">
                       <p className="font-semibold text-blue-900 mb-2">
@@ -246,7 +246,8 @@ export default function HymnOfPraiseLyricsPage() {
                   {/* Movement 9 */}
                   <div className="border-b-2 border-gray-200 pb-6">
                     <h3 className="text-2xl font-bold text-purple-800 mb-4">
-                      IX. My Song Shall Be Alway Thy Mercy (Solo & Chorus)
+                      IX. My Song Shall Be Alway Thy Mercy (Soprano and Tenor
+                      Duet)
                     </h3>
                     <div className="p-4 bg-blue-50 rounded">
                       <p className="font-semibold text-blue-900 mb-2">

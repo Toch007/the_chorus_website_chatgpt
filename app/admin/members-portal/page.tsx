@@ -61,17 +61,6 @@ export default function AdminMembersPortalPage() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Verify user is an admin
-        const response = await fetch(`/api/admin/verify-admin?email=${encodeURIComponent(user.email || "")}`);
-        const data = await response.json();
-
-        if (!data.isAdmin) {
-          alert("Access denied. You do not have admin privileges.");
-          await auth.signOut();
-          router.push("/admin/login");
-          return;
-        }
-
         setIsLoading(false);
         if (activeTab === "members") {
           fetchMembers();

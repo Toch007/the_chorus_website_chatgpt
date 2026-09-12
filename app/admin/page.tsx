@@ -66,6 +66,7 @@ export default function AdminDashboard() {
           alert("Access denied. You do not have admin privileges.");
           await signOut(auth);
           router.replace("/admin/login");
+          setLoading(false);
           return;
         }
 

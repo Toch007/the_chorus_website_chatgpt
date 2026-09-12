@@ -1,6 +1,10 @@
 ﻿import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Pin the workspace root: a stray package-lock.json in the parent folder
+  // otherwise makes Next.js/Turbopack misdetect the project root.
+  outputFileTracingRoot: process.cwd(),
+
   // Enhanced Image Optimization
   images: {
     remotePatterns: [
@@ -24,6 +28,7 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ["image/webp", "image/avif"],
+    qualities: [75, 90],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year
@@ -103,9 +108,10 @@ const nextConfig: NextConfig = {
   },
 
   turbopack: {
+    root: process.cwd(),
     resolveAlias: {
-      '../postinstall.mjs': './lib/empty.js',
-      './postinstall.mjs': './lib/empty.js',
+      "../postinstall.mjs": "./lib/empty.js",
+      "./postinstall.mjs": "./lib/empty.js",
     },
   },
 

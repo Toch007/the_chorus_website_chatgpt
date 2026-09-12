@@ -2,16 +2,21 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Zap, Music, Heart, Clock, MapPin, Ticket } from "lucide-react";
-import TicketStore from "@/components/TicketStore";
+import ProgramDownload from "@/components/ProgramDownload";
+import { shouldShowThankYouPage } from "@/config/paul";
 
 export default function PaulEventPage() {
-  const tickets = [
-    { name: "Bronze", price: 10000, perks: [], color: "bg-amber-700" },
-    { name: "Silver", price: 25000, perks: [], color: "bg-gray-500" },
-    { name: "Gold", price: 50000, perks: [], color: "bg-yellow-600" },
-    { name: "Diamond", price: 100000, perks: [], color: "bg-blue-700" },
-  ];
+  const router = useRouter();
+
+  // After the concert, send visitors straight to the thank-you page
+  useEffect(() => {
+    if (shouldShowThankYouPage()) {
+      router.replace("/events/paul/thank-you");
+    }
+  }, [router]);
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden">
@@ -198,23 +203,39 @@ export default function PaulEventPage() {
           </div>
         </motion.div>
 
-        {/* Ticket Section */}
+        {/* Ticket CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="w-full max-w-5xl mb-12"
+          className="w-full max-w-xl mb-12 text-center"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">
-            🎫 Secure Your Seat
+            🎟 Secure Your Seat
           </h2>
-          <p className="text-center text-gray-200 mb-10 text-lg">
-            Choose your ticket tier for Mendelssohn's <em>Paul</em> — 5th
-            Anniversary Concert
+          <p className="text-gray-200 mb-8 text-lg">
+            Four premium tiers available — from ₦10,000 (Bronze) to ₦100,000
+            (Diamond). Each ticket admits 1 person.
           </p>
+          <Link
+            href="/events/paul/tickets"
+            className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-white font-bold px-10 py-4 rounded-full text-lg shadow-lg shadow-amber-500/30 hover:shadow-amber-400/40 hover:scale-105 transition-all duration-300"
+          >
+            <Ticket className="w-6 h-6" />
+            Buy Tickets Now
+          </Link>
+        </motion.div>
 
-          <TicketStore tickets={tickets} />
+        {/* Program Download */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="w-full max-w-4xl mb-12"
+        >
+          <ProgramDownload />
         </motion.div>
 
         {/* Why Choose The Chorus Abuja */}
@@ -302,6 +323,13 @@ export default function PaulEventPage() {
             connoisseurs for an evening that transcends ordinary concert
             experiences. Secure your ticket today before capacity is reached.
           </p>
+          <Link
+            href="/events/paul/tickets"
+            className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-white font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-all duration-300"
+          >
+            <Ticket className="w-5 h-5" />
+            Buy Tickets
+          </Link>
 
           <div className="mt-8 text-gray-300 space-y-2">
             <p className="text-sm">📞 For Inquiries & Bulk Orders:</p>

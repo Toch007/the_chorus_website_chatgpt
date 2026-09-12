@@ -14,16 +14,19 @@ import {
 
 export default function Events() {
   return (
-    <section className="bg-gray-100 py-16 px-6 md:px-20" id="events">
+    <section
+      className="bg-gradient-to-b from-slate-950 via-blue-950 to-slate-950 py-16 px-6 md:px-20"
+      id="events"
+    >
       <div className="max-w-6xl mx-auto text-center">
         <Reveal direction="down" delay={0.1}>
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Upcoming Performances
           </h2>
         </Reveal>
 
         <Reveal direction="up" delay={0.3}>
-          <p className="text-lg text-gray-700 mb-10">
+          <p className="text-lg text-blue-200 mb-10">
             Stay inspired. Join us at our next concert, outreach, or festival
             appearance.
           </p>
@@ -31,7 +34,7 @@ export default function Events() {
 
         {/* Hymn of Praise — Concluded */}
         <Reveal direction="up" delay={0.4}>
-          <div className="mb-10 rounded-2xl overflow-hidden border border-purple-200 bg-white shadow-md">
+          <div className="mb-10 rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-xl">
             <div className="grid md:grid-cols-3 gap-0">
               <div className="relative h-48 md:h-auto">
                 <Image
@@ -40,7 +43,7 @@ export default function Events() {
                   fill
                   className="object-cover grayscale-[30%]"
                 />
-                <div className="absolute inset-0 bg-purple-900/40" />
+                <div className="absolute inset-0 bg-purple-900/50" />
                 <div className="absolute top-3 left-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 text-purple-800 rounded-full font-bold text-xs">
                     <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
@@ -49,14 +52,20 @@ export default function Events() {
                 </div>
               </div>
               <div className="md:col-span-2 p-6 flex flex-col justify-center text-left">
-                <p className="text-xs font-bold uppercase tracking-widest text-purple-400 mb-1">March 22, 2026 · First Baptist Church, Garki</p>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Mendelssohn's Hymn of Praise</h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                  Thank you to everyone who joined us for a magnificent evening of Mendelssohn's <em>Lobgesang</em> and Negro Spirituals. What a beautiful night of music and worship.
+                <p className="text-xs font-bold uppercase tracking-widest text-purple-300 mb-1">
+                  March 22, 2026 · First Baptist Church, Garki
+                </p>
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Mendelssohn's Hymn of Praise
+                </h3>
+                <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                  Thank you to everyone who joined us for a magnificent evening
+                  of Mendelssohn's <em>Lobgesang</em> and Negro Spirituals. What
+                  a beautiful night of music and worship.
                 </p>
                 <Link
                   href="/events/hymn-of-praise/program"
-                  className="inline-flex items-center gap-2 px-5 py-2 bg-purple-100 text-purple-800 font-semibold rounded-lg hover:bg-purple-200 transition-all w-fit text-sm"
+                  className="inline-flex items-center gap-2 px-5 py-2 bg-purple-500/30 border border-purple-400/50 text-purple-200 font-semibold rounded-lg hover:bg-purple-500/50 transition-all w-fit text-sm"
                 >
                   <Music className="w-4 h-4" />
                   View Concert Program
@@ -105,7 +114,7 @@ export default function Events() {
                 <div className="flex items-center gap-2 text-amber-100 mb-6">
                   <Calendar className="w-5 h-5" />
                   <span className="font-medium">
-                    September 2026 • Details coming soon
+                    Saturday, September 13, 2026 · NUC Auditorium, Maitama
                   </span>
                 </div>
                 <Link
@@ -179,7 +188,7 @@ export default function Events() {
         <Reveal direction="up" delay={0.7}>
           <Link
             href="/events"
-            className="inline-block bg-blue-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 active:bg-blue-900 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transform transition-all duration-300"
+            className="inline-block bg-white/10 border border-white/20 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transform transition-all duration-300"
           >
             📅 See All Events
           </Link>

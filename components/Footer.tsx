@@ -78,44 +78,49 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="text-gray-200 hover:text-yellow-400 transition">
+                <Link
+                  href="/about"
+                  className="text-gray-200 hover:text-yellow-400 transition"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="text-gray-200 hover:text-yellow-400 transition">
+                <Link
+                  href="/events"
+                  className="text-gray-200 hover:text-yellow-400 transition"
+                >
                   Events
                 </Link>
               </li>
               <li>
-                <Link href="/join" className="text-gray-200 hover:text-yellow-400 transition">
+                <Link
+                  href="/join"
+                  className="text-gray-200 hover:text-yellow-400 transition"
+                >
                   Join Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-200 hover:text-yellow-400 transition">
+                <Link
+                  href="/contact"
+                  className="text-gray-200 hover:text-yellow-400 transition"
+                >
                   Contact
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Member Portal */}
+          {/* Admin */}
           <div>
-            <h4 className="text-lg font-semibold mb-3">Member Portal</h4>
+            <h4 className="text-lg font-semibold mb-3">Admin</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/members/login" className="text-yellow-400 hover:text-yellow-300 transition font-medium">
-                  Member Login
-                </Link>
-              </li>
-              <li>
-                <Link href="/members/signup" className="text-gray-200 hover:text-yellow-400 transition">
-                  Member Signup
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/login" className="text-gray-200 hover:text-yellow-400 transition">
+                <Link
+                  href="/admin/login"
+                  className="text-gray-200 hover:text-yellow-400 transition"
+                >
                   Admin Login
                 </Link>
               </li>

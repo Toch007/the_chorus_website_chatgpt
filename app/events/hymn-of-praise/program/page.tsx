@@ -33,7 +33,7 @@ export default function HymnOfPraiseProgramPage() {
     {
       number: 2,
       title: "Welcome Address",
-      performer: "Master of Ceremonies",
+      performer: "Secretary of The Chorus",
       duration: "5 mins",
       description: "",
     },
@@ -80,8 +80,7 @@ export default function HymnOfPraiseProgramPage() {
           voice: "Bass Solo",
           title: "Honour and Arms",
           composer: "Handel",
-          lyricsPath:
-            "/events/hymn-of-praise/program/lyrics/loud-awful-thunder",
+          lyricsPath: "/events/hymn-of-praise/program/lyrics/honour-and-arms",
         },
         {
           voice: "Full Chorus",
@@ -397,22 +396,23 @@ export default function HymnOfPraiseProgramPage() {
                       Tickets Available
                     </h4>
                     <p className="text-sm text-purple-700 mb-4">
-                      Secure your seats now through our various ticketing
-                      channels:
+                      Four premium tiers — Bronze, Silver, Gold, and Diamond.
+                      Each ticket admits 1 person.
                     </p>
-                    <ul className="text-sm text-purple-800 space-y-2 list-disc list-inside">
-                      <li>Online ticketing platform</li>
-                      <li>Direct contact with The Chorus</li>
-                      <li>Authorized partner organizations</li>
-                    </ul>
+                    <Link
+                      href="/events/paul/tickets"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg transition text-sm"
+                    >
+                      🎟 Buy Tickets Now
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-6 pt-6 border-t border-purple-300 text-center">
                   <Link
-                    href="/events"
+                    href="/events/paul"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition"
                   >
-                    <Music size={20} /> Learn More
+                    <Music size={20} /> Learn More About This Concert
                   </Link>
                 </div>
               </div>
@@ -429,9 +429,9 @@ export default function HymnOfPraiseProgramPage() {
                 Enjoyed Tonight's Concert?
               </h3>
               <p className="text-amber-700 mb-6 leading-relaxed">
-                Your generosity helps The Chorus Abuja continue bringing world-class
-                choral music to Abuja. Every contribution — large or small — makes a
-                difference.
+                Your generosity helps The Chorus Abuja continue bringing
+                world-class choral music to Abuja. Every contribution — large or
+                small — makes a difference.
               </p>
               <Link
                 href="/support/donate"

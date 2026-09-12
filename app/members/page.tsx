@@ -131,26 +131,34 @@ export default function MembersPage() {
   return (
     <>
       <Header />
-      <main className="bg-white">
-        {/* Enhanced Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 pt-24 pb-16 px-4">
-          <div className="max-w-6xl mx-auto text-center space-y-8">
+      <main className="bg-white text-gray-800">
+        {/* Hero Section */}
+        <section className="relative pt-24 pb-16 px-4 overflow-hidden">
+          {/* Background image + overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/chorus-members.jpeg')" }}
+          >
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900/70 via-blue-800/60 to-purple-900/70" />
+          </div>
+
+          {/* Content */}
+          <div className="relative max-w-5xl mx-auto text-center space-y-6">
             <Reveal>
-              <h1 className="text-5xl md:text-6xl font-extrabold text-blue-800 mb-6">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4">
                 Meet Our Musical Family
               </h1>
             </Reveal>
-
             <Reveal delay={0.2}>
-              <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
                 The Chorus Abuja is a diverse collective of talented vocalists
                 and musicians dedicated to excellence in sacred, classical, and
-                traditional gospel music. Meet the individuals who bring
-                passion, professionalism, and harmony to every performance.
+                traditional gospel music.
               </p>
             </Reveal>
 
-            {/* Enhanced Team Statistics */}
+            {/* Stats */}
             <Reveal delay={0.4}>
               <EnhancedMembersStatistics
                 membersGrouped={grouped}
@@ -162,12 +170,13 @@ export default function MembersPage() {
         </section>
 
         <div className="space-y-16 px-4 py-16 md:px-10 max-w-screen-xl mx-auto">
-          {/* Enhanced Section Navigation */}
+          {/* Section Navigation */}
           <Reveal>
             <div className="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-blue-800 mb-6 text-center">
+              <h3 className="text-2xl font-bold text-blue-800 mb-2 text-center">
                 Explore by Voice Section
               </h3>
+              <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-6" />
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {Object.entries(displayNames).map(([key, label]) => (
                   <button
@@ -329,26 +338,26 @@ export default function MembersPage() {
           )}
 
           <Reveal>
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-center text-white shadow-2xl">
-              <h3 className="text-3xl font-bold mb-4">
+            <div className="bg-gradient-to-r from-blue-100 to-purple-50 rounded-2xl p-12 text-center shadow-lg">
+              <h3 className="text-3xl font-bold text-blue-800 mb-4">
                 Ready to Join Our Musical Family?
               </h3>
-              <p className="text-blue-100 mb-8 text-lg max-w-2xl mx-auto">
-                We're always excited to welcome passionate singers and
+              <p className="text-gray-700 mb-8 text-lg max-w-2xl mx-auto leading-relaxed">
+                We&apos;re always excited to welcome passionate singers and
                 instrumentalists who share our vision of musical excellence and
                 community impact.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   href="/join"
-                  className="inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all hover:scale-105 shadow-lg"
+                  className="inline-flex items-center bg-blue-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 transition-all hover:scale-105 shadow-lg"
                 >
                   <Users className="w-5 h-5 mr-2" />
-                  Join Our Chorus
+                  Apply Now
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all"
+                  className="inline-flex items-center border-2 border-blue-800 text-blue-800 px-8 py-4 rounded-full font-semibold hover:bg-blue-800 hover:text-white transition-all"
                 >
                   Get in Touch
                 </Link>

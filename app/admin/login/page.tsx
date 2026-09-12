@@ -21,11 +21,17 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const user = userCredential.user;
 
       // Check if user is an admin by querying a separate admin collection
-      const response = await fetch(`/api/admin/verify-admin?email=${encodeURIComponent(email)}`);
+      const response = await fetch(
+        `/api/admin/verify-admin?email=${encodeURIComponent(email)}`,
+      );
       const data = await response.json();
 
       if (!data.isAdmin) {
@@ -35,9 +41,9 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/admin"); // Redirect after login
+      router.push("/admin");
     } catch (err: any) {
-      setError(err.message || "Invalid credentials");
+      setError("Invalid email or password. Please try again.");
     } finally {
       setLoading(false);
     }

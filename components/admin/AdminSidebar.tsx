@@ -24,6 +24,7 @@ import {
   ChevronRight,
   Home,
   MessageSquare,
+  QrCode,
 } from "lucide-react";
 
 interface NavItem {
@@ -122,6 +123,11 @@ export default function AdminSidebar({
       name: "File Manager",
       href: "/admin/files",
       icon: FolderOpen,
+    },
+    {
+      name: "QR Generator",
+      href: "/admin/qr",
+      icon: QrCode,
     },
     {
       name: "Image Optimization",

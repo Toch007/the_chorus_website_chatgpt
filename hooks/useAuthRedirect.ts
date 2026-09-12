@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/firebase/config";
 
 // Redirects only allow users with admin records to continue.
-// Non-admin authenticated users will be signed out and redirected to the members login.
+// Non-admin authenticated users will be signed out and redirected to the admin login.
 export function useAuthRedirect() {
   const router = useRouter();
 
@@ -18,11 +18,10 @@ export function useAuthRedirect() {
           return;
         }
 
-        // If user has no email (unlikely), treat as non-admin
         const email = user.email ?? null;
         if (!email) {
           await signOut(auth);
-          router.push("/members/login");
+          router.push("/admin/login");
           return;
         }
 
@@ -32,17 +31,15 @@ export function useAuthRedirect() {
         );
 
         if (!res.ok) {
-          // treat as not admin
           await signOut(auth);
-          router.push("/members/login");
+          router.push("/admin/login");
           return;
         }
 
         const data = await res.json();
         if (!data.isAdmin) {
-          // Signed-in user is not an admin -> prevent access
           await signOut(auth);
-          router.push("/members/login");
+          router.push("/admin/login");
         }
         // else: user is admin => allow to proceed
       } catch (error) {
@@ -52,7 +49,7 @@ export function useAuthRedirect() {
         } catch (_) {
           /* ignore */
         }
-        router.push("/members/login");
+        router.push("/admin/login");
       }
     });
 
