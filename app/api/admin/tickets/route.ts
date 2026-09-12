@@ -29,8 +29,7 @@ export async function GET(req: Request) {
         email: data.buyerEmail || "",
         emailStatus: data.emailStatus || "SUCCESS", // Default to SUCCESS if not specified
         createdAt:
-          data.createdAt?.toDate?.()?.toISOString() ||
-          new Date().toISOString(),
+          data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
         // Keep original fields
         tier: data.tier,
         status: data.status,
@@ -55,10 +54,7 @@ export async function PATCH(req: Request) {
   try {
     const { ticketId } = await req.json();
     if (!ticketId) {
-      return NextResponse.json(
-        { error: "ticketId required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "ticketId required" }, { status: 400 });
     }
 
     // Grab ticket doc from correct collection

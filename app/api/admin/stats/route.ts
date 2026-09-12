@@ -69,7 +69,7 @@ export async function GET(req: Request) {
     console.error("Error fetching dashboard stats:", error);
     return NextResponse.json(
       { success: false, message: "❌ Error fetching dashboard stats" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

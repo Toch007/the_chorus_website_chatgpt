@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     // Send email notification to admin
     const adminEmailResult = await resend.emails.send({
-      from: "The Chorus Contact Form <noreply@thechorusabuja.com>",
+      from: "The Chorus Contact Form <noreply@thechorusabuja.org>",
       to: ["info@thechorusabuja.org"], // Replace with actual admin email
       subject: `New Contact Form Submission: ${subject}`,
       html: `
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to user
     const userEmailResult = await resend.emails.send({
-      from: "The Chorus Abuja <noreply@thechorusabuja.com>",
+      from: "The Chorus Abuja <noreply@thechorusabuja.org>",
       to: [email],
       subject: "Thank you for contacting The Chorus Abuja",
       html: `

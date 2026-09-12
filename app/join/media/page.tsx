@@ -34,7 +34,7 @@ export default function MediaJoinForm() {
   ];
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const target = e.target as HTMLInputElement | HTMLSelectElement;
     const { name, value, type } = target;

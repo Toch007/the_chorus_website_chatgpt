@@ -11,7 +11,6 @@ export async function GET(req: Request) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-
     const { searchParams } = new URL(req.url);
     const group = searchParams.get("group");
 
@@ -62,7 +61,7 @@ export async function GET(req: Request) {
     console.error("Error counting recipients:", error);
     return NextResponse.json(
       { error: error.message || "Failed to count recipients" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

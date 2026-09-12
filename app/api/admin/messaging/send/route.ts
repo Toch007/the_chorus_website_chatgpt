@@ -9,7 +9,6 @@ export async function POST(req: Request) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-
     const {
       from,
       recipientGroup,
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
     if (!from || !subject || !content) {
       return NextResponse.json(
         { error: "From, subject, and content are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,7 +33,7 @@ export async function POST(req: Request) {
       if (!singleEmail) {
         return NextResponse.json(
           { error: "Single email is required" },
-          { status: 400 }
+          { status: 400 },
         );
       }
       recipients = [singleEmail];
@@ -42,7 +41,7 @@ export async function POST(req: Request) {
       if (!customEmails) {
         return NextResponse.json(
           { error: "Custom emails are required" },
-          { status: 400 }
+          { status: 400 },
         );
       }
       recipients = customEmails
@@ -92,7 +91,7 @@ export async function POST(req: Request) {
         default:
           return NextResponse.json(
             { error: "Invalid recipient group" },
-            { status: 400 }
+            { status: 400 },
           );
       }
     }
@@ -100,7 +99,7 @@ export async function POST(req: Request) {
     if (recipients.length === 0) {
       return NextResponse.json(
         { error: "No recipients found" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -164,7 +163,7 @@ export async function POST(req: Request) {
     console.error("Messaging send error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to send emails" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -67,7 +67,7 @@ export default function JoinChoirPage() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target as
       | HTMLInputElement

@@ -75,7 +75,7 @@ export default function TicketsAdminPage() {
       alert(
         data.success
           ? `Ticket ${ticketId} resent successfully!`
-          : `Failed to resend ticket: ${data.error}`
+          : `Failed to resend ticket: ${data.error}`,
       );
       fetchTickets(filterStatus || undefined); // refresh list
     } catch (err) {
@@ -204,10 +204,10 @@ export default function TicketsAdminPage() {
   ];
 
   const failedTickets = tickets.filter(
-    (ticket) => ticket.emailStatus === "FAILED"
+    (ticket) => ticket.emailStatus === "FAILED",
   ).length;
   const successTickets = tickets.filter(
-    (ticket) => ticket.emailStatus === "SUCCESS"
+    (ticket) => ticket.emailStatus === "SUCCESS",
   ).length;
 
   return (

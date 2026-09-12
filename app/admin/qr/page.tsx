@@ -58,7 +58,11 @@ export default function QRGeneratorPage() {
   function handleDownload() {
     if (!qrDataUrl) return;
     const a = document.createElement("a");
-    const slug = fullUrl.replace(/https?:\/\/[^/]+/, "").replace(/\//g, "-").replace(/^-/, "") || "home";
+    const slug =
+      fullUrl
+        .replace(/https?:\/\/[^/]+/, "")
+        .replace(/\//g, "-")
+        .replace(/^-/, "") || "home";
     a.href = qrDataUrl;
     a.download = `qr-${slug}.png`;
     a.click();
@@ -72,7 +76,8 @@ export default function QRGeneratorPage() {
           QR Code Generator
         </h1>
         <p className="text-gray-500 text-sm mt-1">
-          Generate a QR code for any page on the website. Click a quick link or enter a custom path.
+          Generate a QR code for any page on the website. Click a quick link or
+          enter a custom path.
         </p>
       </div>
 
@@ -126,7 +131,9 @@ export default function QRGeneratorPage() {
               </button>
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              Use a path like <code className="bg-gray-100 px-1 rounded">/about</code> or paste a full URL
+              Use a path like{" "}
+              <code className="bg-gray-100 px-1 rounded">/about</code> or paste
+              a full URL
             </p>
           </div>
 
@@ -155,13 +162,18 @@ export default function QRGeneratorPage() {
         <div className="flex flex-col items-center gap-4">
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex items-center justify-center min-h-[320px] w-full">
             {generating ? (
-              <div className="text-gray-400 text-sm animate-pulse">Generating…</div>
+              <div className="text-gray-400 text-sm animate-pulse">
+                Generating…
+              </div>
             ) : qrDataUrl ? (
               <img
                 src={qrDataUrl}
                 alt="Generated QR Code"
                 className="max-w-full"
-                style={{ width: Math.min(size, 280), height: Math.min(size, 280) }}
+                style={{
+                  width: Math.min(size, 280),
+                  height: Math.min(size, 280),
+                }}
               />
             ) : (
               <div className="text-gray-300 text-sm">No QR code yet</div>
@@ -170,7 +182,8 @@ export default function QRGeneratorPage() {
 
           {fullUrl && (
             <p className="text-xs text-gray-500 text-center break-all max-w-xs">
-              <span className="font-medium text-gray-600">URL: </span>{fullUrl}
+              <span className="font-medium text-gray-600">URL: </span>
+              {fullUrl}
             </p>
           )}
 
@@ -184,7 +197,8 @@ export default function QRGeneratorPage() {
           </button>
 
           <p className="text-xs text-gray-400 text-center">
-            QR codes are generated at high error-correction (Level H) — they remain scannable even if partially covered or printed small.
+            QR codes are generated at high error-correction (Level H) — they
+            remain scannable even if partially covered or printed small.
           </p>
         </div>
       </div>

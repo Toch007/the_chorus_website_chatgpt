@@ -11,7 +11,6 @@ export async function GET(req: Request) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-
     // Count active subscribers using Admin SDK
     const subscribersSnap = await db.collection("newsletterSubscribers").get();
 
@@ -29,7 +28,7 @@ export async function GET(req: Request) {
     console.error("Error counting subscribers:", error);
     return NextResponse.json(
       { error: error.message || "Failed to count subscribers" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

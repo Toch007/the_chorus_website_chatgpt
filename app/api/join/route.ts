@@ -39,7 +39,8 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: "Too many submissions from this network. Please try again later.",
+          error:
+            "Too many submissions from this network. Please try again later.",
         },
         { status: 429 },
       );

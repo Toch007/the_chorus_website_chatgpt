@@ -8,13 +8,12 @@ export async function POST(req: Request) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-
     const { subject, htmlContent, testMode, testEmail } = await req.json();
 
     if (!subject || !htmlContent) {
       return NextResponse.json(
         { error: "Subject and content are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -40,7 +39,7 @@ export async function POST(req: Request) {
               success: false,
               error: testResult.error.message || "Failed to send test email",
             },
-            { status: 500 }
+            { status: 500 },
           );
         }
 
@@ -57,7 +56,7 @@ export async function POST(req: Request) {
             success: false,
             error: error.message || "Failed to send test email",
           },
-          { status: 500 }
+          { status: 500 },
         );
       }
     }
@@ -76,7 +75,7 @@ export async function POST(req: Request) {
     if (subscribers.length === 0) {
       return NextResponse.json(
         { error: "No subscribers found" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -113,7 +112,7 @@ export async function POST(req: Request) {
         for (const subscriberEmail of batch) {
           const personalizedContent = emailContent.replace(
             /\{\{recipient_email\}\}/g,
-            encodeURIComponent(subscriberEmail)
+            encodeURIComponent(subscriberEmail),
           );
 
           await resend.emails.send({
@@ -145,7 +144,7 @@ export async function POST(req: Request) {
     console.error("Newsletter send error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to send newsletter" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
