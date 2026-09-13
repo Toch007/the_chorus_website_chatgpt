@@ -114,6 +114,7 @@ export default function TicketsAdminPage() {
       key: "tier",
       label: "Ticket Type",
       sortable: true,
+      filterable: true,
       render: (value: string) => (
         <span
           className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -150,6 +151,7 @@ export default function TicketsAdminPage() {
       key: "emailStatus",
       label: "Status",
       sortable: true,
+      filterable: true,
       render: (value: string) => (
         <span
           className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full ${
@@ -252,6 +254,7 @@ export default function TicketsAdminPage() {
         columns={columns}
         actions={actions}
         searchable={true}
+        filterable={true}
         exportable={true}
         selectable={true}
         pagination={true}

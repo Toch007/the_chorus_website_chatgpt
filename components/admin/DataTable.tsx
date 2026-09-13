@@ -66,6 +66,31 @@ export default function DataTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
   const [filters, setFilters] = useState<Record<string, string>>({});
+  const [showFilters, setShowFilters] = useState(false);
+
+  const filterableColumns = columns.filter((col) => col.filterable);
+
+  // Unique values available for each filterable column, derived from the
+  // full dataset (not the already-filtered one) so options don't disappear.
+  const filterOptions = useMemo(() => {
+    const options: Record<string, string[]> = {};
+    for (const col of filterableColumns) {
+      const values = new Set<string>();
+      for (const row of data) {
+        const value = row[col.key];
+        if (value !== undefined && value !== null && value !== "") {
+          values.add(String(value));
+        }
+      }
+      options[col.key] = Array.from(values).sort();
+    }
+    return options;
+  }, [data, filterableColumns]);
+
+  const handleFilterChange = (key: string, value: string) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+    setCurrentPage(1);
+  };
 
   // Filter and search data
   const filteredData = useMemo(() => {
@@ -192,7 +217,10 @@ export default function DataTable({
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
       {/* Header Controls */}
-      {(searchable || exportable || selectedRows.size > 0) && (
+      {(searchable ||
+        exportable ||
+        filterableColumns.length > 0 ||
+        selectedRows.size > 0) && (
         <div className="p-4 border-b border-gray-200 bg-gray-50">
           <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
             <div className="flex flex-col sm:flex-row gap-4 flex-1">
@@ -225,17 +253,67 @@ export default function DataTable({
             </div>
 
             <div className="flex gap-2">
+              {filterableColumns.length > 0 && (
+                <button
+                  onClick={() => setShowFilters((v) => !v)}
+                  className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium border rounded-lg ${
+                    showFilters || Object.values(filters).some(Boolean)
+                      ? "bg-blue-50 border-blue-300 text-blue-700"
+                      : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  <Filter className="w-4 h-4" />
+                  Filters
+                  {Object.values(filters).some(Boolean) && (
+                    <span className="ml-1 px-1.5 py-0.5 text-xs bg-blue-600 text-white rounded-full">
+                      {Object.values(filters).filter(Boolean).length}
+                    </span>
+                  )}
+                </button>
+              )}
               {exportable && (
                 <button
                   onClick={exportToCSV}
                   className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
                 >
                   <Download className="w-4 h-4" />
-                  Export CSV
+                  Export CSV ({sortedData.length})
                 </button>
               )}
             </div>
           </div>
+
+          {showFilters && filterableColumns.length > 0 && (
+            <div className="flex flex-wrap gap-3 mt-4 pt-4 border-t border-gray-200">
+              {filterableColumns.map((col) => (
+                <div key={col.key} className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-500">
+                    {col.label}
+                  </label>
+                  <select
+                    value={filters[col.key] || ""}
+                    onChange={(e) => handleFilterChange(col.key, e.target.value)}
+                    className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="">All</option>
+                    {(filterOptions[col.key] || []).map((value) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+              {Object.values(filters).some(Boolean) && (
+                <button
+                  onClick={() => setFilters({})}
+                  className="self-end px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
 

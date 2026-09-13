@@ -165,7 +165,9 @@ async function main() {
     const bot = snap.docs.filter((doc) => !isLegit(doc.data()));
     const legit = snap.docs.filter((doc) => isLegit(doc.data()));
 
-    console.log(`${name}: ${snap.size} total → ${bot.length} bot-like, ${legit.length} look legit`);
+    console.log(
+      `${name}: ${snap.size} total → ${bot.length} bot-like, ${legit.length} look legit`,
+    );
 
     if (bot.length > 0) {
       console.log(`  Sample of docs that would be DELETED:`);
