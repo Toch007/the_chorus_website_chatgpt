@@ -79,13 +79,15 @@ export default function AdminDashboard() {
     return () => unsubscribe();
   }, [router]);
 
-  // Auto-refresh dashboard stats every 30 seconds
+  // Auto-refresh dashboard stats every 3 minutes (use the manual refresh
+  // button for anything more immediate — this just avoids stale data on an
+  // open tab without hammering Firestore reads).
   useEffect(() => {
     if (!authenticated) return;
 
     const interval = setInterval(() => {
       fetchDashboardStats();
-    }, 30000); // 30 seconds
+    }, 180000); // 3 minutes
 
     return () => clearInterval(interval);
   }, [authenticated]);

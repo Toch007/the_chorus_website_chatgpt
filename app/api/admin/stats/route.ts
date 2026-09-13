@@ -11,29 +11,32 @@ export async function GET(req: Request) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-    // Fetch all collections in parallel
+    // Fetch all collections in parallel. Count-only collections use
+    // .count().get() (aggregation query) instead of .get() so we're not
+    // billed for every document — critical for join_* collections which
+    // can accumulate thousands of spam submissions.
     const [
-      membersSnap,
+      membersCount,
       eventsSnap,
       subscribersSnap,
-      choirAppsSnap,
-      volunteerAppsSnap,
-      mediaAppsSnap,
-      techAppsSnap,
-      blogSnap,
-      donationsSnap,
-      partnersSnap,
+      choirCount,
+      volunteerCount,
+      mediaCount,
+      techCount,
+      blogPostsCount,
+      donationsCount,
+      partnersCount,
     ] = await Promise.all([
-      db.collection("members").get(),
+      db.collection("members").count().get(),
       db.collection("events").get(),
       db.collection("newsletterSubscribers").get(),
-      db.collection("join_choir").get(),
-      db.collection("join_volunteer").get(),
-      db.collection("join_media").get(),
-      db.collection("join_tech").get(),
-      db.collection("posts").get(),
-      db.collection("donations").get(),
-      db.collection("partners").get(),
+      db.collection("join_choir").count().get(),
+      db.collection("join_volunteer").count().get(),
+      db.collection("join_media").count().get(),
+      db.collection("join_tech").count().get(),
+      db.collection("posts").count().get(),
+      db.collection("donations").count().get(),
+      db.collection("partners").count().get(),
     ]);
 
     // Calculate recent events (this month)
@@ -50,18 +53,18 @@ export async function GET(req: Request) {
     }).length;
 
     const stats = {
-      totalMembers: membersSnap.size,
+      totalMembers: membersCount.data().count,
       totalEvents: eventsSnap.size,
       newsletterSubscribers: activeSubscribers,
       pendingApplications:
-        choirAppsSnap.size +
-        volunteerAppsSnap.size +
-        mediaAppsSnap.size +
-        techAppsSnap.size,
+        choirCount.data().count +
+        volunteerCount.data().count +
+        mediaCount.data().count +
+        techCount.data().count,
       recentEvents,
-      blogPosts: blogSnap.size,
-      totalDonations: donationsSnap.size,
-      totalPartners: partnersSnap.size,
+      blogPosts: blogPostsCount.data().count,
+      totalDonations: donationsCount.data().count,
+      totalPartners: partnersCount.data().count,
     };
 
     return NextResponse.json({ success: true, stats });

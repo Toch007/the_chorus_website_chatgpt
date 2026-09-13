@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
         { error: "All fields are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: "Invalid email format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -124,13 +124,13 @@ export async function POST(request: NextRequest) {
         adminEmailId: adminEmailResult.data?.id,
         userEmailId: userEmailResult.data?.id,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Contact form error:", error);
     return NextResponse.json(
       { error: "Failed to send message. Please try again later." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
