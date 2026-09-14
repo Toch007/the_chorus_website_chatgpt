@@ -7,11 +7,22 @@ interface NewsletterComposerProps {
   subscriberCount: number;
 }
 
+// Plain text isn't valid email HTML on its own (newlines are ignored), so we
+// escape it and turn line breaks into <br> before sending/previewing.
+function textToHtml(text: string): string {
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  return `<div style="font-family: Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #1f2937;">${escaped.replace(/\n/g, "<br>")}</div>`;
+}
+
 export default function NewsletterComposer({
   subscriberCount,
 }: NewsletterComposerProps) {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
+  const [format, setFormat] = useState<"text" | "html">("text");
   const [preview, setPreview] = useState(false);
   const [sending, setSending] = useState(false);
   const [testMode, setTestMode] = useState(false);
@@ -56,7 +67,7 @@ export default function NewsletterComposer({
         },
         body: JSON.stringify({
           subject,
-          htmlContent: content,
+          htmlContent: format === "html" ? content : textToHtml(content),
           testMode,
           testEmail: testMode ? testEmail : undefined,
         }),
@@ -138,19 +149,51 @@ export default function NewsletterComposer({
 
       {/* Content Editor */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Newsletter Content (HTML)
-        </label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Newsletter Content
+          </label>
+          <div className="flex rounded-lg border border-gray-300 overflow-hidden text-xs">
+            <button
+              type="button"
+              onClick={() => setFormat("text")}
+              className={`px-3 py-1 font-medium ${
+                format === "text"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              Plain Text
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormat("html")}
+              className={`px-3 py-1 font-medium border-l border-gray-300 ${
+                format === "html"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              HTML
+            </button>
+          </div>
+        </div>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Enter HTML content or plain text..."
+          placeholder={
+            format === "html"
+              ? "Enter HTML content..."
+              : "Write your newsletter here — line breaks are preserved automatically."
+          }
           rows={15}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
         />
         <p className="text-xs text-gray-500 mt-1">
-          You can use HTML tags for formatting. Unsubscribe links are
-          automatically added to all emails.
+          {format === "html"
+            ? "You can use HTML tags for formatting."
+            : "Plain text mode — no HTML knowledge needed, your line breaks are kept as-is."}{" "}
+          Unsubscribe links are automatically added to all emails.
         </p>
       </div>
 
@@ -228,7 +271,11 @@ export default function NewsletterComposer({
           </div>
           <div
             className="p-6 bg-white"
-            dangerouslySetInnerHTML={{ __html: content || "<p>No content</p>" }}
+            dangerouslySetInnerHTML={{
+              __html:
+                (format === "html" ? content : textToHtml(content)) ||
+                "<p>No content</p>",
+            }}
           />
         </div>
       )}
